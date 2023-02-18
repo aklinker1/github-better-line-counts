@@ -7,19 +7,28 @@
   "scripts": {
     "compile": "tsc --noEmit",
     "dev": "vite dev",
+    "dev:firefox": "cross-env TARGET=firefox vite dev",
     "build": "vite build",
-    "test": "vitest"
+    "build:firefox": "cross-env TARGET=firefox vite build",
+    "test": "vitest",
+    "zip": "tsx scripts/zip.ts chrome",
+    "zip:firefox": "tsx scripts/zip.ts firefox",
+    "zip:sources": "tsx scripts/zip-sources.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.0",
     "@types/webextension-polyfill": "^0.9.2",
+    "cross-env": "^7.0.3",
     "jsdom": "^21.1.0",
+    "publish-browser-extension": "^1.1.4",
+    "tsx": "^3.12.3",
     "typescript": "^4.9.3",
     "unplugin-auto-import": "^0.14.3",
     "vite": "^3",
     "vite-plugin-web-extension": "^2",
     "vitest": "^0.28.5",
-    "webextension-polyfill": "^0.10.0"
+    "webextension-polyfill": "^0.10.0",
+    "zip-a-folder": "^1.1.5"
   },
   "dependencies": {
     "@webext-core/proxy-service": "^1.0.3",
