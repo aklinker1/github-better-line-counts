@@ -1,4 +1,4 @@
-<h1><img src="./public/icon-sm.svg" height="24"> GitHub Better Diff</h1>
+<h1><img src="./public/icon-sm.svg" height="24"> GitHub: Better Line Counts</h1>
 
 <!-- <img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store"> -->
 
