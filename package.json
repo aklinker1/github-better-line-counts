@@ -1,6 +1,6 @@
 {
   "name": "GitHub: Better Line Counts",
-  "description": "Remove generated files from diff counts on GitHub PRs",
+  "description": "Remove generated files from the total line counts on GitHub PRs",
   "private": true,
   "version": "1.0.0",
   "type": "module",
