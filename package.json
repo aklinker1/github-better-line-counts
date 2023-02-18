@@ -1,5 +1,6 @@
 {
   "name": "GitHub: Better Diff",
+  "description": "Remove generated files from diff counts on GitHub PRs",
   "private": true,
   "version": "1.0.0",
   "type": "module",
