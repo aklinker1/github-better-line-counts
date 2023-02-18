@@ -31,10 +31,10 @@ This extension is bundled via `vite-plugin-web-extension`.
 - `pnpm build`: Builds the extension for production. Outputs to the `dist` directory.
 - `pnpm zip`: Zips up the `dist` directory into an installable ZIP file.
 
-> Add `:firefox` suffix to some commands to target firefox instead of Chrome.
->
-> - `pnpm build:firefox`
-> - `pnpm dev:firefox`
+Add `:firefox` suffix to some commands to target firefox instead of Chrome.
+
+- `pnpm build:firefox`
+- `pnpm dev:firefox`
 
 ### Auto-imports
 
