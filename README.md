@@ -1,6 +1,6 @@
 # GitHub Better Diff
 
-<img width="200" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img width="200" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store">
+<!-- <img width="200" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img width="200" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store"> -->
 
 A chrome extension that removes generated files from a PR's diff count.
 
@@ -8,18 +8,18 @@ A chrome extension that removes generated files from a PR's diff count.
 - `package-lock.json`
 - `yarn.lock`
 
-## Roadmap
-
-- [x] `v1.0.0`: Subtract a hardcoded list of generated files from PR diffs
-- [ ] Support private repos via GitHub PAT
-- [ ] Make the list based off your `.gitattributes`
-- [ ] Recalculate the diff boxes next to the count
-
-That's it. Very simple, targetted extension for fixing 1 problem with GitHub.
-
-## How does this work?
+### How does this work?
 
 The extension uses the Github API to load information about your PR, then recalculates the diff, subtracting known generated files.
+
+## Roadmap
+
+- [x] `v1.0.0` Subtract a hardcoded list of generated files from PR diffs as POC
+- [ ] Support private repos via GitHub PAT
+- [ ] Make the list based off your `.gitattributes`
+- [ ] Recalculate the 5 diff boxes next to the count
+
+That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
 ## Development
 
