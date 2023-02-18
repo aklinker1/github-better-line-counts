@@ -1,6 +1,8 @@
 <h1><img src="./public/icon-sm.svg" height="24"> GitHub: Better Line Counts</h1>
 
-<!-- <img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store"> -->
+[<img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store">](https://chrome.google.com/webstore/detail/ocfdgncpifmegplaglcnglhioflaimkd) [<img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store">](https://addons.mozilla.org/en-US/firefox/addon/github-better-line-counts/)
+
+![Screenshot](./.github/assets/screenshot.png)
 
 A chrome extension that removes generated files from a PR's diff count.
 
