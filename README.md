@@ -1,6 +1,6 @@
 # GitHub Better Diff
 
-<!-- <img width="200" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img width="200" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store"> -->
+<!-- <img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store"> <img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store"> -->
 
 A chrome extension that removes generated files from a PR's diff count.
 
