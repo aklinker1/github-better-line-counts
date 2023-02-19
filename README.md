@@ -17,7 +17,7 @@ The extension uses the Github API to load information about your PR, then recalc
 ## Roadmap
 
 - [x] `v1.0.0` Subtract a hardcoded list of generated files from PR diffs as POC
-- [ ] Support private repos via GitHub PAT
+- [x] `v1.1.0` Support private repos via GitHub PAT
 - [ ] Make the list based off your `.gitattributes`
 - [ ] Recalculate the 5 diff boxes next to the count
 
