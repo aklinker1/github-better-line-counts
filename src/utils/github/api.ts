@@ -1,7 +1,13 @@
 import { defineProxyService } from "@webext-core/proxy-service";
 import { ofetch, $Fetch } from "ofetch";
 import { extensionStorage } from "../storage";
-import { DiffEntry, DiffSummary, PullRequest, User } from "./types";
+import {
+  DiffEntry,
+  DiffSummary,
+  EncodedFile,
+  PullRequest,
+  User,
+} from "./types";
 import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
@@ -83,11 +89,25 @@ class GithubApi {
    *
    * Eventually, this will be based on your .gitattributes file.
    */
-  private async getGeneratedFiles(options: {
+  private async getGeneratedFiles({
+    ref,
+    repo,
+    owner,
+  }: {
     ref: string;
     repo: string;
     owner: string;
   }): Promise<string[]> {
+    const fetch = await GithubApi.getFetch();
+    const gitAttributes = await fetch<EncodedFile>(
+      `/repos/${owner}/${repo}/contents/.gitattributes`,
+      {
+        query: { ref },
+      }
+    );
+    console.warn(gitAttributes);
+    console.warn(atob(gitAttributes.content));
+
     return [
       "pnpm-lock.yaml",
       "package-lock.json",
