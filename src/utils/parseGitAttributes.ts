@@ -32,7 +32,7 @@ function getGeneratedLines(text: string): string[] {
       // Remove comments
       .map((line) => line.split("#")[0].trim())
       // Remove blank lines
-      .filter((line) => line.includes("linguist-generated="))
+      .filter((line) => line.includes("linguist-generated"))
   );
 }
 

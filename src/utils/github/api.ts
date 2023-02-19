@@ -11,6 +11,7 @@ import {
 import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
+import { GlobPattern, parseGitAttributes } from "../parseGitAttributes";
 
 interface RecalculateResult {
   all: DiffSummary;
@@ -52,7 +53,10 @@ class GithubApi {
   }): Promise<RecalculateResult> {
     const ref = await this.getPrCommit(options);
     const cached = await this.cache.get(ref);
-    if (cached) return cached;
+    if (cached) {
+      console.debug("[recalculateDiff] Using cached result");
+      return cached;
+    }
 
     // 10s sleep for testing loading UI
     // await sleep(10e3);
@@ -69,8 +73,25 @@ class GithubApi {
     const include: DiffEntry[] = [];
     const exclude: DiffEntry[] = [];
     prFiles.forEach((diff) => {
-      const isGenerated = generatedFileGlobs.find((pattern) =>
-        minimatch(diff.filename, pattern)
+      // Find an exclude glob that matches the filename
+      const isExcluded = generatedFileGlobs.find(({ pattern, exclude }) => {
+        exclude &&
+          minimatch(diff.filename, pattern, {
+            nonegate: true,
+            // Allow matching with files that start with a .
+            dot: true,
+          });
+      });
+      if (isExcluded) return;
+
+      // Find a regular glob that matches the filename
+      const isGenerated = generatedFileGlobs.find(
+        ({ pattern, exclude }) =>
+          !exclude &&
+          minimatch(diff.filename, pattern, {
+            // Allow matching with files that start with a .
+            dot: true,
+          })
       );
       if (isGenerated) exclude.push(diff);
       else include.push(diff);
@@ -97,25 +118,27 @@ class GithubApi {
     ref: string;
     repo: string;
     owner: string;
-  }): Promise<string[]> {
+  }): Promise<GlobPattern[]> {
     const fetch = await GithubApi.getFetch();
-    const gitAttributes = await fetch<EncodedFile>(
-      `/repos/${owner}/${repo}/contents/.gitattributes`,
-      {
-        query: { ref },
-      }
-    );
-    console.warn(gitAttributes);
-    console.warn(atob(gitAttributes.content));
 
-    return [
-      "pnpm-lock.yaml",
-      "package-lock.json",
-      "yarn.lock",
-      "**/pnpm-lock.json",
-      "**/package-lock.json",
-      "**/yarn.lock",
-    ];
+    try {
+      const gitAttributes = await fetch<EncodedFile>(
+        `/repos/${owner}/${repo}/contents/.gitattributes`,
+        {
+          query: { ref },
+        }
+      );
+      console.debug(gitAttributes);
+      const text = atob(gitAttributes.content);
+      const globPatterns = parseGitAttributes(text);
+      console.debug("Git Attributes:");
+      console.debug(text);
+      console.debug({ globPatterns });
+      return globPatterns;
+    } catch (err) {
+      console.warn("Error loading gitattributes:", err);
+      return [];
+    }
   }
 
   /**

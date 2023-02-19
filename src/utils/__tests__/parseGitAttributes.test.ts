@@ -45,12 +45,12 @@ describe("parseGitAttributes", () => {
 
   it("should parse multiple lines", () => {
     const content = `
-    /@types/auto-imports.d.ts linguist-generated=true
-    examples.ts              linguist-generated=false
+    *.gen.html linguist-generated
+    pnpm-lock.yaml linguist-generated
     `;
     const expected: GlobPattern[] = [
-      { pattern: "/@types/auto-imports.d.ts", exclude: false },
-      { pattern: "**/examples.ts", exclude: true },
+      { pattern: "**/*.gen.html", exclude: false },
+      { pattern: "**/pnpm-lock.yaml", exclude: false },
     ];
 
     const actual = parseGitAttributes(content);
