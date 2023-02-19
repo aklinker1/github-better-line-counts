@@ -1,5 +1,5 @@
 import { defineProxyService } from "@webext-core/proxy-service";
-import { ofetch, $Fetch } from "ofetch";
+import { ofetch, $Fetch, FetchError } from "ofetch";
 import { extensionStorage } from "../storage";
 import {
   DiffEntry,
@@ -136,7 +136,11 @@ class GithubApi {
       console.debug({ globPatterns });
       return globPatterns;
     } catch (err) {
-      console.warn("Error loading gitattributes:", err);
+      if (err instanceof FetchError && err.statusCode === 404) {
+        console.debug("No .gitattributes file for this repo");
+      } else {
+        console.error("Unknown error while loading gitattributes:", err);
+      }
       return [];
     }
   }
