@@ -21,3 +21,7 @@ export interface DiffSummary {
   deletions: number;
   changes: number;
 }
+
+export interface User {
+  login: string;
+}
