@@ -1,7 +1,7 @@
 import { defineProxyService } from "@webext-core/proxy-service";
 import { ofetch, $Fetch } from "ofetch";
 import { extensionStorage } from "../storage";
-import { DiffEntry, DiffSummary, PullRequest } from "./types";
+import { DiffEntry, DiffSummary, PullRequest, User } from "./types";
 import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
@@ -31,6 +31,14 @@ class GithubApi {
 
   cache = createKeyValueCache<RecalculateResult>("commit-hash-diffs");
 
+  /**
+   * Throws an error if the PAT is not valid
+   */
+  async getUser(): Promise<User> {
+    const fetch = await GithubApi.getFetch();
+    return await fetch<User>("/user");
+  }
+
   async recalculateDiff(options: {
     repo: string;
     owner: string;
@@ -41,7 +49,7 @@ class GithubApi {
     if (cached) return cached;
 
     // 10s sleep for testing loading UI
-    // await new Promise((res) => setTimeout(res, 10e3));
+    // await sleep(10e3);
 
     const [generatedFileGlobs, prFiles] = await Promise.all([
       this.getGeneratedFiles({

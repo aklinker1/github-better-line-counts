@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import WebExtension, { readJsonFile } from "vite-plugin-web-extension";
 import { AutoImport } from "./vite.shared";
+import Vue from "@vitejs/plugin-vue";
+import Icons from "unplugin-icons/vite";
 
 const target = process.env.TARGET === "firefox" ? "firefox" : "chrome";
 
@@ -22,6 +24,8 @@ export default defineConfig({
     sourcemap: "inline",
   },
   plugins: [
+    Icons({ compiler: "vue3" }),
+    Vue(),
     AutoImport(),
     WebExtension({
       manifest: generateManifest,
