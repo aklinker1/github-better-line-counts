@@ -16,7 +16,7 @@ The extension uses the Github API to load information about your PR, then recalc
 
 - [x] `v1.0.0` Subtract a hardcoded list of generated files from PR diffs as POC
 - [x] `v1.1.0` Support private repos via GitHub PAT
-- [ ] Make the list based off your `.gitattributes`
+- [x] `v1.2.0` Make the list based off your `.gitattributes`
 - [ ] Recalculate the 5 diff boxes next to the count
 
 That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
