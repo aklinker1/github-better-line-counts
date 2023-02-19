@@ -1,5 +1,5 @@
 import { defineProxyService } from "@webext-core/proxy-service";
-import { ofetch, $Fetch } from "ofetch";
+import { ofetch, $Fetch, FetchError } from "ofetch";
 import { extensionStorage } from "../storage";
 import { DiffEntry, DiffSummary, PullRequest, User } from "./types";
 import { minimatch } from "minimatch";
@@ -16,6 +16,7 @@ class GithubApi {
   private static async getFetch(): Promise<$Fetch> {
     const headers: Record<string, string> = {
       "X-GitHub-Api-Version": "2022-11-28",
+      Accept: "application/vnd.github+json",
     };
 
     // A PAT is required for private repos
@@ -112,12 +113,7 @@ class GithubApi {
   }): Promise<string> {
     const fetch = await GithubApi.getFetch();
     const fullPr = await fetch<PullRequest>(
-      `/repos/${owner}/${repo}/pulls/${pr}`,
-      {
-        headers: {
-          Accept: "application/vnd.github+json",
-        },
-      }
+      `/repos/${owner}/${repo}/pulls/${pr}`
     );
     console.debug("Full PR:", fullPr);
     return fullPr.head.sha;
@@ -146,12 +142,7 @@ class GithubApi {
     do {
       console.debug("Fetching PR page:", page);
       pageResults = await fetch<DiffEntry[]>(
-        `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`,
-        {
-          headers: {
-            Accept: "application/vnd.github+json",
-          },
-        }
+        `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`
       );
       results.push(...pageResults);
       page++;
