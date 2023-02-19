@@ -51,3 +51,7 @@ Unit tests are written with Vitest.
 ```ts
 pnpm test
 ```
+
+## Publishing an Update
+
+Run `./scripts/publish.sh`.
