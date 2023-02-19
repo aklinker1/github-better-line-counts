@@ -1,10 +1,17 @@
 import { defineProxyService } from "@webext-core/proxy-service";
-import { ofetch, $Fetch } from "ofetch";
+import { ofetch, $Fetch, FetchError } from "ofetch";
 import { extensionStorage } from "../storage";
-import { DiffEntry, DiffSummary, PullRequest, User } from "./types";
+import {
+  DiffEntry,
+  DiffSummary,
+  EncodedFile,
+  PullRequest,
+  User,
+} from "./types";
 import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
+import { GlobPattern, parseGitAttributes } from "../parseGitAttributes";
 
 interface RecalculateResult {
   all: DiffSummary;
@@ -47,7 +54,10 @@ class GithubApi {
   }): Promise<RecalculateResult> {
     const ref = await this.getPrCommit(options);
     const cached = await this.cache.get(ref);
-    if (cached) return cached;
+    if (cached) {
+      console.debug("[recalculateDiff] Using cached result");
+      return cached;
+    }
 
     // 10s sleep for testing loading UI
     // await sleep(10e3);
@@ -64,8 +74,25 @@ class GithubApi {
     const include: DiffEntry[] = [];
     const exclude: DiffEntry[] = [];
     prFiles.forEach((diff) => {
-      const isGenerated = generatedFileGlobs.find((pattern) =>
-        minimatch(diff.filename, pattern)
+      // Find an exclude glob that matches the filename
+      const isExcluded = generatedFileGlobs.find(({ pattern, exclude }) => {
+        exclude &&
+          minimatch(diff.filename, pattern, {
+            nonegate: true,
+            // Allow matching with files that start with a .
+            dot: true,
+          });
+      });
+      if (isExcluded) return;
+
+      // Find a regular glob that matches the filename
+      const isGenerated = generatedFileGlobs.find(
+        ({ pattern, exclude }) =>
+          !exclude &&
+          minimatch(diff.filename, pattern, {
+            // Allow matching with files that start with a .
+            dot: true,
+          })
       );
       if (isGenerated) exclude.push(diff);
       else include.push(diff);
@@ -84,19 +111,39 @@ class GithubApi {
    *
    * Eventually, this will be based on your .gitattributes file.
    */
-  private async getGeneratedFiles(options: {
+  private async getGeneratedFiles({
+    ref,
+    repo,
+    owner,
+  }: {
     ref: string;
     repo: string;
     owner: string;
-  }): Promise<string[]> {
-    return [
-      "pnpm-lock.yaml",
-      "package-lock.json",
-      "yarn.lock",
-      "**/pnpm-lock.json",
-      "**/package-lock.json",
-      "**/yarn.lock",
-    ];
+  }): Promise<GlobPattern[]> {
+    const fetch = await GithubApi.getFetch();
+
+    try {
+      const gitAttributes = await fetch<EncodedFile>(
+        `/repos/${owner}/${repo}/contents/.gitattributes`,
+        {
+          query: { ref },
+        }
+      );
+      console.debug(gitAttributes);
+      const text = atob(gitAttributes.content);
+      const globPatterns = parseGitAttributes(text);
+      console.debug("Git Attributes:");
+      console.debug(text);
+      console.debug({ globPatterns });
+      return globPatterns;
+    } catch (err) {
+      if (err instanceof FetchError && err.statusCode === 404) {
+        console.debug("No .gitattributes file for this repo");
+      } else {
+        console.error("Unknown error while loading gitattributes:", err);
+      }
+      return [];
+    }
   }
 
   /**

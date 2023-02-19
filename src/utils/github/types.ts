@@ -25,3 +25,10 @@ export interface DiffSummary {
 export interface User {
   login: string;
 }
+
+export interface EncodedFile {
+  type: "file";
+  encoding: "base64";
+  path: string;
+  content: string;
+}
