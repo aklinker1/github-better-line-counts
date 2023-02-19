@@ -1,5 +1,5 @@
 import { defineProxyService } from "@webext-core/proxy-service";
-import { ofetch, $Fetch, FetchError } from "ofetch";
+import { ofetch, $Fetch } from "ofetch";
 import { extensionStorage } from "../storage";
 import { DiffEntry, DiffSummary, PullRequest, User } from "./types";
 import { minimatch } from "minimatch";
