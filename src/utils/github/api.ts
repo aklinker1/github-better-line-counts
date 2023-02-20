@@ -79,9 +79,11 @@ class GithubApi {
         return;
       }
 
-      const { attributes } = gitAttributes.evaluate(diff.filename);
-
-      if (attributes["linguist-generated"]) exclude.push(diff);
+      const evaluation = gitAttributes.evaluate(diff.filename);
+      const isGenerated = !!evaluation.attributes["linguist-generated"];
+      console.debug("Is generated?", diff.filename, isGenerated);
+      console.debug("Evaluation:", evaluation);
+      if (isGenerated) exclude.push(diff);
       else include.push(diff);
     });
 
