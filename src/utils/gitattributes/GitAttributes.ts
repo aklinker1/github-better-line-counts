@@ -2,7 +2,7 @@ import { tokenize } from "./tokenize";
 import { Attribute, Node, parseAst, Rule } from "./parseAst";
 import minimatch from "minimatch";
 
-interface FileEvaluation {
+export interface FileEvaluation {
   attributes: Record<string, Attribute["value"]>;
   appliedRules: Rule[];
 }
