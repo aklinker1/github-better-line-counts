@@ -11,7 +11,7 @@ import {
 import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
-import { GlobPattern, parseGitAttributes } from "../parseGitAttributes";
+import { GitAttributes } from "../gitattributes";
 
 interface RecalculateResult {
   all: DiffSummary;
@@ -62,8 +62,8 @@ class GithubApi {
     // 10s sleep for testing loading UI
     // await sleep(10e3);
 
-    const [generatedFileGlobs, prFiles] = await Promise.all([
-      this.getGeneratedFiles({
+    const [gitAttributes, prFiles] = await Promise.all([
+      this.getGitAttributes({
         owner: options.owner,
         repo: options.repo,
         ref,
@@ -74,26 +74,15 @@ class GithubApi {
     const include: DiffEntry[] = [];
     const exclude: DiffEntry[] = [];
     prFiles.forEach((diff) => {
-      // Find an exclude glob that matches the filename
-      const isExcluded = generatedFileGlobs.find(({ pattern, exclude }) => {
-        exclude &&
-          minimatch(diff.filename, pattern, {
-            nonegate: true,
-            // Allow matching with files that start with a .
-            dot: true,
-          });
-      });
-      if (isExcluded) return;
+      if (gitAttributes == null) {
+        include.push(diff);
+        return;
+      }
 
-      // Find a regular glob that matches the filename
-      const isGenerated = generatedFileGlobs.find(
-        ({ pattern, exclude }) =>
-          !exclude &&
-          minimatch(diff.filename, pattern, {
-            // Allow matching with files that start with a .
-            dot: true,
-          })
-      );
+      const evaluation = gitAttributes.evaluate(diff.filename);
+      const isGenerated = !!evaluation.attributes["linguist-generated"];
+      console.debug("Is generated?", diff.filename, isGenerated);
+      console.debug("Evaluation:", evaluation);
       if (isGenerated) exclude.push(diff);
       else include.push(diff);
     });
@@ -111,7 +100,7 @@ class GithubApi {
    *
    * Eventually, this will be based on your .gitattributes file.
    */
-  private async getGeneratedFiles({
+  private async getGitAttributes({
     ref,
     repo,
     owner,
@@ -119,30 +108,30 @@ class GithubApi {
     ref: string;
     repo: string;
     owner: string;
-  }): Promise<GlobPattern[]> {
+  }): Promise<GitAttributes | undefined> {
     const fetch = await GithubApi.getFetch();
 
     try {
-      const gitAttributes = await fetch<EncodedFile>(
+      const encodedFile = await fetch<EncodedFile>(
         `/repos/${owner}/${repo}/contents/.gitattributes`,
         {
           query: { ref },
         }
       );
-      console.debug(gitAttributes);
-      const text = atob(gitAttributes.content);
-      const globPatterns = parseGitAttributes(text);
+      console.debug(encodedFile);
+      const text = atob(encodedFile.content);
+      const gitAttributes = new GitAttributes(text);
       console.debug("Git Attributes:");
-      console.debug(text);
-      console.debug({ globPatterns });
-      return globPatterns;
+      console.debug(gitAttributes.text);
+      console.debug(gitAttributes.ast);
+      return gitAttributes;
     } catch (err) {
       if (err instanceof FetchError && err.statusCode === 404) {
         console.debug("No .gitattributes file for this repo");
       } else {
         console.error("Unknown error while loading gitattributes:", err);
       }
-      return [];
+      return undefined;
     }
   }
 
