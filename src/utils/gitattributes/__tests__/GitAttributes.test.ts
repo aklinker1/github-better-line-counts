@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { GitAttributes, FileEvaluation } from "../GitAttributes";
 
 describe("GitAttributes", () => {
-  it("should parse git's example correctly (https://www.git-scm.com/docs/gitattributes#_examples)", () => {
+  it("should evaluate git's example correctly (https://www.git-scm.com/docs/gitattributes#_examples)", () => {
     const gitattributes = new GitAttributes(`
 
 # Comment 1
@@ -11,7 +11,7 @@ abc      -foo -bar
 *.c      frotz
 
 # Comment 2
-abc     foo bar=true baz
+abc     foo bar baz
 
 a*       foo !bar -baz # Comment 3`);
 
@@ -49,7 +49,7 @@ a*       foo !bar -baz # Comment 3`);
           attributes: [
             { name: "foo", value: true, line: 9, column: 9 },
             { name: "bar", value: true, line: 9, column: 13 },
-            { name: "baz", value: true, line: 9, column: 22 },
+            { name: "baz", value: true, line: 9, column: 17 },
           ],
         },
         {

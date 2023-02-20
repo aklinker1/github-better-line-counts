@@ -2,11 +2,6 @@ import { tokenize } from "./tokenize";
 import { Attribute, Node, parseAst, Rule } from "./parseAst";
 import minimatch from "minimatch";
 
-export interface FileEvaluation {
-  attributes: Record<string, Attribute["value"]>;
-  appliedRules: Rule[];
-}
-
 export class GitAttributes {
   ast: Node[];
 
@@ -43,4 +38,9 @@ export class GitAttributes {
   private getGlobPattern(pattern: string): string {
     return pattern.startsWith("/") ? pattern : `**/${pattern}`;
   }
+}
+
+export interface FileEvaluation {
+  attributes: Record<string, Attribute["value"]>;
+  appliedRules: Rule[];
 }

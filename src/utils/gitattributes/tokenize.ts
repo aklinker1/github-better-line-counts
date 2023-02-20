@@ -6,6 +6,7 @@ export function tokenize(text: string): Token[] {
   let isEscaped = false;
   let escapeCount = 0;
   let isPattern = false;
+
   const newToken = (): Token => ({
     token: "",
     line: lineIndex + 1,
