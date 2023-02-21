@@ -31,7 +31,7 @@
     "unplugin-auto-import": "^0.14.3",
     "unplugin-icons": "^0.15.3",
     "vite": "^3",
-    "vite-plugin-web-extension": "^2",
+    "vite-plugin-web-extension": "^2.0.1",
     "vitest": "^0.28.5",
     "vue": "^3.2.47",
     "webextension-polyfill": "^0.10.0",
