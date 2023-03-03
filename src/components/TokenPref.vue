@@ -34,10 +34,11 @@ const hidden = ref(true);
 <template>
   <li class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <p class="font-bold text-base-content text-xl">Access Private Repos</p>
+      <p class="font-medium text-base-content text-lg">Access Private Repos</p>
       <p class="text-base">
-        You need to enter a GitHub personal access token for the extension to
-        work with private repos.
+        <em>Optional:</em> To load the
+        <code class="text-sm">.gitattributes</code> for private repos, you need
+        to enter a GitHub personal access token.
         <a
           class="link link-secondary"
           href="https://github.com/settings/tokens/new?description=Github%3A%20Better%20Line%20Count&scopes=repo"
