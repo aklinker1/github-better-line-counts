@@ -5,13 +5,6 @@
  * tsx scripts/zip-sources.ts
  * ```
  */
-/**
- * Zip a build output for installing manually or uploading to the stores.
- *
- * ```sh
- * tsx scripts/zip.ts {chrome|firefox}
- * ```
- */
 import { zip as zipDir } from "zip-a-folder";
 import pkg from "../package.json";
 import path from "node:path";
