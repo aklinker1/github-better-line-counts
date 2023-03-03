@@ -1,7 +1,12 @@
 import { Github } from "../utils/github";
+import { extensionStorage } from "../utils/storage";
 
 export function DiffStat(statsPromise: Promise<Github.RecalculateResult>) {
   let stats: Github.RecalculateResult | undefined;
+  const hideGeneratedLineCountPromise = extensionStorage.getItem(
+    "hideGeneratedLineCount"
+  );
+  let hideGeneratedLineCount: boolean | null = null;
 
   const additionsSelector = "#diffstat .color-fg-success";
   const deletionsSelector = "#diffstat .color-fg-danger";
@@ -26,16 +31,21 @@ export function DiffStat(statsPromise: Promise<Github.RecalculateResult>) {
       deletionsElement.style.removeProperty("display");
       deletionsElement.textContent = `−${stats?.include.deletions}`;
 
-      generatedElement.style.color = "var(--color-fg-muted)";
-      generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
-      generatedElement.title = `${stats?.exclude.changes} lines generated`;
-      deletionsElement.replaceWith(deletionsElement, generatedElement);
+      if (!hideGeneratedLineCount) {
+        generatedElement.style.color = "var(--color-fg-muted)";
+        generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
+        generatedElement.title = `${stats?.exclude.changes} lines generated`;
+        deletionsElement.replaceWith(deletionsElement, generatedElement);
+      }
     }
   };
 
   render();
-  statsPromise.then((newStats) => {
-    stats = newStats;
-    render();
-  });
+  Promise.all([statsPromise, hideGeneratedLineCountPromise]).then(
+    ([newStats, newHideGeneratedLineCount]) => {
+      stats = newStats;
+      hideGeneratedLineCount = newHideGeneratedLineCount;
+      render();
+    }
+  );
 }
