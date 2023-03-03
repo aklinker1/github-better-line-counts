@@ -6,18 +6,12 @@ import {
   DiffSummary,
   EncodedFile,
   PullRequest,
+  RecalculateResult,
   User,
 } from "./types";
-import { minimatch } from "minimatch";
 import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
 import { GitAttributes } from "../gitattributes";
-
-interface RecalculateResult {
-  all: DiffSummary;
-  include: DiffSummary;
-  exclude: DiffSummary;
-}
 
 class GithubApi {
   private static async getFetch(): Promise<$Fetch> {

@@ -22,7 +22,7 @@ function replaceCount() {
   const stats = api.recalculateDiff({ pr, owner, repo }).then((diff) => {
     console.debug("Diff:", diff);
     console.debug(`Diff calculated in ${Date.now() - start}ms`);
-    return diff.include;
+    return diff;
   });
 
   DiffStat(stats);

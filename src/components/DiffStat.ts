@@ -1,19 +1,17 @@
 import { Github } from "../utils/github";
 
-export function DiffStat(statsPromise: Promise<Github.DiffSummary>) {
-  let stats: Github.DiffSummary | undefined;
+export function DiffStat(statsPromise: Promise<Github.RecalculateResult>) {
+  let stats: Github.RecalculateResult | undefined;
 
   const additionsSelector = "#diffstat .color-fg-success";
-  const additionsText = () => `+${stats?.additions}`;
-
   const deletionsSelector = "#diffstat .color-fg-danger";
-  const deletionsText = () => `−${stats?.deletions}`;
 
   const render = () => {
     const additionsElement =
       document.querySelector<HTMLElement>(additionsSelector);
     const deletionsElement =
       document.querySelector<HTMLElement>(deletionsSelector);
+    const generatedElement = document.createElement("span");
 
     if (!additionsElement || !deletionsElement) return;
 
@@ -23,10 +21,15 @@ export function DiffStat(statsPromise: Promise<Github.DiffSummary>) {
       deletionsElement.style.display = "none";
     } else {
       additionsElement.style.removeProperty("display");
-      additionsElement.textContent = additionsText();
+      additionsElement.textContent = `+${stats?.include.additions}`;
 
       deletionsElement.style.removeProperty("display");
-      deletionsElement.textContent = deletionsText();
+      deletionsElement.textContent = `−${stats?.include.deletions}`;
+
+      generatedElement.style.color = "var(--color-fg-muted)";
+      generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
+      generatedElement.title = `${stats?.exclude.changes} lines generated`;
+      deletionsElement.replaceWith(deletionsElement, generatedElement);
     }
   };
 
