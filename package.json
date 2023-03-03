@@ -2,7 +2,7 @@
   "name": "GitHub: Better Line Counts",
   "description": "Remove generated files from the total line counts on GitHub PRs",
   "private": true,
-  "version": "1.2.2",
+  "version": "1.3.0",
   "type": "module",
   "scripts": {
     "compile": "tsc --noEmit",
