@@ -2,11 +2,17 @@
 
 [<img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store">](https://chrome.google.com/webstore/detail/ocfdgncpifmegplaglcnglhioflaimkd) [<img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store">](https://addons.mozilla.org/en-US/firefox/addon/github-better-line-counts/)
 
-A chrome extension that removes generated files (based on the repo's `.gitattributes` file) from a PR's line count.
+A chrome extension that removes generated files from a PR's line count.
 
 ### How does this work?
 
-The extension uses the Github API to load information about your PR, then recalculates the diff, subtracting known generated files.
+The extension uses the Github API to load information about your PR then recalculates the diff, subtracting generated files listed in the repo's `.gitattributes` file.
+
+```
+pnpm-lock.yaml  linguist-generated
+vendor/**/*     linguist-generated
+*.gen.html      linguist-generated
+```
 
 ## Roadmap
 
