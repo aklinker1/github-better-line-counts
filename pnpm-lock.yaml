@@ -12,6 +12,7 @@ specifiers:
   autoprefixer: ^10.4.13
   cross-env: ^7.0.3
   daisyui: ^2.50.1
+  fast-glob: ^3.2.12
   jsdom: ^21.1.0
   minimatch: ^6.2.0
   ofetch: ^1.0.1
@@ -45,6 +46,7 @@ devDependencies:
   '@vitejs/plugin-vue': 3.2.0_vite@3.2.5+vue@3.2.47
   autoprefixer: 10.4.13_postcss@8.4.21
   cross-env: 7.0.3
+  fast-glob: 3.2.12
   jsdom: 21.1.0
   postcss: 8.4.21
   publish-browser-extension: 1.1.4

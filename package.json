@@ -22,6 +22,7 @@
     "@vitejs/plugin-vue": "^3",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
+    "fast-glob": "^3.2.12",
     "jsdom": "^21.1.0",
     "postcss": "^8.4.21",
     "publish-browser-extension": "^1.1.4",
