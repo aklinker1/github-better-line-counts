@@ -19,9 +19,9 @@ vendor/**/*     linguist-generated
 - [x] `v1.0.0` Subtract a hardcoded list of generated files from PR diffs as POC
 - [x] `v1.1.0` Support private repos via GitHub PAT
 - [x] `v1.2.0` Make the list based off your `.gitattributes`
-- [x] `v1.3.0` Show the number of lines counted as generated next to additions and subtractions
+- [x] `v1.3.0` Show the number of generated lines next to additions and subtractions
 - [ ] Recalculate the 5 diff boxes next to the count
-- [ ] Add third count for generated files with tooltip dropdown
+- [ ] Add a dropdown that lists the files that were counted in the generated line count
 
 That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
