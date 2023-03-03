@@ -1,51 +1,51 @@
 import { Github } from "../utils/github";
 import { extensionStorage } from "../utils/storage";
 
-export function DiffStat(statsPromise: Promise<Github.RecalculateResult>) {
-  let stats: Github.RecalculateResult | undefined;
+export async function DiffStat(
+  statsPromise: Promise<Github.RecalculateResult>
+) {
   const hideGeneratedLineCountPromise = extensionStorage.getItem(
     "hideGeneratedLineCount"
   );
-  let hideGeneratedLineCount: boolean | null = null;
 
-  const additionsSelector = "#diffstat .color-fg-success";
-  const deletionsSelector = "#diffstat .color-fg-danger";
+  // Render loading UI while calculating stats
 
-  const render = () => {
-    const additionsElement =
-      document.querySelector<HTMLElement>(additionsSelector);
-    const deletionsElement =
-      document.querySelector<HTMLElement>(deletionsSelector);
+  let additionsElement = getAdditionsElement();
+  let deletionsElement = getDeletionsElement();
+
+  if (additionsElement) additionsElement.style.display = "none";
+  if (deletionsElement) deletionsElement.style.display = "none";
+
+  // Wait for calculation and settings to load
+
+  const [stats, hideGeneratedLineCount] = await Promise.all([
+    statsPromise,
+    hideGeneratedLineCountPromise,
+  ]);
+
+  // Render new counts
+
+  additionsElement = getAdditionsElement();
+  deletionsElement = getDeletionsElement();
+  if (!additionsElement || !deletionsElement) return;
+
+  additionsElement.style.removeProperty("display");
+  additionsElement.textContent = `+${stats?.include.additions}`;
+
+  deletionsElement.style.removeProperty("display");
+  deletionsElement.textContent = `−${stats?.include.deletions}`;
+
+  if (!hideGeneratedLineCount) {
     const generatedElement = document.createElement("span");
-
-    if (!additionsElement || !deletionsElement) return;
-
-    if (stats == null) {
-      additionsElement.style.display = "none";
-
-      deletionsElement.style.display = "none";
-    } else {
-      additionsElement.style.removeProperty("display");
-      additionsElement.textContent = `+${stats?.include.additions}`;
-
-      deletionsElement.style.removeProperty("display");
-      deletionsElement.textContent = `−${stats?.include.deletions}`;
-
-      if (!hideGeneratedLineCount) {
-        generatedElement.style.color = "var(--color-fg-muted)";
-        generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
-        generatedElement.title = `${stats?.exclude.changes} lines generated`;
-        deletionsElement.replaceWith(deletionsElement, generatedElement);
-      }
-    }
-  };
-
-  render();
-  Promise.all([statsPromise, hideGeneratedLineCountPromise]).then(
-    ([newStats, newHideGeneratedLineCount]) => {
-      stats = newStats;
-      hideGeneratedLineCount = newHideGeneratedLineCount;
-      render();
-    }
-  );
+    generatedElement.style.color = "var(--color-fg-muted)";
+    generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
+    generatedElement.title = `${stats?.exclude.changes} lines generated`;
+    deletionsElement.replaceWith(deletionsElement, generatedElement);
+  }
 }
+
+const getAdditionsElement = () =>
+  document.querySelector<HTMLElement>("#diffstat .color-fg-success");
+
+const getDeletionsElement = () =>
+  document.querySelector<HTMLElement>("#diffstat .color-fg-danger");
