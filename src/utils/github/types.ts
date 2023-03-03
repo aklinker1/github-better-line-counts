@@ -22,6 +22,12 @@ export interface DiffSummary {
   changes: number;
 }
 
+export interface RecalculateResult {
+  all: DiffSummary;
+  include: DiffSummary;
+  exclude: DiffSummary;
+}
+
 export interface User {
   login: string;
 }
