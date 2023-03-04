@@ -1,29 +1,13 @@
 <script lang="ts" setup>
-import { getGithubApi, Github } from "../utils/github";
 import { extensionStorage } from "../utils/storage";
 import IMdiEye from "~icons/mdi/eye";
 import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
-
-const api = getGithubApi();
+import useGithubUserQuery from "../composition/useGithubUserQuery";
 
 const token = ref(await extensionStorage.getItem("githubPat"));
+watch(token, () => extensionStorage.setItem("githubPat", token.value));
 
-const {
-  execute: saveToken,
-  state: user,
-  error,
-  isLoading,
-} = useAsyncState<Github.User | undefined>(
-  async () => {
-    await extensionStorage.setItem("githubPat", token.value);
-
-    if (!token.value) return;
-    return await api.getUser();
-  },
-  undefined,
-  { immediate: true }
-);
-watch(token, () => saveToken());
+const { state: user, error, isLoading } = useGithubUserQuery(token);
 
 const hidden = ref(true);
 </script>
@@ -63,14 +47,16 @@ const hidden = ref(true);
     </div>
 
     <template v-if="token">
-      <p v-if="isLoading">Checking token...</p>
-      <p v-else-if="error" class="flex items-center gap-2">
-        <span class="badge badge-error">Token is invalid</span>
-        <span class="text-base">{{ error }}</span>
+      <p v-if="error" class="flex items-center gap-2">
+        <span class="badge badge-error shrink-0">Token is invalid</span>
+        <span class="text-sm truncate">{{ error }}</span>
+      </p>
+      <p v-else-if="isLoading || user == null" class="badge badge-ghost">
+        Checking token...
       </p>
       <p v-else class="flex items-center gap-2">
-        <span class="badge badge-success">Token is valid</span>
-        <span class="text-base">Username: {{ user?.login }}</span>
+        <span class="badge badge-success shrink-0">Token is valid</span>
+        <span class="text-sm truncate">Username: {{ user?.login }}</span>
       </p>
     </template>
   </li>

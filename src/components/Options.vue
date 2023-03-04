@@ -5,7 +5,12 @@ import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
 
 <template>
   <ul class="space-y-4">
-    <Suspense><TokenPref /></Suspense>
-    <Suspense><ShowGeneratedCountPref /></Suspense>
+    <Suspense>
+      <TokenPref />
+    </Suspense>
+
+    <Suspense>
+      <ShowGeneratedCountPref />
+    </Suspense>
   </ul>
 </template>
