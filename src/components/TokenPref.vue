@@ -6,10 +6,7 @@ import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
 
 const api = getGithubApi();
 
-const { state: token } = useAsyncState(
-  extensionStorage.getItem("githubPat").then((res) => res ?? ""),
-  ""
-);
+const token = ref(await extensionStorage.getItem("githubPat"));
 
 const {
   execute: saveToken,

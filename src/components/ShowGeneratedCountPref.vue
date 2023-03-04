@@ -1,13 +1,8 @@
 <script lang="ts" setup>
-import { extensionTypes } from "webextension-polyfill";
-import { getGithubApi, Github } from "../utils/github";
 import { extensionStorage } from "../utils/storage";
 
-const api = getGithubApi();
-
-const { state: hideLineCount, isReady } = useAsyncState(
-  extensionStorage.getItem("hideGeneratedLineCount"),
-  null
+const hideLineCount = ref(
+  await extensionStorage.getItem("hideGeneratedLineCount")
 );
 
 function toggle() {
@@ -26,7 +21,6 @@ function toggle() {
         <input
           class="checkbox checkbox-primary checkbox-sm ml-2"
           type="checkbox"
-          :disabled="!isReady"
           :checked="!hideLineCount"
           @change="toggle"
         />
