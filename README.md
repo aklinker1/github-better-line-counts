@@ -54,6 +54,25 @@ Unit tests are written with Vitest.
 pnpm test
 ```
 
-## Publishing an Update
+## Release an Update
 
-Run `./scripts/publish.sh`.
+Eventually, I'll create a GitHub action for this. But for now, you can release an update by:
+
+1. Create a file, `.env.submit`, with the following content:
+
+   ```sh
+   # Follow: https://developer.chrome.com/docs/webstore/using_webstore_api/
+   CHROME_EXTENSION_ID="..."
+   CHROME_CLIENT_ID="..."
+   CHROME_CLIENT_SECRET="..."
+   CHROME_REFRESH_TOKEN="..."
+
+   # Follow: https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#web-ext-sign
+   FIREFOX_EXTENSION_ID="..."
+   FIREFOX_JWT_ISSUER="..."
+   FIREFOX_JWT_SECRET="..."
+   ```
+
+2. _Optional_: Run `pnpm submit:dry` to test if your config is correct.
+
+3. Run `pnpm submit` to submit new versions to the stores.

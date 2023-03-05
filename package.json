@@ -17,8 +17,8 @@
     "zip:firefox": "tsx scripts/zip.ts firefox",
     "zip:sources": "tsx scripts/zip-sources.ts",
     "prepare": "husky install",
-    "release": "env-cmd -f ./.env.publish ./scripts/release.sh",
-    "release:dry": "pnpm release --dry-run"
+    "submit": "env-cmd -f ./.env.submit ./scripts/submit.sh",
+    "submit:dry": "pnpm submit --dry-run"
   },
   "devDependencies": {
     "@aklinker1/generate-changelog": "^1.1.2",
