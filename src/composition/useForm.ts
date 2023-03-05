@@ -7,10 +7,7 @@ export function useForm<T extends Record<string, any>>(
   const resetState = reactive<T>({ ...initialState });
   const state = reactive<T>({ ...initialState });
 
-  const hasChanges = computed(() => {
-    console.log("state", toRaw(state), "resetState", toRaw(resetState));
-    return !isDeepEqual(state, resetState);
-  });
+  const hasChanges = computed(() => !isDeepEqual(state, resetState));
 
   return {
     state,
