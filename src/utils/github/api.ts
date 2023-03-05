@@ -110,7 +110,7 @@ class GithubApi {
         `/repos/${owner}/${repo}/contents/.gitattributes`,
         {
           query: { ref },
-        }
+        },
       );
       console.debug(encodedFile);
       const text = atob(encodedFile.content);
@@ -143,7 +143,7 @@ class GithubApi {
   }): Promise<string> {
     const fetch = await GithubApi.getFetch();
     const fullPr = await fetch<PullRequest>(
-      `/repos/${owner}/${repo}/pulls/${pr}`
+      `/repos/${owner}/${repo}/pulls/${pr}`,
     );
     console.debug("Full PR:", fullPr);
     return fullPr.head.sha;
@@ -172,7 +172,7 @@ class GithubApi {
     do {
       console.debug("Fetching PR page:", page);
       pageResults = await fetch<DiffEntry[]>(
-        `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`
+        `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`,
       );
       results.push(...pageResults);
       page++;
@@ -199,5 +199,5 @@ class GithubApi {
 
 export const [registerGithubApi, getGithubApi] = defineProxyService(
   "GithubApi",
-  () => new GithubApi()
+  () => new GithubApi(),
 );

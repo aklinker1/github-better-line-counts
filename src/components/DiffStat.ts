@@ -5,10 +5,10 @@ import { Spinner } from "./Spinner";
 const greyColor = "var(--color-fg-muted)";
 
 export async function DiffStat(
-  statsPromise: Promise<Github.RecalculateResult>
+  statsPromise: Promise<Github.RecalculateResult>,
 ) {
   const hideGeneratedLineCountPromise = extensionStorage.getItem(
-    "hideGeneratedLineCount"
+    "hideGeneratedLineCount",
   );
 
   // Render loading UI while calculating stats

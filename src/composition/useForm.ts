@@ -2,7 +2,7 @@ import isDeepEqual from "fast-deep-equal";
 
 export function useForm<T extends Record<string, any>>(
   initialState: T,
-  saveChanges: (newState: T) => void | Promise<void>
+  saveChanges: (newState: T) => void | Promise<void>,
 ) {
   const resetState = reactive<T>({ ...initialState });
   const state = reactive<T>({ ...initialState });

@@ -23,7 +23,7 @@ interface KeyValueCache<TValue> {
  * Create a cache that stores a set of key-value pairs in extension storage.
  */
 export function createKeyValueCache<TValue>(
-  name: string
+  name: string,
 ): KeyValueCache<TValue> {
   const storageKey = `@cache/${name}`;
 
@@ -36,7 +36,7 @@ export function createKeyValueCache<TValue>(
 
   const isValid = (
     cachedValue: CachedValue<any> | undefined,
-    now: number
+    now: number,
   ): cachedValue is CachedValue<any> =>
     !!cachedValue && cachedValue.expiresAt > now;
 

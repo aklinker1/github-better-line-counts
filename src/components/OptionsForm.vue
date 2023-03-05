@@ -6,17 +6,17 @@ import { extensionStorage } from "../utils/storage";
 const { state, hasChanges, reset, saveChanges } = useForm(
   {
     hideGeneratedLineCount: !!(await extensionStorage.getItem(
-      "hideGeneratedLineCount"
+      "hideGeneratedLineCount",
     )),
     githubPat: (await extensionStorage.getItem("githubPat")) ?? "",
   },
   async (newState) => {
     await extensionStorage.setItem(
       "hideGeneratedLineCount",
-      newState.hideGeneratedLineCount
+      newState.hideGeneratedLineCount,
     );
     await extensionStorage.setItem("githubPat", newState.githubPat);
-  }
+  },
 );
 </script>
 

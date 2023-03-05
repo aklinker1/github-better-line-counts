@@ -12,6 +12,6 @@ export default function (token: Ref<string | null>) {
     },
     {
       retry: false,
-    }
+    },
   );
 }

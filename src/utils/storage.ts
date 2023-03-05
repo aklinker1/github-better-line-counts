@@ -12,5 +12,5 @@ export interface ExtensionStorageSchema {
 }
 
 export const extensionStorage = defineExtensionStorage<ExtensionStorageSchema>(
-  browser.storage.local
+  browser.storage.local,
 );
