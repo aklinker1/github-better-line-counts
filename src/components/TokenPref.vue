@@ -1,14 +1,21 @@
 <script lang="ts" setup>
-import { extensionStorage } from "../utils/storage";
 import IMdiEye from "~icons/mdi/eye";
 import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
 
-const token = ref(await extensionStorage.getItem("githubPat"));
-watch(token, () => extensionStorage.setItem("githubPat", token.value));
+const props = defineProps<{
+  githubPat: string;
+}>();
+
+const emits = defineEmits<{
+  (event: "update:githubPat", newToken: string): void;
+}>();
+
+const token = toRef(props, "githubPat");
+watch(token, (newToken) => emits("update:githubPat", newToken));
 
 const { state: user, error, isLoading } = useGithubUserQuery(token);
 
-const hidden = ref(true);
+const tokenHidden = ref(true);
 </script>
 
 <template>
@@ -28,21 +35,22 @@ const hidden = ref(true);
         to create one.
       </p>
     </div>
-    <div class="input-group input-group-sm">
+    <div class="input-group">
       <input
-        class="input input-bordered input-sm w-full"
+        class="input input-bordered w-full"
         placeholder="Personal access token..."
         v-model="token"
-        :type="hidden ? 'password' : 'text'"
+        :type="tokenHidden ? 'password' : 'text'"
       />
-      <button
-        class="btn btn-sm"
-        :class="{ 'btn-error': !hidden }"
-        @click="hidden = !hidden"
+      <div
+        class="btn"
+        role="button"
+        :class="{ 'btn-error': !tokenHidden }"
+        @click="tokenHidden = !tokenHidden"
       >
-        <i-mdi-eye-off-outline v-if="hidden" />
+        <i-mdi-eye-off-outline v-if="tokenHidden" />
         <i-mdi-eye v-else />
-      </button>
+      </div>
     </div>
 
     <template v-if="token">

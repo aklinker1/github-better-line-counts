@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-import { extensionStorage } from "../utils/storage";
+const props = defineProps<{
+  hideGeneratedLineCount: boolean;
+}>();
 
-const hideLineCount = ref(
-  await extensionStorage.getItem("hideGeneratedLineCount")
-);
+const emits = defineEmits<{
+  (event: "update:hideGeneratedLineCount", newHide: boolean): void;
+}>();
+
+const hideLineCount = toRef(props, "hideGeneratedLineCount");
 
 function toggle() {
   hideLineCount.value = !hideLineCount.value;
-  extensionStorage.setItem("hideGeneratedLineCount", hideLineCount.value);
+  emits("update:hideGeneratedLineCount", hideLineCount.value);
 }
 </script>
 
