@@ -30,3 +30,5 @@ src/@types/auto-imports.d.ts
 
 # Environment
 .webextrc*
+.env
+.env.*

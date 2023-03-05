@@ -1,0 +1,12 @@
+.github-better-line-count-spinner {
+    animation: github-better-line-count-spin 2s infinite linear;
+}
+
+@keyframes github-better-line-count-spin {
+    0% {
+        transform:rotate(0deg)
+    }
+    100% {
+        transform:rotate(359deg)
+    }
+}

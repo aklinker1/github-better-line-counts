@@ -1,5 +1,8 @@
 import { Github } from "../utils/github";
 import { extensionStorage } from "../utils/storage";
+import { Spinner } from "./Spinner";
+
+const greyColor = "var(--color-fg-muted)";
 
 export async function DiffStat(
   statsPromise: Promise<Github.RecalculateResult>
@@ -10,11 +13,13 @@ export async function DiffStat(
 
   // Render loading UI while calculating stats
 
-  let additionsElement = getAdditionsElement();
-  let deletionsElement = getDeletionsElement();
+  let deletions = getDeletionsElement();
+  if (!deletions) return;
 
-  if (additionsElement) additionsElement.style.display = "none";
-  if (deletionsElement) deletionsElement.style.display = "none";
+  const spinner = Spinner(greyColor);
+  if (deletions) {
+    deletions.replaceWith(deletions, spinner);
+  }
 
   // Wait for calculation and settings to load
 
@@ -25,22 +30,18 @@ export async function DiffStat(
 
   // Render new counts
 
-  additionsElement = getAdditionsElement();
-  deletionsElement = getDeletionsElement();
-  if (!additionsElement || !deletionsElement) return;
+  let additions = getAdditionsElement();
+  if (!additions) return;
 
-  additionsElement.style.removeProperty("display");
-  additionsElement.textContent = `+${stats?.include.additions}`;
-
-  deletionsElement.style.removeProperty("display");
-  deletionsElement.textContent = `−${stats?.include.deletions}`;
+  additions.textContent = `+${stats?.include.additions}`;
+  deletions.textContent = `−${stats?.include.deletions}`;
 
   if (!hideGeneratedLineCount) {
-    const generatedElement = document.createElement("span");
-    generatedElement.style.color = "var(--color-fg-muted)";
-    generatedElement.textContent = ` ⌁${stats?.exclude.changes}`;
-    generatedElement.title = `${stats?.exclude.changes} lines generated`;
-    deletionsElement.replaceWith(deletionsElement, generatedElement);
+    const generated = document.createElement("span");
+    generated.style.color = greyColor;
+    generated.textContent = ` ⌁${stats?.exclude.changes}`;
+    generated.title = `${stats?.exclude.changes} lines generated`;
+    spinner.replaceWith(generated);
   }
 }
 
