@@ -13,7 +13,7 @@ const emits = defineEmits<{
 const token = toRef(props, "githubPat");
 watch(token, (newToken) => emits("update:githubPat", newToken));
 
-const { state: user, error, isLoading } = useGithubUserQuery(token);
+const { data: user, error, isLoading } = useGithubUserQuery(token);
 
 const tokenHidden = ref(true);
 </script>

@@ -1,15 +1,17 @@
 import { getGithubApi, Github } from "../utils/github";
+import { QueryKeys } from "../utils/QueryKeys";
 
 export default function (token: Ref<string | null>) {
   const api = getGithubApi();
 
-  async function getUser(): Promise<Github.User | undefined> {
-    if (!token.value) return;
-    return await api.getUser();
-  }
-
-  const query = useAsyncState(getUser, undefined, { immediate: true });
-
-  watch(token, () => query.execute());
-  return query;
+  return useQuery<Github.User | undefined>(
+    [QueryKeys.GithubUser, token],
+    () => {
+      if (!token.value) return;
+      return api.getUser(token.value);
+    },
+    {
+      retry: false,
+    }
+  );
 }

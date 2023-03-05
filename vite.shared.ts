@@ -10,6 +10,9 @@ export function AutoImport() {
       {
         "webextension-polyfill": [["*", "browser"]],
       },
+      {
+        "vue-query": ["useMutation", "useQuery", "useQueryClient"],
+      },
     ],
   });
 }

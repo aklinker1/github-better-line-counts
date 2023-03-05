@@ -1,4 +1,5 @@
 import { createApp } from "vue";
 import Options from "./pages/Options.vue";
+import { VueQueryPlugin } from "vue-query";
 
-createApp(Options).mount(document.body);
+createApp(Options).use(VueQueryPlugin).mount(document.body);

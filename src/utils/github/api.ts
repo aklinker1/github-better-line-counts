@@ -14,7 +14,7 @@ import { HOUR } from "../time";
 import { GitAttributes } from "../gitattributes";
 
 class GithubApi {
-  private static async getFetch(): Promise<$Fetch> {
+  private static async getFetch(token?: string | null): Promise<$Fetch> {
     const headers: Record<string, string> = {
       "X-GitHub-Api-Version": "2022-11-28",
       Accept: "application/vnd.github+json",
@@ -22,7 +22,7 @@ class GithubApi {
 
     // A PAT is required for private repos
     // https://github.com/settings/tokens/new?description=Simple%20GitHub&20Diffs&scopes=repo
-    const token = await extensionStorage.getItem("githubPat");
+    token ??= await extensionStorage.getItem("githubPat");
     if (token) headers.Authorization = `Bearer ${token}`;
 
     return ofetch.create({
@@ -36,8 +36,8 @@ class GithubApi {
   /**
    * Throws an error if the PAT is not valid
    */
-  async getUser(): Promise<User> {
-    const fetch = await GithubApi.getFetch();
+  async getUser(token: string): Promise<User> {
+    const fetch = await GithubApi.getFetch(token);
     return await fetch<User>("/user");
   }
 
