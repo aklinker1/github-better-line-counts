@@ -16,15 +16,19 @@
     "zip": "tsx scripts/zip.ts chrome",
     "zip:firefox": "tsx scripts/zip.ts firefox",
     "zip:sources": "tsx scripts/zip-sources.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "submit": "env-cmd -f ./.env.submit ./scripts/submit.sh",
+    "submit:dry": "pnpm submit --dry-run"
   },
   "devDependencies": {
+    "@aklinker1/generate-changelog": "^1.1.2",
     "@iconify/json": "^2.2.24",
     "@types/jsdom": "^21.1.0",
     "@types/webextension-polyfill": "^0.10.0",
     "@vitejs/plugin-vue": "^3",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "fast-glob": "^3.2.12",
     "husky": "^8.0.3",
     "jsdom": "^21.1.0",
