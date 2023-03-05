@@ -24,21 +24,24 @@ heading "Generate Changelog"
 CHANGES=$(pnpm generate-changelog)
 SKIPPED=$(echo "$CHANGES" | jq -r '.skipped')
 echo "Next version: $NEXT_VERSION"
-# if [[ "$SKIPPED" == "true" ]]; then
-#     echo "No changes"
-#     exit
-# fi
+if [[ "$SKIPPED" == "true" ]]; then
+    echo "No changes"
+    exit
+fi
 
 CHANGELOG=$(echo "$CHANGES" | jq -r '.changelog')
 NEXT_TAG=$(echo "$CHANGES" | jq -r '.nextTag')         # Includes v (ex: v1.2.1)
 NEXT_VERSION=$(echo "$CHANGES" | jq -r '.nextVersion') # Excludes v (ex: 1.2.1)
-echo "Changelog: $CHANGELOG"
+echo "---"
+echo -e "Changelog: \n---\n$CHANGELOG\n---"
 echo "Next tag: $NEXT_TAG"
+echo "Next version: $NEXT_VERSION"
 
 # Bump Version
 
 heading "Bump version"
 cat <<< $(jq ".version=\"$NEXT_VERSION\"" package.json) > package.json
+pnpm prettier -w package.json
 
 # Checks
 
@@ -51,9 +54,13 @@ pnpm compile
 # Commit Changes
 
 heading "Commit Changes"
-git add package.json
-# git commit -m "chore(release): $NEXT_TAG"
-# git tag "$NEXT_TAG"
+if [[ "$1" == "--dry-run" ]]; then 
+    echo "Skipping commit for dry run"
+else
+    git add package.json
+    git commit -m "chore(release): $NEXT_TAG"
+    git tag "$NEXT_TAG"
+fi
 
 # Zip everything up
 
@@ -69,7 +76,7 @@ SOURCES_ZIP="artifacts/github-better-diffs-$NEXT_TAG-sources.zip"
 # Publish
 
 heading "Publishing to Stores"
-pnpm publish-extension --dry-run \
+pnpm publish-extension $1 \
     --chrome-zip "$CHROME_ZIP" \
     --firefox-zip "$FIREFOX_ZIP" \
     --firefox-sources-zip "$SOURCES_ZIP"
@@ -77,7 +84,10 @@ pnpm publish-extension --dry-run \
 # Create Release
 
 heading "Create GitHub Release"
-# git push
-# git push --tags
-# gh release create "$NEXT_TAG" "$CHROME_ZIP" "$FIREFOX_ZIP" "$SOURCES_ZIP" --notes "$CHANGELOG"
-echo "gh release create '$NEXT_TAG' '$CHROME_ZIP' '$FIREFOX_ZIP' '$SOURCES_ZIP' --notes '$CHANGELOG'"
+if [[ "$1" == "--dry-run" ]]; then
+    echo "gh release create '$NEXT_TAG' '$CHROME_ZIP' '$FIREFOX_ZIP' '$SOURCES_ZIP' --notes '$CHANGELOG'"
+else
+    git push
+    git push --tags
+    gh release create "$NEXT_TAG" "$CHROME_ZIP" "$FIREFOX_ZIP" "$SOURCES_ZIP" --notes "$CHANGELOG"
+fi

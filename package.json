@@ -17,7 +17,8 @@
     "zip:firefox": "tsx scripts/zip.ts firefox",
     "zip:sources": "tsx scripts/zip-sources.ts",
     "prepare": "husky install",
-    "release": "env-cmd -f ./.env.publish ./scripts/release.sh"
+    "release": "env-cmd -f ./.env.publish ./scripts/release.sh",
+    "release:dry": "pnpm release --dry-run"
   },
   "devDependencies": {
     "@aklinker1/generate-changelog": "^1.1.2",
@@ -27,11 +28,11 @@
     "@vitejs/plugin-vue": "^3",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "fast-glob": "^3.2.12",
     "husky": "^8.0.3",
     "jsdom": "^21.1.0",
     "postcss": "^8.4.21",
-    "publish-browser-extension": "^1.1.4",
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
     "publish-browser-extension": "^1.1.4",
