@@ -2,7 +2,6 @@
 import { extensionStorage } from "../utils/storage";
 import IMdiEye from "~icons/mdi/eye";
 import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
-import useGithubUserQuery from "../composition/useGithubUserQuery";
 
 const token = ref(await extensionStorage.getItem("githubPat"));
 watch(token, () => extensionStorage.setItem("githubPat", token.value));
