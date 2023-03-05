@@ -45,6 +45,7 @@
     "vite-plugin-web-extension": "^2.0.1",
     "vitest": "^0.28.5",
     "vue": "^3.2.47",
+    "web-ext": "^7.5.0",
     "webextension-polyfill": "^0.10.0",
     "zip-a-folder": "^1.1.5"
   },
