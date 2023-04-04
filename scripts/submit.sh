@@ -56,6 +56,7 @@ pnpm compile
 heading "Commit Changes"
 if [[ "$1" == "--dry-run" ]]; then 
     echo "Skipping commit for dry run"
+    git checkout -- package.json
 else
     git add package.json
     git commit -m "chore(release): $NEXT_TAG"
