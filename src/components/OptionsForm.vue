@@ -1,15 +1,22 @@
 <script lang="ts" setup>
 import TokenPref from "./TokenPref.vue";
 import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
-import { extensionStorage } from "../utils/storage";
+import CustomListsPref from "./CustomListsPref.vue";
+import { CustomLists, extensionStorage } from "../utils/storage";
 import { commitHashDiffsCache } from "../utils/global-cache";
 
-const { state, hasChanges, reset, saveChanges } = useForm(
+const { state, hasChanges, reset, saveChanges } = useForm<{
+  hideGeneratedLineCount: boolean;
+  githubPat: string;
+  customLists: CustomLists;
+}>(
   {
     hideGeneratedLineCount: !!(await extensionStorage.getItem(
       "hideGeneratedLineCount",
     )),
     githubPat: (await extensionStorage.getItem("githubPat")) ?? "",
+    // This value is set when extension is installed.
+    customLists: (await extensionStorage.getItem("customLists"))!,
   },
   async (newState) => {
     await extensionStorage.setItem(
@@ -17,6 +24,7 @@ const { state, hasChanges, reset, saveChanges } = useForm(
       newState.hideGeneratedLineCount,
     );
     await extensionStorage.setItem("githubPat", newState.githubPat);
+    await extensionStorage.setItem("customLists", newState.customLists);
 
     // Clear cache
     await commitHashDiffsCache.clear();
@@ -25,11 +33,13 @@ const { state, hasChanges, reset, saveChanges } = useForm(
 </script>
 
 <template>
-  <form class="flex flex-col gap-4 pb-20" @submit.prevent="saveChanges">
+  <form class="flex flex-col gap-8 pb-20" @submit.prevent="saveChanges">
     <TokenPref v-model:github-pat="state.githubPat" />
     <ShowGeneratedCountPref
       v-model:hide-generated-line-count="state.hideGeneratedLineCount"
     />
+
+    <CustomListsPref v-model:custom-lists="state.customLists" />
 
     <div
       class="fixed inset-x-0 bottom-0 bg-base-100 flex gap-4 p-4 border-t border-neutral border-opacity-10"
