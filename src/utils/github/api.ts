@@ -57,13 +57,14 @@ class GithubApi {
     // 10s sleep for testing loading UI
     // await sleep(10e3);
 
-    const [gitAttributes, prFiles] = await Promise.all([
+    const [gitAttributes, prFiles, settingsPatterns] = await Promise.all([
       this.getGitAttributes({
         owner: options.owner,
         repo: options.repo,
         ref,
       }),
       this.getPrFiles(options),
+      this.getPatternsFromSettings(),
     ]);
 
     const include: DiffEntry[] = [];
@@ -74,10 +75,23 @@ class GithubApi {
         return;
       }
 
-      const evaluation = gitAttributes.evaluate(diff.filename);
-      const isGenerated = !!evaluation.attributes["linguist-generated"];
-      console.debug("Is generated?", diff.filename, isGenerated);
-      console.debug("Evaluation:", evaluation);
+      const gitAttributesEval = gitAttributes.evaluate(diff.filename);
+      const matchingSettings = settingsPatterns.filter(({ pattern }) =>
+        minimatch(diff.filename, pattern),
+      );
+      const isGitAttributesGenerated =
+        !!gitAttributesEval.attributes["linguist-generated"];
+      const isSettingsGenerated = matchingSettings.length > 0;
+      const isGenerated = isGitAttributesGenerated || isSettingsGenerated;
+
+      console.debug("Is generated?", diff.filename, {
+        isGitAttributesGenerated,
+        isSettingsGenerated,
+        isGenerated,
+      });
+      console.debug("Git attributes evaluation:", gitAttributesEval);
+      console.debug("Matched settings:", isSettingsGenerated);
+
       if (isGenerated) exclude.push(diff);
       else include.push(diff);
     });
@@ -90,6 +104,7 @@ class GithubApi {
     await this.cache.set(ref, result, 2 * HOUR);
     return result;
   }
+
   /**
    * Returns a list of generated files that should be excluded from diff counts.
    *
@@ -128,6 +143,19 @@ class GithubApi {
       }
       return undefined;
     }
+  }
+
+  private async getPatternsFromSettings(): Promise<
+    Array<{ source: string; pattern: string }>
+  > {
+    const res = await extensionStorage.getItem("customLists");
+    if (!res) return [];
+
+    const { all } = res;
+    return all.split("\n").map((line) => ({
+      pattern: line,
+      source: "Options: All Repos",
+    }));
   }
 
   /**
