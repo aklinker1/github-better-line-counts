@@ -38,7 +38,6 @@ const { state, hasChanges, reset, saveChanges } = useForm<{
     <ShowGeneratedCountPref
       v-model:hide-generated-line-count="state.hideGeneratedLineCount"
     />
-
     <CustomListsPref v-model:custom-lists="state.customLists" />
 
     <div
