@@ -2,6 +2,7 @@
 import TokenPref from "./TokenPref.vue";
 import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
 import { extensionStorage } from "../utils/storage";
+import { commitHashDiffsCache } from "../utils/global-cache";
 
 const { state, hasChanges, reset, saveChanges } = useForm(
   {
@@ -16,6 +17,9 @@ const { state, hasChanges, reset, saveChanges } = useForm(
       newState.hideGeneratedLineCount,
     );
     await extensionStorage.setItem("githubPat", newState.githubPat);
+
+    // Clear cache
+    await commitHashDiffsCache.clear();
   },
 );
 </script>

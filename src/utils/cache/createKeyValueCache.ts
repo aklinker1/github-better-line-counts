@@ -17,6 +17,10 @@ interface KeyValueCache<TValue> {
    * Set a value in cache that exires after a certain amount of time.
    */
   set(key: string, value: TValue, expiresInMs: number): Promise<void>;
+  /**
+   * Remove all entries from the cache, both expired and non-expired entries.
+   */
+  clear(): Promise<void>;
 }
 
 /**
@@ -73,6 +77,9 @@ export function createKeyValueCache<TValue>(
         cache[key] = { value, expiresAt: now + expiresInMs };
         await setCache(cache);
       });
+    },
+    clear() {
+      return mutex.runExclusive(() => setCache({}));
     },
   };
 }

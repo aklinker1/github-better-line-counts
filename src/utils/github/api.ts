@@ -9,9 +9,10 @@ import {
   RecalculateResult,
   User,
 } from "./types";
-import { createKeyValueCache } from "../cache";
 import { HOUR } from "../time";
 import { GitAttributes } from "../gitattributes";
+import minimatch from "minimatch";
+import { commitHashDiffsCache } from "../global-cache";
 
 class GithubApi {
   private static async getFetch(token?: string | null): Promise<$Fetch> {
@@ -31,7 +32,7 @@ class GithubApi {
     });
   }
 
-  cache = createKeyValueCache<RecalculateResult>("commit-hash-diffs");
+  cache = commitHashDiffsCache;
 
   /**
    * Throws an error if the PAT is not valid
