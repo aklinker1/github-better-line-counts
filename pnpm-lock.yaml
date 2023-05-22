@@ -30,7 +30,7 @@ specifiers:
   unplugin-auto-import: ^0.15.2
   unplugin-icons: ^0.15.3
   vite: ^4.2.1
-  vite-plugin-web-extension: ^3.0.2
+  vite-plugin-web-extension: ^3.0.8
   vitest: ^0.28.5
   vue: ^3.2.47
   vue-query: ^1.26.0
@@ -71,7 +71,7 @@ devDependencies:
   unplugin-auto-import: 0.15.2_@vueuse+core@9.13.0
   unplugin-icons: 0.15.3
   vite: 4.2.1
-  vite-plugin-web-extension: 3.0.2_vite@4.2.1
+  vite-plugin-web-extension: 3.0.8_vite@4.2.1
   vitest: 0.28.5_jsdom@21.1.0
   vue: 3.2.47
   web-ext: 7.5.0
@@ -5047,8 +5047,8 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-web-extension/3.0.2_vite@4.2.1:
-    resolution: {integrity: sha512-YdjDYkeSZIh1xo2qbGTzKjxapDwn0aqVtSjbpA8Jn3iQGZLjNRYDE0qcuFftvKPBxKlV06Q4VzkY6x9M0UprkQ==}
+  /vite-plugin-web-extension/3.0.8_vite@4.2.1:
+    resolution: {integrity: sha512-1iNRKzbC5cVfTNw+tQSQ/G/b5jU+Ocx+sry0DqsguYCzG8qegP+Lbk2VhWwDw9k6i5u5luBP328XeqtAx/Nsbg==}
     peerDependencies:
       vite: ^4
     dependencies:
