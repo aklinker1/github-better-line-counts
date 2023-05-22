@@ -13,6 +13,7 @@ import { HOUR } from "../time";
 import { GitAttributes } from "../gitattributes";
 import minimatch from "minimatch";
 import { commitHashDiffsCache } from "../global-cache";
+import { logger } from "../logger";
 
 class GithubApi {
   private static async getFetch(token?: string | null): Promise<$Fetch> {
@@ -50,7 +51,7 @@ class GithubApi {
     const ref = await this.getPrCommit(options);
     const cached = await this.cache.get(ref);
     if (cached) {
-      console.debug("[recalculateDiff] Using cached result");
+      logger.debug("[recalculateDiff] Using cached result");
       return cached;
     }
 
@@ -84,13 +85,13 @@ class GithubApi {
       const isSettingsGenerated = matchingSettings.length > 0;
       const isGenerated = isGitAttributesGenerated || isSettingsGenerated;
 
-      console.debug("Is generated?", diff.filename, {
+      logger.debug("Is generated?", diff.filename, {
         isGitAttributesGenerated,
         isSettingsGenerated,
         isGenerated,
       });
-      console.debug("Git attributes evaluation:", gitAttributesEval);
-      console.debug("Matched settings:", isSettingsGenerated);
+      logger.debug("Git attributes evaluation:", gitAttributesEval);
+      logger.debug("Matched settings:", isSettingsGenerated);
 
       if (isGenerated) exclude.push(diff);
       else include.push(diff);
@@ -128,18 +129,18 @@ class GithubApi {
           query: { ref },
         },
       );
-      console.debug(encodedFile);
+      logger.debug(encodedFile);
       const text = atob(encodedFile.content);
       const gitAttributes = new GitAttributes(text);
-      console.debug("Git Attributes:");
-      console.debug(gitAttributes.text);
-      console.debug(gitAttributes.ast);
+      logger.debug("Git Attributes:");
+      logger.debug(gitAttributes.text);
+      logger.debug(gitAttributes.ast);
       return gitAttributes;
     } catch (err) {
       if (err instanceof FetchError && err.statusCode === 404) {
-        console.debug("No .gitattributes file for this repo");
+        logger.debug("No .gitattributes file for this repo");
       } else {
-        console.error("Unknown error while loading gitattributes:", err);
+        logger.error("Unknown error while loading gitattributes:", err);
       }
       return undefined;
     }
@@ -174,7 +175,7 @@ class GithubApi {
     const fullPr = await fetch<PullRequest>(
       `/repos/${owner}/${repo}/pulls/${pr}`,
     );
-    console.debug("Full PR:", fullPr);
+    logger.debug("Full PR:", fullPr);
     return fullPr.head.sha;
   }
 
@@ -199,7 +200,7 @@ class GithubApi {
     const perPage = 100;
 
     do {
-      console.debug("Fetching PR page:", page);
+      logger.debug("Fetching PR page:", page);
       pageResults = await fetch<DiffEntry[]>(
         `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`,
       );
@@ -207,7 +208,7 @@ class GithubApi {
       page++;
     } while (pageResults.length === perPage);
 
-    console.debug("Found", results.length, "files");
+    logger.debug("Found", results.length, "files");
     return results;
   }
 

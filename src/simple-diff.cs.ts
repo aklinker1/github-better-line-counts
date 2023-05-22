@@ -7,6 +7,7 @@ import { getCurrentOwner } from "./utils/getCurrentOwner";
 import { getCurrentPr } from "./utils/getCurrentPr";
 import { getCurrentRepo } from "./utils/getCurrentRepo";
 import { getGithubApi } from "./utils/github";
+import { logger } from "./utils/logger";
 
 replaceCount();
 addUrlChangeListener(replaceCount);
@@ -20,8 +21,8 @@ function replaceCount() {
   const start = Date.now();
   const api = getGithubApi();
   const stats = api.recalculateDiff({ pr, owner, repo }).then((diff) => {
-    console.debug("Diff:", diff);
-    console.debug(`Diff calculated in ${Date.now() - start}ms`);
+    logger.debug("Diff:", diff);
+    logger.debug(`Diff calculated in ${Date.now() - start}ms`);
     return diff;
   });
 
