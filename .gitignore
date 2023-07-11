@@ -27,6 +27,6 @@ artifacts
 .wxt
 
 # Environment
-.webextrc*
+web-ext.config.ts
 .env
 .env.*
