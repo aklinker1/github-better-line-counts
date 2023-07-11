@@ -8,9 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-chrome
-dist-firefox
+.output
 artifacts
 *.local
 
@@ -26,7 +24,7 @@ artifacts
 *.sw?
 
 # Generated Files
-src/@types/auto-imports.d.ts
+.wxt
 
 # Environment
 .webextrc*

@@ -1,14 +1,16 @@
-import { DEFAULT_CUSTOM_LIST_ALL } from "./utils/constants";
-import { registerGithubApi } from "./utils/github";
-import { extensionStorage } from "./utils/storage";
+import { DEFAULT_CUSTOM_LIST_ALL } from "../utils/constants";
+import { registerGithubApi } from "../utils/github";
+import { extensionStorage } from "../utils/storage";
 
-registerGithubApi();
+export default defineBackgroundScript(() => {
+  registerGithubApi();
 
-browser.runtime.onInstalled.addListener(async ({ reason }) => {
-  if (reason === "install") {
-    await initalizeStorage();
-    void browser.runtime.openOptionsPage();
-  }
+  browser.runtime.onInstalled.addListener(async ({ reason }) => {
+    if (reason === "install") {
+      await initalizeStorage();
+      void browser.runtime.openOptionsPage();
+    }
+  });
 });
 
 async function initalizeStorage() {
