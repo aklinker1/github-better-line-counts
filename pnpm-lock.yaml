@@ -101,8 +101,8 @@ devDependencies:
     specifier: ^7.5.0
     version: 7.5.0
   wxt:
-    specifier: ^0.1.3
-    version: 0.1.3(webextension-polyfill@0.10.0)
+    specifier: ^0.1.6
+    version: 0.1.6(typescript@5.1.6)(webextension-polyfill@0.10.0)
   zip-a-folder:
     specifier: ^1.1.5
     version: 1.1.5
@@ -3155,6 +3155,10 @@ packages:
       type-fest: 0.20.2
     dev: true
 
+  /globrex@0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
+    dev: true
+
   /got@12.5.3:
     resolution: {integrity: sha512-8wKnb9MGU8IPGRIo+/ukTy9XLJBwDiCpIf5TVzQ9Cpol50eMTpBq2GAuDsuDIz7hTYmZgMgC1e9ydr6kSDWs3w==}
     engines: {node: '>=14.16'}
@@ -5557,6 +5561,19 @@ packages:
       punycode: 2.3.0
     dev: true
 
+  /tsconfck@2.1.1(typescript@5.1.6):
+    resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5 || ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.1.6
+    dev: true
+
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
 
@@ -5870,6 +5887,23 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite-tsconfig-paths@4.2.0(typescript@5.1.6)(vite@4.4.3):
+    resolution: {integrity: sha512-jGpus0eUy5qbbMVGiTxCL1iB9ZGN6Bd37VGLJU39kTDD6ZfULTTb1bcc5IeTWqWJKiWV5YihCaibeASPiGi8kw==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.1.1(typescript@5.1.6)
+      vite: 4.4.3(@types/node@18.13.0)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /vite@4.4.3(@types/node@18.13.0):
@@ -6311,8 +6345,8 @@ packages:
         optional: true
     dev: true
 
-  /wxt@0.1.3(webextension-polyfill@0.10.0):
-    resolution: {integrity: sha512-DFWp5SfjfySLgy156kdCY2Wm4M60oxOFWoZfVEstIpCQZqKf5HwDSYPqt8ltoICEWgAjc30VMWUxO+p2s2B2vQ==}
+  /wxt@0.1.6(typescript@5.1.6)(webextension-polyfill@0.10.0):
+    resolution: {integrity: sha512-daF8G3eqseSDyDCsSSkTwQfn87i8qHkGohBsSQhcU6MZJFxAlWjte7afFFM7LN4c0YBAi7w4tzvDn1Vqqi3myA==}
     engines: {node: '>=18.16.0', pnpm: '>=8'}
     hasBin: true
     peerDependencies:
@@ -6335,6 +6369,7 @@ packages:
       picomatch: 2.3.1
       unimport: 3.0.14
       vite: 4.4.3(@types/node@18.13.0)
+      vite-tsconfig-paths: 4.2.0(typescript@5.1.6)(vite@4.4.3)
       web-ext: 7.6.2
       webextension-polyfill: 0.10.0
     transitivePeerDependencies:
@@ -6351,6 +6386,7 @@ packages:
       - sugarss
       - supports-color
       - terser
+      - typescript
       - utf-8-validate
     dev: true
 
