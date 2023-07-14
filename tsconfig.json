@@ -1,15 +1,8 @@
 {
+  "extends": "./src/.wxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "skipLibCheck": true,
     "types": ["vite/client", "unplugin-icons/types/vue"]
-  },
-  "include": ["src"]
+  }
 }

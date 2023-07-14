@@ -29,7 +29,7 @@ That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
 ### Scripts
 
-This extension is bundled via `vite-plugin-web-extension`.
+This extension is bundled via [WXT](https://wxt.dev).
 
 - `pnpm dev`: Launchs Chrome with the dev version of the extension installed.
 - `pnpm build`: Builds the extension for production. Outputs to the `dist` directory.
@@ -39,12 +39,6 @@ Add `:firefox` suffix to some commands to target firefox instead of Chrome.
 
 - `pnpm build:firefox`
 - `pnpm dev:firefox`
-
-### Auto-imports
-
-This extension also uses `unplugin-auto-import` to make some imports available without writing the import statement.
-
-For Typescript to work properly in your editor, `unplugin-auto-import` generates a declaration file at: `src/@types/auto-imports.d.ts`. You must run `pnpm build` to create this file before types will work properly.
 
 ### Running Tests
 
