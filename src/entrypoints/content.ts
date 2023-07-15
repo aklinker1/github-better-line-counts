@@ -24,10 +24,13 @@ function main() {
   if (commitHash)
     return replaceCount(
       { type: "commit", repo, owner, ref: commitHash },
-      TextDiff,
+      CommitDiff,
     );
 
   const commitRefs = getCurrentCompare();
   if (commitRefs)
-    return replaceCount({ type: "compare", repo, owner, commitRefs }, TextDiff);
+    return replaceCount(
+      { type: "compare", repo, owner, commitRefs },
+      CompareDiff,
+    );
 }
