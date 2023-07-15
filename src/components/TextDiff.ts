@@ -1,7 +1,5 @@
-import { Github } from "../utils/github";
+import type { RecalculateResult } from "../utils/github";
 
-export async function TextDiff(
-  statsPromise: Promise<Github.RecalculateResult>,
-) {
+export async function TextDiff(statsPromise: Promise<RecalculateResult>) {
   console.warn("TODO: TextDiff");
 }

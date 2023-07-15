@@ -1,5 +1,5 @@
 import { createKeyValueCache } from "./cache";
-import type { Github } from "./github";
+import type { RecalculateResult } from "./github";
 
 export const commitHashDiffsCache =
-  createKeyValueCache<Github.RecalculateResult>("commit-hash-diffs");
+  createKeyValueCache<RecalculateResult>("commit-hash-diffs");

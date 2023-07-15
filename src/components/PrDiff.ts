@@ -1,6 +1,6 @@
-import { Github } from "../utils/github";
+import type { RecalculateResult } from "@/utils/github";
 
-export async function PrDiff(statsPromise: Promise<Github.RecalculateResult>) {
+export async function PrDiff(statsPromise: Promise<RecalculateResult>) {
   const hideGeneratedLineCountPromise = extensionStorage.getItem(
     "hideGeneratedLineCount",
   );
