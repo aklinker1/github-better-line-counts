@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CustomLists } from "../utils/storage";
+import { CustomLists } from "@/utils/storage";
 import CustomListItem from "./CustomListItem.vue";
 
 const props = defineProps<{

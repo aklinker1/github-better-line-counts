@@ -1,5 +1,3 @@
-import { replaceCount } from "../utils/replaceCount";
-
 export default defineContentScript({
   matches: ["*://*.github.com/*"],
   runAt: "document_end",

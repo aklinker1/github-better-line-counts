@@ -1,4 +1,3 @@
-import { createApp } from "vue";
 import Options from "../../pages/Options.vue";
 import { VueQueryPlugin } from "vue-query";
 

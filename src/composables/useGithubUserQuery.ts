@@ -1,5 +1,4 @@
-import { getGithubService, Github } from "../utils/github";
-import { QueryKeys } from "../utils/QueryKeys";
+import { getGithubService, Github } from "@/utils/github";
 
 export default function (token: Ref<string | null>) {
   const github = getGithubService();
