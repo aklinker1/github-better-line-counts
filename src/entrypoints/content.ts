@@ -18,7 +18,7 @@ function main() {
   const pr = getCurrentPr();
   if (pr) return replaceCount({ type: "pr", repo, owner, pr }, PrDiff);
 
-  const commitHash = undefined;
+  const commitHash = getCurrentRef();
   if (commitHash)
     return replaceCount(
       { type: "commit", repo, owner, ref: commitHash },
