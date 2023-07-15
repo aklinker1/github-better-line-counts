@@ -8,7 +8,7 @@ describe("getCurrentRef", () => {
     ["456", "https://github.com/anime-skip/player/commit/456?test=789"],
     [undefined, "https://github.com/anime-skip/player/commit/"],
     [undefined, "https://github.com/anime-skip/player/commit"],
-  ])("should return the owner based on the URL", (expected, url) => {
+  ])("should return the ref based on the URL", (expected, url) => {
     const jsdom = new JSDOM("", { url });
 
     expect(getCurrentRef(jsdom.window)).toEqual(expected);

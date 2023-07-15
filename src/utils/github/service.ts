@@ -64,7 +64,18 @@ function createGithubService(api: GithubApi) {
       return fullCommit.sha;
     }
 
-    throw Error("Not implemented: " + options.type);
+    if (options.type === "compare") {
+      const fullCommit = await api.getCommit({
+        ...options,
+        ref: options.commitRefs[0],
+      });
+      logger.debug("Full base commit:", fullCommit);
+      return fullCommit.sha;
+    }
+
+    throw Error(
+      `Not implemented: getCurrentCommit(${JSON.stringify(options)})`,
+    );
   }
 
   function calculateDiffForFiles(files: DiffEntry[]): DiffSummary {
@@ -81,6 +92,24 @@ function createGithubService(api: GithubApi) {
     return { changes, additions, deletions };
   }
 
+  async function getChangedFiles(
+    options: RecalculateOptions,
+  ): Promise<DiffEntry[]> {
+    if (options.type === "pr") return api.getAllPrFiles(options);
+
+    if (options.type === "commit") {
+      const commit = await api.getCommit(options);
+      return commit.files;
+    }
+
+    if (options.type === "compare") {
+      const comparison = await api.compareCommits(options);
+      return comparison.files;
+    }
+
+    throw Error(`Not implemented: getChangedFiles(${JSON.stringify(options)})`);
+  }
+
   return {
     async recalculateDiff(
       options: RecalculateOptions,
@@ -93,11 +122,7 @@ function createGithubService(api: GithubApi) {
       const [gitAttributes, changedFiles, settingsPatterns] = await Promise.all(
         [
           getGitAttributes({ ...options, ref }),
-          options.type === "pr"
-            ? api.getAllPrFiles(options)
-            : options.type === "commit"
-            ? api.getCommit(options).then((res) => res.files)
-            : api.getAllCompareFiles(options),
+          getChangedFiles(options),
           getPatternsFromSettings(),
         ],
       );

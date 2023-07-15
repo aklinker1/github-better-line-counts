@@ -26,6 +26,10 @@ export interface Commit {
   files: DiffEntry[];
 }
 
+export interface Comparison {
+  files: DiffEntry[];
+}
+
 export interface User {
   login: string;
 }

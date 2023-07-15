@@ -1,5 +1,12 @@
 import { FetchError, ofetch } from "ofetch";
-import { Commit, DiffEntry, EncodedFile, PullRequest, User } from "./types";
+import {
+  Commit,
+  Comparison,
+  DiffEntry,
+  EncodedFile,
+  PullRequest,
+  User,
+} from "./types";
 
 export function createGithubApi() {
   /**
@@ -113,13 +120,16 @@ export function createGithubApi() {
     },
 
     /**
-     * Load all files in a comparison.
+     * Get info about the comparison between two commits.
      */
-    async getAllCompareFiles(options: {
+    async compareCommits(options: {
       owner: string;
       repo: string;
-    }): Promise<DiffEntry[]> {
-      throw Error("TODO: getAllCompareFiles");
+      commitRefs: [string, string];
+    }): Promise<Comparison> {
+      return await fetch<Comparison>(
+        `/repos/${options.owner}/${options.repo}/compare/${options.commitRefs[0]}...${options.commitRefs[1]}`,
+      );
     },
   };
 }

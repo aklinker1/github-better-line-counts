@@ -25,10 +25,7 @@ function main() {
       TextDiff,
     );
 
-  const commitHashes = undefined;
-  if (commitHashes)
-    return replaceCount(
-      { type: "compare", repo, owner, commitRefs: commitHashes },
-      TextDiff,
-    );
+  const commitRefs = getCurrentCompare();
+  if (commitRefs)
+    return replaceCount({ type: "compare", repo, owner, commitRefs }, TextDiff);
 }

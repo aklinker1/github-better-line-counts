@@ -14,7 +14,7 @@ describe("getCurrentPr", () => {
     ],
     [271, "https://github.com/anime-skip/player/pull/271"],
     [271, "https://github.com/anime-skip/player/pull/271?w=0"],
-  ])("should return the owner based on the URL", (expected, url) => {
+  ])("should return the pr number based on the URL", (expected, url) => {
     const jsdom = new JSDOM("", { url });
 
     expect(getCurrentPr(jsdom.window)).toEqual(expected);
