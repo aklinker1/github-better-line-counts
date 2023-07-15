@@ -1,9 +1,10 @@
 import { DEFAULT_CUSTOM_LIST_ALL } from "../utils/constants";
-import { registerGithubApi } from "../utils/github";
+import { registerGithubService, createGithubApi } from "../utils/github";
 import { extensionStorage } from "../utils/storage";
 
 export default defineBackground(() => {
-  registerGithubApi();
+  const api = createGithubApi();
+  registerGithubService(api);
 
   browser.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason === "install") {

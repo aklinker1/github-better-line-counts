@@ -4,7 +4,7 @@ export interface DiffEntry {
   additions: number;
   deletions: number;
   changes: number;
-  status: "modified" | undefined;
+  status: "modified" | "added" | unknown | undefined;
 }
 
 export interface PullRequest {
@@ -23,18 +23,7 @@ export interface Commit {
     deletions: number;
     total: number;
   };
-}
-
-export interface DiffSummary {
-  additions: number;
-  deletions: number;
-  changes: number;
-}
-
-export interface RecalculateResult {
-  all: DiffSummary;
-  include: DiffSummary;
-  exclude: DiffSummary;
+  files: DiffEntry[];
 }
 
 export interface User {
@@ -46,30 +35,4 @@ export interface EncodedFile {
   encoding: "base64";
   path: string;
   content: string;
-}
-
-export type RecalculateOptions =
-  | RecalculatePrOptions
-  | RecalculateCommitOptions
-  | RecalculateCompareOptions;
-
-export interface RecalculatePrOptions {
-  type: "pr";
-  owner: string;
-  repo: string;
-  pr: number;
-}
-
-export interface RecalculateCommitOptions {
-  type: "commit";
-  owner: string;
-  repo: string;
-  ref: string;
-}
-
-export interface RecalculateCompareOptions {
-  type: "compare";
-  owner: string;
-  repo: string;
-  commitRefs: [string, string];
 }

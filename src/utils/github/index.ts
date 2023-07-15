@@ -1,2 +1,4 @@
-export { getGithubApi, registerGithubApi } from "./api";
+export * from "./service";
+export * from "./api-cache";
+export * from "./api";
 export * as Github from "./types";
