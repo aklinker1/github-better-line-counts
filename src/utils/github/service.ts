@@ -114,6 +114,11 @@ function createGithubService(api: GithubApi) {
       options: RecalculateOptions,
     ): Promise<RecalculateResult> {
       const ref = await getCurrentCommit(options);
+      const cached = await commitHashDiffsCache.get(ref);
+      if (cached) {
+        logger.debug("[recalculateDiff] Using cached result");
+        return cached;
+      }
 
       // 10s sleep for testing loading UI
       // await sleep(10e3);
@@ -161,6 +166,7 @@ function createGithubService(api: GithubApi) {
         exclude: calculateDiffForFiles(exclude),
         include: calculateDiffForFiles(include),
       };
+      await commitHashDiffsCache.set(ref, result, 2 * HOUR);
       return result;
     },
 

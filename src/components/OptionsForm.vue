@@ -3,7 +3,6 @@ import TokenPref from "./TokenPref.vue";
 import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
 import CustomListsPref from "./CustomListsPref.vue";
 import { CustomLists } from "@/utils/storage";
-import { commitHashDiffsCache } from "@/utils/global-cache";
 
 const { state, hasChanges, reset, saveChanges } = useForm<{
   hideGeneratedLineCount: boolean;
