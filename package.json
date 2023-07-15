@@ -57,5 +57,12 @@
     "minimatch": "^9.0.3",
     "ofetch": "^1.1.1",
     "vue-query": "^1.26.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowAny": [
+        "node-fetch"
+      ]
+    }
   }
 }
