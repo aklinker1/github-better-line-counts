@@ -3,7 +3,7 @@ import AutoImportPlugin from "unplugin-auto-import/vite";
 export function AutoImport() {
   return AutoImportPlugin({
     dts: "src/@types/auto-imports.d.ts",
-    dirs: ["src/composition"],
+    dirs: ["src/composables"],
     imports: [
       "vue",
       "@vueuse/core",

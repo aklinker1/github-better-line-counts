@@ -101,8 +101,8 @@ devDependencies:
     specifier: ^7.5.0
     version: 7.5.0
   wxt:
-    specifier: ^0.1.6
-    version: 0.1.6(typescript@5.1.6)(webextension-polyfill@0.10.0)
+    specifier: ^0.2.0
+    version: 0.2.0(typescript@5.1.6)(webextension-polyfill@0.10.0)
   zip-a-folder:
     specifier: ^1.1.5
     version: 1.1.5
@@ -6345,8 +6345,8 @@ packages:
         optional: true
     dev: true
 
-  /wxt@0.1.6(typescript@5.1.6)(webextension-polyfill@0.10.0):
-    resolution: {integrity: sha512-daF8G3eqseSDyDCsSSkTwQfn87i8qHkGohBsSQhcU6MZJFxAlWjte7afFFM7LN4c0YBAi7w4tzvDn1Vqqi3myA==}
+  /wxt@0.2.0(typescript@5.1.6)(webextension-polyfill@0.10.0):
+    resolution: {integrity: sha512-gRDWMHFndQWWNQrw9zpFS7J4Uf1p+1fTVulEmCcxG6SqvbdprGTmTp9JeIS6LpgMTjNdh4FjLmXeTEeumQ4SyQ==}
     engines: {node: '>=18.16.0', pnpm: '>=8'}
     hasBin: true
     peerDependencies:

@@ -1,13 +1,6 @@
 import { Github } from "../utils/github";
-import { extensionStorage } from "../utils/storage";
-import { Spinner } from "./Spinner";
 
-const GREY_COLOR = "var(--color-fg-muted)";
-export const DIFF_STAT_ID = "github-better-line-counts";
-
-export async function DiffStat(
-  statsPromise: Promise<Github.RecalculateResult>,
-) {
+export async function PrDiff(statsPromise: Promise<Github.RecalculateResult>) {
   const hideGeneratedLineCountPromise = extensionStorage.getItem(
     "hideGeneratedLineCount",
   );
@@ -18,7 +11,7 @@ export async function DiffStat(
   if (!deletions) return;
 
   const spinner = Spinner(GREY_COLOR);
-  spinner.id = DIFF_STAT_ID;
+  spinner.id = DIFF_COMPONENT_ID;
   if (deletions) {
     deletions.replaceWith(deletions, spinner);
   }
@@ -40,7 +33,7 @@ export async function DiffStat(
 
   if (!hideGeneratedLineCount) {
     const generated = document.createElement("span");
-    generated.id = DIFF_STAT_ID;
+    generated.id = DIFF_COMPONENT_ID;
     generated.style.color = GREY_COLOR;
     generated.textContent = ` ⌁${stats?.exclude.changes}`;
     generated.title = `${stats?.exclude.changes} lines generated`;

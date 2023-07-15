@@ -16,6 +16,15 @@ export interface PullRequest {
   };
 }
 
+export interface Commit {
+  sha: string;
+  stats: {
+    additions: number;
+    deletions: number;
+    total: number;
+  };
+}
+
 export interface DiffSummary {
   additions: number;
   deletions: number;
@@ -37,4 +46,30 @@ export interface EncodedFile {
   encoding: "base64";
   path: string;
   content: string;
+}
+
+export type RecalculateOptions =
+  | RecalculatePrOptions
+  | RecalculateCommitOptions
+  | RecalculateCompareOptions;
+
+export interface RecalculatePrOptions {
+  type: "pr";
+  owner: string;
+  repo: string;
+  pr: number;
+}
+
+export interface RecalculateCommitOptions {
+  type: "commit";
+  owner: string;
+  repo: string;
+  ref: string;
+}
+
+export interface RecalculateCompareOptions {
+  type: "compare";
+  owner: string;
+  repo: string;
+  commitRefs: [string, string];
 }

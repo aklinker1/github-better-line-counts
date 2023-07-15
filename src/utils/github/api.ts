@@ -2,10 +2,15 @@ import { defineProxyService } from "@webext-core/proxy-service";
 import { ofetch, $Fetch, FetchError } from "ofetch";
 import { extensionStorage } from "../storage";
 import {
+  Commit,
   DiffEntry,
   DiffSummary,
   EncodedFile,
   PullRequest,
+  RecalculateCommitOptions,
+  RecalculateCompareOptions,
+  RecalculateOptions,
+  RecalculatePrOptions,
   RecalculateResult,
   User,
 } from "./types";
@@ -43,12 +48,10 @@ class GithubApi {
     return await fetch<User>("/user");
   }
 
-  async recalculateDiff(options: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<RecalculateResult> {
-    const ref = await this.getPrCommit(options);
+  async recalculateDiff(
+    options: RecalculateOptions,
+  ): Promise<RecalculateResult> {
+    const ref = await this.getCurrentCommit(options);
     const cached = await this.cache.get(ref);
     if (cached) {
       logger.debug("[recalculateDiff] Using cached result");
@@ -58,19 +61,19 @@ class GithubApi {
     // 10s sleep for testing loading UI
     // await sleep(10e3);
 
-    const [gitAttributes, prFiles, settingsPatterns] = await Promise.all([
-      this.getGitAttributes({
-        owner: options.owner,
-        repo: options.repo,
-        ref,
-      }),
-      this.getPrFiles(options),
+    const [gitAttributes, changedFiles, settingsPatterns] = await Promise.all([
+      this.getGitAttributes({ ...options, ref }),
+      options.type === "pr"
+        ? this.getPrFiles(options)
+        : options.type === "commit"
+        ? this.getCommitFiles(options)
+        : this.getCompareFiles(options),
       this.getPatternsFromSettings(),
     ]);
 
     const include: DiffEntry[] = [];
     const exclude: DiffEntry[] = [];
-    prFiles.forEach((diff) => {
+    changedFiles.forEach((diff) => {
       if (gitAttributes == null) {
         include.push(diff);
         return;
@@ -98,7 +101,7 @@ class GithubApi {
     });
 
     const result: RecalculateResult = {
-      all: this.calculateDiffForFiles(prFiles),
+      all: this.calculateDiffForFiles(changedFiles),
       exclude: this.calculateDiffForFiles(exclude),
       include: this.calculateDiffForFiles(include),
     };
@@ -160,38 +163,39 @@ class GithubApi {
   }
 
   /**
-   * Get the commit sha the PR is on.
+   * Get the commit hash for the current page. Used to look up gitattributes.
    */
-  private async getPrCommit({
-    repo,
-    owner,
-    pr,
-  }: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<string> {
+  private async getCurrentCommit(options: RecalculateOptions): Promise<string> {
+    const { owner, repo, type } = options;
     const fetch = await GithubApi.getFetch();
-    const fullPr = await fetch<PullRequest>(
-      `/repos/${owner}/${repo}/pulls/${pr}`,
-    );
-    logger.debug("Full PR:", fullPr);
-    return fullPr.head.sha;
+
+    if (type === "pr") {
+      const fullPr = await fetch<PullRequest>(
+        `/repos/${owner}/${repo}/pulls/${options.pr}`,
+      );
+      logger.debug("Full PR:", fullPr);
+      return fullPr.head.sha;
+    }
+
+    if (type === "commit") {
+      const fullCommit = await fetch<Commit>(
+        `/repos/${owner}/${repo}/commits/${options.ref}`,
+      );
+      logger.debug("Full commit:", fullCommit);
+      return fullCommit.sha;
+    }
+
+    throw Error("Not implemented: " + options.type);
   }
 
   /**
    * List all the files in a PR, paginating through to load all of them. Each file includes a count,
    * which will be used to recompute the diff.
    */
-  private async getPrFiles({
-    repo,
-    owner,
-    pr,
-  }: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<DiffEntry[]> {
+  private async getPrFiles(
+    options: RecalculatePrOptions,
+  ): Promise<DiffEntry[]> {
+    const { owner, repo, pr } = options;
     const fetch = await GithubApi.getFetch();
 
     const results: DiffEntry[] = [];
@@ -210,6 +214,26 @@ class GithubApi {
 
     logger.debug("Found", results.length, "files");
     return results;
+  }
+
+  /**
+   * List all the files in a commit, paginating through to load all of them. Each file includes a count,
+   * which will be used to recompute the diff.
+   */
+  private async getCommitFiles(
+    options: RecalculateCommitOptions,
+  ): Promise<DiffEntry[]> {
+    throw Error;
+  }
+
+  /**
+   * List all the files in a commit, paginating through to load all of them. Each file includes a count,
+   * which will be used to recompute the diff.
+   */
+  private async getCompareFiles(
+    options: RecalculateCompareOptions,
+  ): Promise<DiffEntry[]> {
+    throw Error;
   }
 
   private calculateDiffForFiles(files: DiffEntry[]): DiffSummary {
