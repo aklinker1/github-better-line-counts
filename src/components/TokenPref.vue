@@ -10,8 +10,7 @@ const emits = defineEmits<{
   (event: "update:githubPat", newToken: string): void;
 }>();
 
-const token = toRef(props, "githubPat");
-watch(token, (newToken) => emits("update:githubPat", newToken));
+const token = useVModel(props, "githubPat", emits);
 
 const { data: user, error, isLoading } = useGithubUserQuery(token);
 
@@ -54,16 +53,18 @@ const tokenHidden = ref(true);
     </div>
 
     <template v-if="token">
-      <p v-if="error" class="flex items-center gap-2">
+      <p v-if="error" class="">
         <span class="badge badge-error shrink-0">Token is invalid</span>
-        <span class="text-sm truncate">{{ error }}</span>
+        {{ " " }}
+        <span class="text-sm">{{ error }}</span>
       </p>
       <p v-else-if="isLoading || user == null" class="badge badge-ghost">
         Checking token...
       </p>
-      <p v-else class="flex items-center gap-2">
-        <span class="badge badge-success shrink-0">Token is valid</span>
-        <span class="text-sm truncate">Username: {{ user?.login }}</span>
+      <p v-else class="">
+        <span class="badge badge-success">Token is valid</span>
+        {{ " " }}
+        <span class="text-sm">Username: {{ user?.login }}</span>
       </p>
     </template>
   </li>
