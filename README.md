@@ -27,6 +27,14 @@ That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
 ## Development
 
+You must use [PNPM](https://pnpm.io/) with this repo. To install it, run `corepack enable` or `npm i -g pnpm`.
+
+Then instal dependencies:
+
+```sh
+pnpm i
+```
+
 ### Scripts
 
 This extension is bundled via [WXT](https://wxt.dev).
