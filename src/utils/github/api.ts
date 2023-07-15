@@ -109,6 +109,7 @@ export function createGithubApi() {
 
       do {
         logger.debug("Fetching PR page:", page);
+        // TODO: reuse getPr with page and per_page query params
         pageResults = await fetch<DiffEntry[]>(
           `/repos/${options.owner}/${options.repo}/pulls/${options.pr}/files?page=${page}&per_page=${perPage}`,
         );
