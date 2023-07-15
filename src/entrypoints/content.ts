@@ -6,7 +6,9 @@ export default defineContentScript({
 
   main() {
     main();
-    setInterval(main, 1e3);
+    // TODO: schedule next interval for 1 second AFTER the main function finishes. If the main
+    // function takes more than 1 second, it might cause problems.
+    setInterval(main, SECOND);
   },
 });
 
