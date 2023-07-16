@@ -1,233 +1,138 @@
-import { defineProxyService } from "@webext-core/proxy-service";
-import { ofetch, $Fetch, FetchError } from "ofetch";
-import { extensionStorage } from "../storage";
+import { FetchError, ofetch } from "ofetch";
 import {
+  Commit,
+  Comparison,
   DiffEntry,
-  DiffSummary,
   EncodedFile,
   PullRequest,
-  RecalculateResult,
   User,
 } from "./types";
-import { HOUR } from "../time";
-import { GitAttributes } from "../gitattributes";
-import minimatch from "minimatch";
-import { commitHashDiffsCache } from "../global-cache";
-import { logger } from "../logger";
 
-class GithubApi {
-  private static async getFetch(token?: string | null): Promise<$Fetch> {
-    const headers: Record<string, string> = {
+export function createGithubApi() {
+  /**
+   * Fetch with some default headers and authentication.
+   */
+  const fetch = ofetch.create({
+    baseURL: "https://api.github.com",
+    headers: {
       "X-GitHub-Api-Version": "2022-11-28",
       Accept: "application/vnd.github+json",
-    };
-
-    // A PAT is required for private repos
-    // https://github.com/settings/tokens/new?description=Simple%20GitHub&20Diffs&scopes=repo
-    token ??= await extensionStorage.getItem("githubPat");
-    if (token) headers.Authorization = `Bearer ${token}`;
-
-    return ofetch.create({
-      baseURL: "https://api.github.com",
-      headers,
-    });
-  }
-
-  cache = commitHashDiffsCache;
-
-  /**
-   * Throws an error if the PAT is not valid
-   */
-  async getUser(token: string): Promise<User> {
-    const fetch = await GithubApi.getFetch(token);
-    return await fetch<User>("/user");
-  }
-
-  async recalculateDiff(options: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<RecalculateResult> {
-    const ref = await this.getPrCommit(options);
-    const cached = await this.cache.get(ref);
-    if (cached) {
-      logger.debug("[recalculateDiff] Using cached result");
-      return cached;
-    }
-
-    // 10s sleep for testing loading UI
-    // await sleep(10e3);
-
-    const [gitAttributes, prFiles, settingsPatterns] = await Promise.all([
-      this.getGitAttributes({
-        owner: options.owner,
-        repo: options.repo,
-        ref,
-      }),
-      this.getPrFiles(options),
-      this.getPatternsFromSettings(),
-    ]);
-
-    const include: DiffEntry[] = [];
-    const exclude: DiffEntry[] = [];
-    prFiles.forEach((diff) => {
-      if (gitAttributes == null) {
-        include.push(diff);
-        return;
+    },
+    async onRequest(ctx) {
+      const headers = ctx.options.headers as Record<string, string>;
+      if (headers.Authorization == null) {
+        const token = await extensionStorage.getItem("githubPat");
+        if (token) headers.Authorization = `Bearer ${token}`;
       }
+    },
+  });
 
-      const gitAttributesEval = gitAttributes.evaluate(diff.filename);
-      const matchingSettings = settingsPatterns.filter(({ pattern }) =>
-        minimatch(diff.filename, pattern),
-      );
-      const isGitAttributesGenerated =
-        !!gitAttributesEval.attributes["linguist-generated"];
-      const isSettingsGenerated = matchingSettings.length > 0;
-      const isGenerated = isGitAttributesGenerated || isSettingsGenerated;
-
-      logger.debug("Is generated?", diff.filename, {
-        isGitAttributesGenerated,
-        isSettingsGenerated,
-        isGenerated,
-      });
-      logger.debug("Git attributes evaluation:", gitAttributesEval);
-      logger.debug("Matched settings:", isSettingsGenerated);
-
-      if (isGenerated) exclude.push(diff);
-      else include.push(diff);
-    });
-
-    const result: RecalculateResult = {
-      all: this.calculateDiffForFiles(prFiles),
-      exclude: this.calculateDiffForFiles(exclude),
-      include: this.calculateDiffForFiles(include),
-    };
-    await this.cache.set(ref, result, 2 * HOUR);
-    return result;
-  }
-
-  /**
-   * Returns a list of generated files that should be excluded from diff counts.
-   *
-   * Eventually, this will be based on your .gitattributes file.
-   */
-  private async getGitAttributes({
-    ref,
-    repo,
-    owner,
-  }: {
-    ref: string;
-    repo: string;
-    owner: string;
-  }): Promise<GitAttributes | undefined> {
-    const fetch = await GithubApi.getFetch();
-
-    try {
-      const encodedFile = await fetch<EncodedFile>(
-        `/repos/${owner}/${repo}/contents/.gitattributes`,
-        {
-          query: { ref },
+  return {
+    /**
+     * Throws an error if the PAT is not valid
+     */
+    async getUser(token: string): Promise<User> {
+      return await fetch<User>("/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      logger.debug(encodedFile);
-      const text = atob(encodedFile.content);
-      const gitAttributes = new GitAttributes(text);
-      logger.debug("Git Attributes:");
-      logger.debug(gitAttributes.text);
-      logger.debug(gitAttributes.ast);
-      return gitAttributes;
-    } catch (err) {
-      if (err instanceof FetchError && err.statusCode === 404) {
-        logger.debug("No .gitattributes file for this repo");
-      } else {
-        logger.error("Unknown error while loading gitattributes:", err);
+      });
+    },
+
+    /**
+     * Returns the repo's git attributes, or undefined if the file does not exist
+     */
+    async getGitAttributesFile(options: {
+      owner: string;
+      repo: string;
+      ref: string;
+    }): Promise<string | undefined> {
+      try {
+        const encodedFile = await fetch<EncodedFile>(
+          `/repos/${options.owner}/${options.repo}/contents/.gitattributes`,
+          {
+            query: {
+              ref: options.ref,
+            },
+          },
+        );
+        logger.debug(encodedFile);
+        return atob(encodedFile.content);
+      } catch (err) {
+        if (err instanceof FetchError && err.statusCode === 404) {
+          logger.debug("No .gitattributes file for this repo");
+          return undefined;
+        } else {
+          throw err;
+        }
       }
-      return undefined;
-    }
-  }
+    },
 
-  private async getPatternsFromSettings(): Promise<
-    Array<{ source: string; pattern: string }>
-  > {
-    const res = await extensionStorage.getItem("customLists");
-    if (!res) return [];
-
-    const { all } = res;
-    return all.split("\n").map((line) => ({
-      pattern: line,
-      source: "Options: All Repos",
-    }));
-  }
-
-  /**
-   * Get the commit sha the PR is on.
-   */
-  private async getPrCommit({
-    repo,
-    owner,
-    pr,
-  }: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<string> {
-    const fetch = await GithubApi.getFetch();
-    const fullPr = await fetch<PullRequest>(
-      `/repos/${owner}/${repo}/pulls/${pr}`,
-    );
-    logger.debug("Full PR:", fullPr);
-    return fullPr.head.sha;
-  }
-
-  /**
-   * List all the files in a PR, paginating through to load all of them. Each file includes a count,
-   * which will be used to recompute the diff.
-   */
-  private async getPrFiles({
-    repo,
-    owner,
-    pr,
-  }: {
-    repo: string;
-    owner: string;
-    pr: number;
-  }): Promise<DiffEntry[]> {
-    const fetch = await GithubApi.getFetch();
-
-    const results: DiffEntry[] = [];
-    let pageResults: DiffEntry[] = [];
-    let page = 1;
-    const perPage = 100;
-
-    do {
-      logger.debug("Fetching PR page:", page);
-      pageResults = await fetch<DiffEntry[]>(
-        `/repos/${owner}/${repo}/pulls/${pr}/files?page=${page}&per_page=${perPage}`,
+    /**
+     * Load information about a PR.
+     */
+    async getPr(options: {
+      owner: string;
+      repo: string;
+      pr: number;
+    }): Promise<PullRequest> {
+      return await fetch<PullRequest>(
+        `/repos/${options.owner}/${options.repo}/pulls/${options.pr}`,
       );
-      results.push(...pageResults);
-      page++;
-    } while (pageResults.length === perPage);
+    },
 
-    logger.debug("Found", results.length, "files");
-    return results;
-  }
+    /**
+     * Load information about a commit.
+     */
+    async getCommit(options: {
+      owner: string;
+      repo: string;
+      ref: string;
+    }): Promise<Commit> {
+      return await fetch<Commit>(
+        `/repos/${options.owner}/${options.repo}/commits/${options.ref}`,
+      );
+    },
 
-  private calculateDiffForFiles(files: DiffEntry[]): DiffSummary {
-    let changes = 0,
-      additions = 0,
-      deletions = 0;
+    /**
+     * Load all files in a PR.
+     */
+    async getAllPrFiles(options: {
+      owner: string;
+      repo: string;
+      pr: number;
+    }): Promise<DiffEntry[]> {
+      const results: DiffEntry[] = [];
+      let pageResults: DiffEntry[] = [];
+      let page = 1;
+      const perPage = 100;
 
-    for (const file of files) {
-      changes += file.changes;
-      additions += file.additions;
-      deletions += file.deletions;
-    }
+      do {
+        logger.debug("Fetching PR page:", page);
+        // TODO: reuse getPr with page and per_page query params
+        pageResults = await fetch<DiffEntry[]>(
+          `/repos/${options.owner}/${options.repo}/pulls/${options.pr}/files?page=${page}&per_page=${perPage}`,
+        );
+        results.push(...pageResults);
+        page++;
+      } while (pageResults.length === perPage);
 
-    return { changes, additions, deletions };
-  }
+      return results;
+    },
+
+    /**
+     * Get info about the comparison between two commits.
+     */
+    async compareCommits(options: {
+      owner: string;
+      repo: string;
+      commitRefs: [string, string];
+    }): Promise<Comparison> {
+      return await fetch<Comparison>(
+        `/repos/${options.owner}/${options.repo}/compare/${options.commitRefs[0]}...${options.commitRefs[1]}`,
+      );
+    },
+  };
 }
 
-export const [registerGithubApi, getGithubApi] = defineProxyService(
-  "GithubApi",
-  () => new GithubApi(),
-);
+export type GithubApi = ReturnType<typeof createGithubApi>;

@@ -1,6 +1,7 @@
 import { UserManifest, defineConfig } from "wxt";
 import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
+import { resolve } from "node:path";
 
 export default defineConfig({
   srcDir: "src",
@@ -10,6 +11,9 @@ export default defineConfig({
       { from: "vue-query", name: "useQuery" },
       { from: "vue-query", name: "useMutation" },
     ],
+    addons: {
+      vueTemplate: true,
+    },
   },
   vite: {
     plugins: [Icons({ compiler: "vue3" }), Vue()],

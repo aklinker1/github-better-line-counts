@@ -2,7 +2,7 @@
 
 [<img height="72" src="./.github/assets/promo-cws.svg" alt="Available in the Chrome Web Store">](https://chrome.google.com/webstore/detail/ocfdgncpifmegplaglcnglhioflaimkd) [<img height="72" src="./.github/assets/promo-fas.svg" alt="Available in the Firefox Addon Store">](https://addons.mozilla.org/en-US/firefox/addon/github-better-line-counts/)
 
-A chrome extension that removes generated files from a PR's line count.
+A chrome extension that removes generated files from GitHub's line counts.
 
 ### How does this work?
 
@@ -26,6 +26,14 @@ vendor/**/*     linguist-generated
 That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
 ## Development
+
+You must use [PNPM](https://pnpm.io/) with this repo. To install it, run `corepack enable` or `npm i -g pnpm`.
+
+Then instal dependencies:
+
+```sh
+pnpm i
+```
 
 ### Scripts
 

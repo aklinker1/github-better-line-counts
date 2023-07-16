@@ -4,7 +4,7 @@ export interface DiffEntry {
   additions: number;
   deletions: number;
   changes: number;
-  status: "modified" | undefined;
+  status: "modified" | "added" | unknown | undefined;
 }
 
 export interface PullRequest {
@@ -16,16 +16,18 @@ export interface PullRequest {
   };
 }
 
-export interface DiffSummary {
-  additions: number;
-  deletions: number;
-  changes: number;
+export interface Commit {
+  sha: string;
+  stats: {
+    additions: number;
+    deletions: number;
+    total: number;
+  };
+  files: DiffEntry[];
 }
 
-export interface RecalculateResult {
-  all: DiffSummary;
-  include: DiffSummary;
-  exclude: DiffSummary;
+export interface Comparison {
+  files: DiffEntry[];
 }
 
 export interface User {

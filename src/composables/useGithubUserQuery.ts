@@ -1,14 +1,13 @@
-import { getGithubApi, Github } from "../utils/github";
-import { QueryKeys } from "../utils/QueryKeys";
+import { getGithubService, Github } from "@/utils/github";
 
 export default function (token: Ref<string | null>) {
-  const api = getGithubApi();
+  const github = getGithubService();
 
   return useQuery<Github.User | undefined>(
     [QueryKeys.GithubUser, token],
     () => {
       if (!token.value) return;
-      return api.getUser(token.value);
+      return github.getUser(token.value);
     },
     {
       retry: false,
