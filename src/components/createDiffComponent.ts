@@ -27,13 +27,12 @@ export function createDiffComponent(options: {
     // Render new counts
 
     const additions = options.getAdditionsElement();
-    if (!additions) return;
+    if (additions)
+      additions.textContent = options.getAdditionsText(stats.include.additions);
 
     const deletions = options.getDeletionsElement();
-    if (!deletions) return;
-
-    additions.textContent = options.getAdditionsText(stats.include.additions);
-    deletions.textContent = options.getDeletionsText(stats.include.deletions);
+    if (deletions)
+      deletions.textContent = options.getDeletionsText(stats.include.deletions);
 
     if (!hideGeneratedLineCount) {
       const generated = document.createElement("strong");
@@ -41,6 +40,8 @@ export function createDiffComponent(options: {
       generated.textContent = options.getGeneratedText(stats.exclude.changes);
       generated.style.color = GREY_COLOR;
       spinner.replaceWith(generated);
+    } else {
+      spinner.style.display = "none";
     }
   };
 }
