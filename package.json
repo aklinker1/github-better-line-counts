@@ -20,7 +20,7 @@
     "prepare": "husky install",
     "postinstall": "wxt prepare",
     "submit": "env-cmd -f ./.env.submit ./scripts/submit.sh",
-    "submit:dry": "pnpm submit --dry-run"
+    "submit:dry": "pnpm -s submit --dry-run"
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
