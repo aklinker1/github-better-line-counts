@@ -67,9 +67,9 @@ heading "Zip"
 pnpm zip
 pnpm zip:firefox
 
-CHROME_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-chrome.zip"
-FIREFOX_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-firefox.zip"
-SOURCES_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-sources.zip"
+CHROME_ZIP=".output/github-better-line-counts-$NEXT_VERSION-chrome.zip"
+FIREFOX_ZIP=".output/github-better-line-counts-$NEXT_VERSION-firefox.zip"
+SOURCES_ZIP=".output/github-better-line-counts-$NEXT_VERSION-sources.zip"
 
 # Publish
 
