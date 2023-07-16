@@ -46,8 +46,6 @@ pnpm prettier -w package.json
 # Checks
 
 heading "Run Checks"
-pnpm build
-pnpm build:firefox
 pnpm test run
 pnpm compile
 
@@ -68,11 +66,10 @@ fi
 heading "Zip"
 pnpm zip
 pnpm zip:firefox
-pnpm zip:sources
 
-CHROME_ZIP="artifacts/github-better-diffs-$NEXT_TAG-chrome.zip"
-FIREFOX_ZIP="artifacts/github-better-diffs-$NEXT_TAG-firefox.zip"
-SOURCES_ZIP="artifacts/github-better-diffs-$NEXT_TAG-sources.zip"
+CHROME_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-chrome.zip"
+FIREFOX_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-firefox.zip"
+SOURCES_ZIP="artifacts/github-better-line-counts-$NEXT_TAG-sources.zip"
 
 # Publish
 
