@@ -104,7 +104,7 @@ devDependencies:
     specifier: ^1.8.5
     version: 1.8.5(typescript@5.1.6)
   wxt:
-    specifier: ^0.2.4
+    specifier: ^0.2.3
     version: 0.2.4(typescript@5.1.6)(webextension-polyfill@0.10.0)
   zip-a-folder:
     specifier: ^2.0.0
