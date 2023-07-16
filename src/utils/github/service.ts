@@ -7,9 +7,6 @@ import { GitAttributes } from "../gitattributes";
 export const [registerGithubService, getGithubService] = defineProxyService(
   "GithubService",
   createGithubService,
-  {
-    logger,
-  },
 );
 
 function createGithubService(api: GithubApi) {
