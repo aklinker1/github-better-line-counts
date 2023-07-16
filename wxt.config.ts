@@ -13,7 +13,6 @@ export default defineConfig({
     addons: {
       vueTemplate: true,
     },
-    warn: () => {},
   },
   vite: {
     plugins: [Icons({ compiler: "vue3" }), Vue()],
