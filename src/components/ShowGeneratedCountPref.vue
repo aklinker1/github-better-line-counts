@@ -7,11 +7,10 @@ const emits = defineEmits<{
   (event: "update:hideGeneratedLineCount", newHide: boolean): void;
 }>();
 
-const hideLineCount = toRef(props, "hideGeneratedLineCount");
+const hideLineCount = useVModel(props, "hideGeneratedLineCount", emits);
 
 function toggle() {
   hideLineCount.value = !hideLineCount.value;
-  emits("update:hideGeneratedLineCount", hideLineCount.value);
 }
 </script>
 

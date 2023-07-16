@@ -1,7 +1,6 @@
 import { UserManifest, defineConfig } from "wxt";
 import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
-import { resolve } from "node:path";
 
 export default defineConfig({
   srcDir: "src",

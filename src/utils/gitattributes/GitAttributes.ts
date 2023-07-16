@@ -1,6 +1,6 @@
 import { tokenize } from "./tokenize";
 import { Attribute, Node, parseAst, Rule } from "./parseAst";
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
 
 export class GitAttributes {
   ast: Node[];

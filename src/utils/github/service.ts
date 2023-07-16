@@ -1,12 +1,15 @@
 import { defineProxyService } from "@webext-core/proxy-service";
 import { GithubApi } from "./api";
 import { DiffEntry } from "./types";
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
 import { GitAttributes } from "../gitattributes";
 
 export const [registerGithubService, getGithubService] = defineProxyService(
   "GithubService",
   createGithubService,
+  {
+    logger,
+  },
 );
 
 function createGithubService(api: GithubApi) {

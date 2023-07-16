@@ -27,11 +27,9 @@ export function createDiffComponent(options: {
     // Render new counts
 
     const additions = options.getAdditionsElement();
-    console.log({ additions });
     if (!additions) return;
 
     const deletions = options.getDeletionsElement();
-    console.log({ deletions });
     if (!deletions) return;
 
     additions.textContent = options.getAdditionsText(stats.include.additions);
