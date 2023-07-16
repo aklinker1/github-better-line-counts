@@ -45,7 +45,7 @@ const tokenHidden = ref(true);
         class="btn"
         role="button"
         :class="{ 'btn-error': !tokenHidden }"
-        @click="tokenHidden = !tokenHidden"
+        @click="tokenHidden.value = !tokenHidden"
       >
         <i-mdi-eye-off-outline v-if="tokenHidden" />
         <i-mdi-eye v-else />

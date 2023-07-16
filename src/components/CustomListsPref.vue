@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed } from "vue";
 import type { CustomLists } from "@/utils/storage";
 import CustomListItem from "./CustomListItem.vue";
 

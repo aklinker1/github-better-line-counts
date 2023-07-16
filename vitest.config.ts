@@ -8,7 +8,7 @@ export default defineConfig({
   },
   plugins: [
     AutoImportPlugin({
-      dts: "src/@types/auto-imports.d.ts",
+      dts: false,
       dirs: ["src/composables"],
       imports: [
         "vue",
