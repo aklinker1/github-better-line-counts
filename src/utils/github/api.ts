@@ -60,7 +60,6 @@ export function createGithubApi() {
         return atob(encodedFile.content);
       } catch (err) {
         if (err instanceof FetchError && err.statusCode === 404) {
-          logger.debug("No .gitattributes file for this repo");
           return undefined;
         } else {
           throw err;
