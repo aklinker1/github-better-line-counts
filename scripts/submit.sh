@@ -77,7 +77,8 @@ heading "Publishing to Stores"
 pnpm publish-extension $1 \
     --chrome-zip "$CHROME_ZIP" \
     --firefox-zip "$FIREFOX_ZIP" \
-    --firefox-sources-zip "$SOURCES_ZIP"
+    --firefox-sources-zip "$SOURCES_ZIP" \
+    --edge-zip "$CHROME_ZIP"
 
 # Create Release
 

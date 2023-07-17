@@ -73,6 +73,12 @@ Eventually, I'll create a GitHub action for this. But for now, you can release a
    FIREFOX_EXTENSION_ID="..."
    FIREFOX_JWT_ISSUER="..."
    FIREFOX_JWT_SECRET="..."
+
+   # Follow: https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/publish/api/using-addons-api#before-you-begin
+   EDGE_PRODUCT_ID="..."
+   EDGE_CLIENT_ID="..."
+   EDGE_CLIENT_SECRET="..."
+   EDGE_ACCESS_TOKEN_URL="..."
    ```
 
 2. _Optional_: Run `pnpm submit:dry` to test if your config is correct.
