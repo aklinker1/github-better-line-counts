@@ -135,17 +135,12 @@ function createGithubService(api: GithubApi) {
       const include: DiffEntry[] = [];
       const exclude: DiffEntry[] = [];
       changedFiles.forEach((diff) => {
-        if (gitAttributes == null) {
-          include.push(diff);
-          return;
-        }
-
-        const gitAttributesEval = gitAttributes.evaluate(diff.filename);
+        const gitAttributesEval = gitAttributes?.evaluate(diff.filename);
         const matchingSettings = settingsPatterns.filter(({ pattern }) =>
           minimatch(diff.filename, pattern),
         );
         const isGitAttributesGenerated =
-          !!gitAttributesEval.attributes["linguist-generated"];
+          !!gitAttributesEval?.attributes["linguist-generated"];
         const isSettingsGenerated = matchingSettings.length > 0;
         const isGenerated = isGitAttributesGenerated || isSettingsGenerated;
 
