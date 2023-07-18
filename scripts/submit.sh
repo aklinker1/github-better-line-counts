@@ -55,6 +55,10 @@ heading "Commit Changes"
 if [[ "$1" == "--dry-run" ]]; then 
     echo "Skipping commit for dry run"
     git checkout -- package.json
+    NEXT_VERSION="$(node -pe 'require("./package.json").version')"
+    NEXT_TAG="v$NEXT_VERSION"
+    echo "Reset tag: $NEXT_TAG"
+    echo "Reset version: $NEXT_VERSION"
 else
     git add package.json
     git commit -m "chore(release): $NEXT_TAG"
