@@ -22,9 +22,8 @@ const tokenHidden = ref(true);
     <div class="flex flex-col gap-2">
       <p class="font-medium text-base-content text-lg">Access Private Repos</p>
       <p class="text-base">
-        <em>Optional:</em> To load the
-        <code class="text-sm">.gitattributes</code> for private repos, you need
-        to enter a GitHub personal access token.
+        <em>Optional:</em> To recalculate the diff on private repos, the
+        extension needs a GitHub PAT to authenticate API requests.
         <a
           class="link link-secondary"
           href="https://github.com/settings/tokens/new?description=Github%3A%20Better%20Line%20Count&scopes=repo"
