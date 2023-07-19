@@ -2,7 +2,7 @@
   "name": "GitHub: Better Line Counts",
   "description": "Remove generated files from GitHub line counts",
   "private": true,
-  "version": "1.6.1",
+  "version": "1.6.2",
   "type": "module",
   "scripts": {
     "format": "prettier --write .",
