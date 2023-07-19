@@ -16,32 +16,44 @@ export function createDiffComponent(options: {
     const spinner = Spinner(GREY_COLOR);
     spinner.id = DIFF_COMPONENT_ID;
     options.addSpinnerToPage(spinner);
+    const hideSpinner = () => {
+      spinner.style.display = "none";
+    };
 
     // Wait for calculation and settings to load
 
-    const [stats, hideGeneratedLineCount] = await Promise.all([
-      statsPromise,
-      hideGeneratedLineCountPromise,
-    ]);
+    try {
+      const [stats, hideGeneratedLineCount] = await Promise.all([
+        statsPromise,
+        hideGeneratedLineCountPromise,
+      ]);
 
-    // Render new counts
+      // Render new counts
 
-    const additions = options.getAdditionsElement();
-    if (additions)
-      additions.textContent = options.getAdditionsText(stats.include.additions);
+      const additions = options.getAdditionsElement();
+      if (additions)
+        additions.textContent = options.getAdditionsText(
+          stats.include.additions,
+        );
 
-    const deletions = options.getDeletionsElement();
-    if (deletions)
-      deletions.textContent = options.getDeletionsText(stats.include.deletions);
+      const deletions = options.getDeletionsElement();
+      if (deletions)
+        deletions.textContent = options.getDeletionsText(
+          stats.include.deletions,
+        );
 
-    if (!hideGeneratedLineCount) {
-      const generated = document.createElement("strong");
-      generated.id = DIFF_COMPONENT_ID;
-      generated.textContent = options.getGeneratedText(stats.exclude.changes);
-      generated.style.color = GREY_COLOR;
-      spinner.replaceWith(generated);
-    } else {
-      spinner.style.display = "none";
+      if (!hideGeneratedLineCount) {
+        const generated = document.createElement("strong");
+        generated.id = DIFF_COMPONENT_ID;
+        generated.textContent = options.getGeneratedText(stats.exclude.changes);
+        generated.style.color = GREY_COLOR;
+        spinner.replaceWith(generated);
+      } else {
+        hideSpinner();
+      }
+    } catch (err) {
+      hideSpinner();
+      logger.debug("Failed to calculate diff:", err);
     }
   };
 }
