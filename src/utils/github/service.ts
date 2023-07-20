@@ -109,12 +109,23 @@ function createGithubService(api: GithubApi) {
     throw Error(`Not implemented: getChangedFiles(${JSON.stringify(options)})`);
   }
 
+  function getCacheKey(
+    currentRef: string,
+    options: RecalculateOptions,
+  ): string {
+    if (options.type === "compare") {
+      return `${options.commitRefs[0]}...${options.commitRefs[1]}`;
+    }
+    return currentRef;
+  }
+
   return {
     async recalculateDiff(
       options: RecalculateOptions,
     ): Promise<RecalculateResult> {
       const ref = await getCurrentCommit(options);
-      const cached = await commitHashDiffsCache.get(ref);
+      const cacheKey = getCacheKey(ref, options);
+      const cached = await commitHashDiffsCache.get(cacheKey);
       if (cached) {
         logger.debug("[recalculateDiff] Using cached result");
         return cached;
@@ -161,7 +172,7 @@ function createGithubService(api: GithubApi) {
         exclude: calculateDiffForFiles(exclude),
         include: calculateDiffForFiles(include),
       };
-      await commitHashDiffsCache.set(ref, result, 2 * HOUR);
+      await commitHashDiffsCache.set(cacheKey, result, 2 * HOUR);
       return result;
     },
 
