@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^3.1.3
     version: 3.1.3(prettier@2.8.4)
   publish-browser-extension:
-    specifier: ^1.4.0
-    version: 1.4.0
+    specifier: ^1.4.1
+    version: 1.4.1
   tailwindcss:
     specifier: ^3.3.3
     version: 3.3.3
@@ -4597,8 +4597,8 @@ packages:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
     dev: true
 
-  /publish-browser-extension@1.4.0:
-    resolution: {integrity: sha512-Sb6oYvJivuyBfuVtZqyofbTmtgTIsfe95+etpldT0UFGw/8qCIgPmuiLOxjMffSSEWjvxmG14mhwZ0vnczI0hw==}
+  /publish-browser-extension@1.4.1:
+    resolution: {integrity: sha512-Z9IIY1XT+1160Ot98zXgl3WYOrCk8lsN7c+7hu5jM/er6l26ZxrtFoAI6Yp5GtSjEpbT1CHHQdkFAoyVLifs6A==}
     engines: {node: '18', pnpm: '8'}
     hasBin: true
     dependencies:
