@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import OptionsForm from "../components/OptionsForm.vue";
+import OptionsForm from "@/components/OptionsForm.vue";
 </script>
 
 <template>
