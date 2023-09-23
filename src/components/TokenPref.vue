@@ -33,15 +33,15 @@ const tokenHidden = ref(true);
         to create one.
       </p>
     </div>
-    <div class="input-group">
+    <div class="join">
       <input
-        class="input input-bordered w-full"
+        class="join-item input input-bordered w-full"
         placeholder="Personal access token..."
         v-model="token"
         :type="tokenHidden ? 'password' : 'text'"
       />
       <div
-        class="btn"
+        class="join-item btn"
         role="button"
         :class="{ 'btn-error': !tokenHidden }"
         @click="tokenHidden = !tokenHidden"
