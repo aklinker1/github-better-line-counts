@@ -3,6 +3,6 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "isolatedModules": true,
-    "types": ["vite/client", "unplugin-icons/types/vue"]
+    "types": ["unplugin-icons/types/vue"]
   }
 }
