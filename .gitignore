@@ -12,6 +12,7 @@ node_modules
 artifacts
 *.local
 coverage
+stats.html
 
 # Editor directories and files
 .vscode/*
