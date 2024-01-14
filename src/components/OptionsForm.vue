@@ -29,6 +29,8 @@ const { state, hasChanges, reset, saveChanges } = useForm<{
     await commitHashDiffsCache.clear();
   },
 );
+
+const { t } = i18n;
 </script>
 
 <template>
@@ -48,10 +50,10 @@ const { state, hasChanges, reset, saveChanges } = useForm<{
         :disabled="!hasChanges"
         @click="saveChanges"
       >
-        Save Changes
+        {{ t("saveChanges") }}
       </button>
       <button class="btn" :disabled="!hasChanges" @click="reset">
-        Discard
+        {{ t("discard") }}
       </button>
     </div>
   </form>

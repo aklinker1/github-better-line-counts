@@ -15,22 +15,26 @@ const token = useVModel(props, "githubPat", emits);
 const { data: user, error, isLoading } = useGithubUserQuery(token);
 
 const tokenHidden = ref(true);
+
+const { t } = i18n;
 </script>
 
 <template>
   <li class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <p class="font-medium text-base-content text-lg">Access Private Repos</p>
+      <p class="font-medium text-base-content text-lg">
+        {{ t("options_privateRepos_title") }}
+      </p>
       <p class="text-base">
-        <em>Optional:</em> To recalculate the diff on private repos, the
-        extension needs a GitHub PAT to authenticate API requests.
+        <em>{{ t("options_privateRepos_description1") }}</em>
+        {{ t("options_privateRepos_description2") }}
         <a
           class="link link-secondary"
           href="https://github.com/settings/tokens/new?description=Github%3A%20Better%20Line%20Count&scopes=repo"
           target="_blank"
-          >Click here</a
+          >{{ t("options_privateRepos_description3") }}</a
         >
-        to create one.
+        {{ t("options_privateRepos_description4") }}
       </p>
     </div>
     <div class="join">
@@ -53,17 +57,23 @@ const tokenHidden = ref(true);
 
     <template v-if="token">
       <p v-if="error" class="">
-        <span class="badge badge-error shrink-0">Token is invalid</span>
+        <span class="badge badge-error shrink-0">{{
+          t("options_privateRepos_invalidToken")
+        }}</span>
         {{ " " }}
         <span class="text-sm">{{ error }}</span>
       </p>
       <p v-else-if="isLoading || user == null" class="badge badge-ghost">
-        Checking token...
+        {{ t("options_privateRepos_checking") }}
       </p>
       <p v-else class="">
-        <span class="badge badge-success">Token is valid</span>
+        <span class="badge badge-success">{{
+          t("options_privateRepos_validToken")
+        }}</span>
         {{ " " }}
-        <span class="text-sm">Username: {{ user?.login }}</span>
+        <span class="text-sm">{{
+          t("options_privateRepos_username", [user.login])
+        }}</span>
       </p>
     </template>
   </li>

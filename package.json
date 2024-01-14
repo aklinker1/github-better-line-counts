@@ -57,7 +57,7 @@
     "vitest": "^1.1.0",
     "vue": "^3.3.13",
     "vue-tsc": "^1.8.26",
-    "wxt": "^0.12.3"
+    "wxt": "0.14.2-alpha2"
   },
   "pnpm": {
     "peerDependencyRules": {
