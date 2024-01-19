@@ -47,6 +47,9 @@ export function createDiffComponent(options: {
         generated.id = DIFF_COMPONENT_ID;
         generated.textContent = options.getGeneratedText(stats.exclude.changes);
         generated.style.color = GREY_COLOR;
+        const generatedAdditionsText = `+${stats.exclude.additions}`;
+        const generatedDeletionsText = `−${stats.exclude.deletions}`;
+        generated.title = `${generatedAdditionsText} ${generatedDeletionsText}`;
         spinner.replaceWith(generated);
       } else {
         hideSpinner();
