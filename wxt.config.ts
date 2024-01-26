@@ -20,6 +20,7 @@ export default defineConfig({
   manifest: ({ browser }) => {
     const manifest: UserManifest = {
       permissions: ["storage"],
+      default_locale: "en",
     };
     if (browser === "firefox") {
       manifest.permissions!.push("https://api.github.com/*");

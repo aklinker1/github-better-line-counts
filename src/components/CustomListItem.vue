@@ -6,6 +6,8 @@ const props = defineProps<{
 const emits = defineEmits<{
   (event: "update:value", newValue: string): void;
 }>();
+
+const { t } = i18n;
 </script>
 
 <template>
@@ -14,7 +16,7 @@ const emits = defineEmits<{
 
     <textarea
       class="font-mono p-2 w-full resize-y m-0 outline-none -mb-1 min-h-[5rem]"
-      :placeholder="'Enter glob patterns:\n*.lock\n**/vendor/**'"
+      :placeholder="t('options_customLists_customRepoPlaceholder')"
       :value="value"
       @input="
         emits('update:value', ($event.target as HTMLTextAreaElement).value)
