@@ -35,8 +35,7 @@ function createGithubService(api: GithubApi) {
   async function getPatternsFromSettings(): Promise<
     Array<{ source: string; pattern: string }>
   > {
-    const res = await extensionStorage.getItem("customLists");
-    if (!res) return [];
+    const res = await customListsStorage.getValue();
 
     const { all } = res;
     return all.split("\n").map((line) => ({

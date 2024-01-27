@@ -21,7 +21,7 @@ export function createGithubApi() {
     async onRequest(ctx) {
       const headers = ctx.options.headers as Record<string, string>;
       if (headers.Authorization == null) {
-        const token = await extensionStorage.getItem("githubPat");
+        const token = await githubPatStorage.getValue();
         if (token) headers.Authorization = `Bearer ${token}`;
       }
     },

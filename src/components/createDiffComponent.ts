@@ -9,9 +9,8 @@ export function createDiffComponent(options: {
   getGeneratedText: (count: number) => string;
 }): (statsPromise: Promise<RecalculateResult>) => Promise<void> {
   return async (statsPromise) => {
-    const hideGeneratedLineCountPromise = extensionStorage.getItem(
-      "hideGeneratedLineCount",
-    );
+    const hideGeneratedLineCountPromise =
+      hideGeneratedLineCountStorage.getValue();
 
     const spinner = Spinner(GREY_COLOR);
     spinner.id = DIFF_COMPONENT_ID;

@@ -2,7 +2,12 @@
 import TokenPref from "./TokenPref.vue";
 import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
 import CustomListsPref from "./CustomListsPref.vue";
-import type { CustomLists } from "@/utils/storage";
+import {
+  hideGeneratedLineCountStorage,
+  type CustomLists,
+  githubPatStorage,
+  customListsStorage,
+} from "@/utils/storage";
 
 const { state, hasChanges, reset, saveChanges } = useForm<{
   hideGeneratedLineCount: boolean;
@@ -10,20 +15,17 @@ const { state, hasChanges, reset, saveChanges } = useForm<{
   customLists: CustomLists;
 }>(
   {
-    hideGeneratedLineCount: !!(await extensionStorage.getItem(
-      "hideGeneratedLineCount",
-    )),
-    githubPat: (await extensionStorage.getItem("githubPat")) ?? "",
+    hideGeneratedLineCount: !!(await hideGeneratedLineCountStorage.getValue()),
+    githubPat: (await githubPatStorage.getValue()) ?? "",
     // This value is set when extension is installed.
-    customLists: (await extensionStorage.getItem("customLists"))!,
+    customLists: (await customListsStorage.getValue())!,
   },
   async (newState) => {
-    await extensionStorage.setItem(
-      "hideGeneratedLineCount",
+    await hideGeneratedLineCountStorage.setValue(
       newState.hideGeneratedLineCount,
     );
-    await extensionStorage.setItem("githubPat", newState.githubPat);
-    await extensionStorage.setItem("customLists", newState.customLists);
+    await githubPatStorage.setValue(newState.githubPat);
+    await customListsStorage.setValue(newState.customLists);
 
     // Clear cache
     await commitHashDiffsCache.clear();
