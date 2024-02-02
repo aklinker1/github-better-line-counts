@@ -1,5 +1,3 @@
-import { defineExtensionStorage } from "@webext-core/storage";
-
 export interface CustomLists {
   all: string;
 }
@@ -21,6 +19,20 @@ export interface ExtensionStorageSchema {
   };
 }
 
-export const extensionStorage = defineExtensionStorage<ExtensionStorageSchema>(
-  browser.storage.local,
+export const githubPatStorage = storage.defineItem<string>("local:githubPat", {
+  defaultValue: import.meta.env.VITE_DEFAULT_TOKEN ?? "",
+});
+
+export const hideGeneratedLineCountStorage = storage.defineItem<boolean>(
+  "local:hideGeneratedLineCount",
+  { defaultValue: false },
+);
+
+export const customListsStorage = storage.defineItem<{ all: string }>(
+  "local:customLists",
+  {
+    defaultValue: {
+      all: `*.lock\n*.lock.*\n*-lock*`,
+    },
+  },
 );

@@ -1,4 +1,3 @@
-import { localExtStorage } from "@webext-core/storage";
 import { Mutex } from "async-mutex";
 
 interface CachedValue<TValue> {
@@ -34,9 +33,11 @@ export function createKeyValueCache<TValue>(
   const mutex = new Mutex();
 
   const getCache = (): Promise<Cache<TValue>> =>
-    localExtStorage.getItem(storageKey).then((res) => res ?? {});
+    storage
+      .getItem<Cache<TValue>>(`local:${storageKey}`)
+      .then((res) => res ?? {});
   const setCache = (cache: Cache<any>): Promise<void> =>
-    localExtStorage.setItem(storageKey, cache);
+    storage.setItem(`local:${storageKey}`, cache);
 
   const isValid = (
     cachedValue: CachedValue<any> | undefined,
