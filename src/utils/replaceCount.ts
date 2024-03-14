@@ -1,8 +1,5 @@
-import {
-  RecalculateOptions,
-  RecalculateResult,
-  getGithubService,
-} from "./github";
+import { getGithubService } from "./github";
+import type { RecalculateOptions, RecalculateResult } from "./github";
 
 /**
  * Calculate and add the generated count to the page.

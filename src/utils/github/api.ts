@@ -1,5 +1,5 @@
 import { FetchError, ofetch } from "ofetch";
-import {
+import type {
   Commit,
   Comparison,
   DiffEntry,

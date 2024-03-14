@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { GitAttributes, FileEvaluation } from "../GitAttributes";
+import { GitAttributes, type FileEvaluation } from "../GitAttributes";
 
 describe("GitAttributes", () => {
   it("should evaluate git's example correctly (https://www.git-scm.com/docs/gitattributes#_examples)", () => {

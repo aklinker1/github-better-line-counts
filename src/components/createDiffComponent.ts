@@ -1,4 +1,4 @@
-import { RecalculateResult } from "@/utils/github";
+import type { RecalculateResult } from "@/utils/github";
 
 export function createDiffComponent(options: {
   getAdditionsElement: () => HTMLElement | null | undefined;

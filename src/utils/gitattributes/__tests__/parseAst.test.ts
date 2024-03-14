@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { Node, parseAst } from "../parseAst";
-import { Token } from "../tokenize";
+import { parseAst } from "../parseAst";
+import type { Node } from "../parseAst";
+import type { Token } from "../tokenize";
 
 describe("parseAst", () => {
   it("should return the correct AST for no tokens", () => {
