@@ -20,7 +20,7 @@
     "submit:dry": "pnpm -s submit --dry-run"
   },
   "dependencies": {
-    "@aklinker1/check": "^1.0.0",
+    "@aklinker1/check": "^1.0.3",
     "@vueuse/core": "^9",
     "@webext-core/messaging": "^1.4.0",
     "@webext-core/proxy-service": "^1.2.0",
@@ -60,7 +60,9 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "allowAny": ["node-fetch"]
+      "allowAny": [
+        "node-fetch"
+      ]
     }
   },
   "simple-git-hooks": {
