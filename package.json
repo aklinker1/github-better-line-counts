@@ -59,7 +59,9 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "allowAny": ["node-fetch"]
+      "allowAny": [
+        "node-fetch"
+      ]
     }
   },
   "simple-git-hooks": {
