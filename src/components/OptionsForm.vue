@@ -15,10 +15,10 @@ const { state, hasChanges, reset, saveChanges } = useForm<{
   customLists: CustomLists;
 }>(
   {
-    hideGeneratedLineCount: !!(await hideGeneratedLineCountStorage.getValue()),
-    githubPat: (await githubPatStorage.getValue()) ?? "",
+    hideGeneratedLineCount: await hideGeneratedLineCountStorage.getValue(),
+    githubPat: await githubPatStorage.getValue(),
     // This value is set when extension is installed.
-    customLists: (await customListsStorage.getValue())!,
+    customLists: await customListsStorage.getValue(),
   },
   async (newState) => {
     await hideGeneratedLineCountStorage.setValue(
