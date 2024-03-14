@@ -28,7 +28,7 @@ jobs:
         run: pnpm install
 
       - name: Formatting
-        run: pnpm format:check
+        run: pnpm check
 
       - name: Type Check
         run: pnpm compile

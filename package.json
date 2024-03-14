@@ -5,9 +5,7 @@
   "version": "1.7.0",
   "type": "module",
   "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "compile": "vue-tsc --noEmit",
+    "check": "check",
     "dev": "wxt",
     "dev:firefox": "wxt --browser firefox",
     "build": "wxt build",
@@ -22,6 +20,7 @@
     "submit:dry": "pnpm -s submit --dry-run"
   },
   "dependencies": {
+    "@aklinker1/check": "^1.0.0",
     "@vueuse/core": "^9",
     "@webext-core/messaging": "^1.4.0",
     "@webext-core/proxy-service": "^1.2.0",
@@ -35,6 +34,7 @@
   "devDependencies": {
     "@aklinker1/generate-changelog": "^1.1.2",
     "@iconify/json": "^2.2.119",
+    "@types/bun": "latest",
     "@types/jsdom": "^21.1.3",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitest/coverage-v8": "^1.3.1",
@@ -70,5 +70,6 @@
   },
   "lint-staged": {
     "*": "prettier --write"
-  }
+  },
+  "module": "index.ts"
 }
