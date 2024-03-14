@@ -1,6 +1,6 @@
 import { defineProxyService } from "@webext-core/proxy-service";
-import { GithubApi } from "./api";
-import { DiffEntry } from "./types";
+import type { GithubApi } from "./api";
+import type { DiffEntry } from "./types";
 import { minimatch } from "minimatch";
 import { GitAttributes } from "../gitattributes";
 
