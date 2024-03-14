@@ -27,11 +27,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Formatting
-        run: pnpm format:check
-
-      - name: Type Check
-        run: pnpm compile
+      - name: Run Checks
+        run: pnpm check
 
       - name: Build
         run: pnpm build

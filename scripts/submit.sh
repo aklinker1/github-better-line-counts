@@ -47,12 +47,12 @@ pnpm prettier -w package.json
 
 heading "Run Checks"
 pnpm test run
-pnpm compile
+pnpm check
 
 # Commit Changes
 
 heading "Commit Changes"
-if [[ "$1" == "--dry-run" ]]; then 
+if [[ "$1" == "--dry-run" ]]; then
     echo "Skipping commit for dry run"
     git checkout -- package.json
     NEXT_VERSION="$(node -pe 'require("./package.json").version')"

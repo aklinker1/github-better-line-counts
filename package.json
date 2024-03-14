@@ -5,9 +5,7 @@
   "version": "1.7.0",
   "type": "module",
   "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "compile": "vue-tsc --noEmit",
+    "check": "check",
     "dev": "wxt",
     "dev:firefox": "wxt --browser firefox",
     "build": "wxt build",
@@ -22,6 +20,7 @@
     "submit:dry": "pnpm -s submit --dry-run"
   },
   "dependencies": {
+    "@aklinker1/check": "^1.0.3",
     "@vueuse/core": "^9",
     "@webext-core/messaging": "^1.4.0",
     "@webext-core/proxy-service": "^1.2.0",
