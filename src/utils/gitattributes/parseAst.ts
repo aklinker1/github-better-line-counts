@@ -1,4 +1,4 @@
-import { Token } from "./tokenize";
+import type { Token } from "./tokenize";
 
 export function parseAst(tokens: Token[]): Node[] {
   const nodes: Node[] = [];

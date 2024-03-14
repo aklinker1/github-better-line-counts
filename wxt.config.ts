@@ -1,4 +1,5 @@
-import { UserManifest, defineConfig } from "wxt";
+import type { UserManifest } from "wxt";
+import { defineConfig } from "wxt";
 import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
 
