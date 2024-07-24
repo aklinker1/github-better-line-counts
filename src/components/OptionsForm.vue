@@ -8,6 +8,7 @@ import {
   githubPatStorage,
   customListsStorage,
 } from "@/utils/storage";
+import { useForm } from "@/composables/useForm";
 
 const { state, hasChanges, reset, saveChanges } = useForm<{
   hideGeneratedLineCount: boolean;

@@ -5,18 +5,27 @@ import Icons from "unplugin-icons/vite";
 
 export default defineConfig({
   srcDir: "src",
+  extensionApi: "chrome",
+  modules: ["@wxt-dev/module-vue"],
   imports: {
-    presets: ["vue", "vue-router", "@vueuse/core"],
+    presets: ["vue-router", "@vueuse/core"],
     imports: [
       { from: "vue-query", name: "useQuery" },
       { from: "vue-query", name: "useMutation" },
     ],
-    addons: {
-      vueTemplate: true,
-    },
   },
+  // imports: {
+  //   presets: ["vue", "vue-router", "@vueuse/core"],
+  //   imports: [
+  //     { from: "vue-query", name: "useQuery" },
+  //     { from: "vue-query", name: "useMutation" },
+  //   ],
+  //   addons: {
+  //     vueTemplate: true,
+  //   },
+  // },
   vite: () => ({
-    plugins: [Icons({ compiler: "vue3" }), Vue()],
+    plugins: [Icons({ compiler: "vue3" })],
   }),
   manifest: ({ browser }) => {
     const manifest: UserManifest = {
