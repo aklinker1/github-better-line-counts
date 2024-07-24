@@ -5,26 +5,32 @@ import Icons from "unplugin-icons/vite";
 
 export default defineConfig({
   srcDir: "src",
+  extensionApi: "chrome",
+  experimental: {
+    entrypointImporter: "vite-node",
+  },
+  modules: ["@wxt-dev/module-vue"],
   imports: {
-    presets: ["vue", "vue-router", "@vueuse/core"],
+    presets: ["vue-router", "@vueuse/core"],
     imports: [
       { from: "vue-query", name: "useQuery" },
       { from: "vue-query", name: "useMutation" },
     ],
-    addons: {
-      vueTemplate: true,
-    },
   },
   vite: () => ({
-    plugins: [Icons({ compiler: "vue3" }), Vue()],
+    plugins: [Icons({ compiler: "vue3" })],
+    ssr: {
+      // List any dependencies that depend on webextension-polyfill here for vite-node importer to work
+      noExternal: ["@webext-core/proxy-service", "@webext-core/messaging"],
+    },
   }),
   manifest: ({ browser }) => {
-    const manifest: UserManifest = {
-      permissions: ["storage"],
-    };
+    const permissions = ["storage"];
     if (browser === "firefox") {
-      manifest.permissions!.push("https://api.github.com/*");
+      permissions.push("https://api.github.com/*");
     }
-    return manifest;
+    return {
+      permissions,
+    };
   },
 });
