@@ -3,6 +3,7 @@
   "description": "Remove generated files from GitHub line counts",
   "private": true,
   "version": "1.7.0",
+  "packageManager": "pnpm@9.6.0",
   "type": "module",
   "scripts": {
     "check": "check",
