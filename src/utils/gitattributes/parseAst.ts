@@ -76,8 +76,8 @@ export function parseAst(tokens: Token[]): Node[] {
                 valueToken === "true"
                   ? true
                   : valueToken === "false"
-                  ? false
-                  : valueToken;
+                    ? false
+                    : valueToken;
               i += 2;
             }
             rule.attributes.push(attr);
