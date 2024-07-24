@@ -14,26 +14,16 @@ export default defineConfig({
       { from: "vue-query", name: "useMutation" },
     ],
   },
-  // imports: {
-  //   presets: ["vue", "vue-router", "@vueuse/core"],
-  //   imports: [
-  //     { from: "vue-query", name: "useQuery" },
-  //     { from: "vue-query", name: "useMutation" },
-  //   ],
-  //   addons: {
-  //     vueTemplate: true,
-  //   },
-  // },
   vite: () => ({
     plugins: [Icons({ compiler: "vue3" })],
   }),
   manifest: ({ browser }) => {
-    const manifest: UserManifest = {
-      permissions: ["storage"],
-    };
+    const permissions = ["storage"];
     if (browser === "firefox") {
-      manifest.permissions!.push("https://api.github.com/*");
+      permissions.push("https://api.github.com/*");
     }
-    return manifest;
+    return {
+      permissions,
+    };
   },
 });
