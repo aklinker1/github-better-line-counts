@@ -55,6 +55,7 @@ jobs:
         with:
           path: .output/*.zip
           if-no-files-found: error
+          include-hidden-files: true
 
       - name: Submit
         run: |
@@ -88,4 +89,6 @@ jobs:
 
       - name: Release
         if: ${{ !inputs.dryRun }}
-        run: pnpx changelogen@latest gh release ${{ steps.version.outputs.newVersion }} --token ${{ github.token }}
+        run: gh release create v${{ steps.version.outputs.newVersion }} .output/*.zip -F CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
