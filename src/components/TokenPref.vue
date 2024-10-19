@@ -2,15 +2,9 @@
 import IMdiEye from "~icons/mdi/eye";
 import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
 
-const props = defineProps<{
-  githubPat: string;
-}>();
-
-const emits = defineEmits<{
-  (event: "update:githubPat", newToken: string): void;
-}>();
-
-const token = useVModel(props, "githubPat", emits);
+const token = defineModel<string>("githubPat", {
+  required: true,
+});
 
 const { data: user, error, isLoading } = useGithubUserQuery(token);
 
@@ -67,7 +61,7 @@ const { t } = i18n;
         {{ t("options.privateRepos.checking") }}
       </p>
       <p v-else>
-        <span class="badge badge-success">{{
+        <span class="badge badge-primary">{{
           t("options.privateRepos.validToken")
         }}</span>
         {{ " " }}

@@ -1,6 +1,4 @@
-import type { UserManifest } from "wxt";
 import { defineConfig } from "wxt";
-import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
 
 export default defineConfig({
@@ -15,7 +13,7 @@ export default defineConfig({
     "@wxt-dev/auto-icons",
   ],
   imports: {
-    presets: ["vue-router", "@vueuse/core"],
+    presets: ["vue-router"],
     imports: [
       { from: "@tanstack/vue-query", name: "useQuery" },
       { from: "@tanstack/vue-query", name: "useMutation" },

@@ -3,15 +3,8 @@ import { computed } from "vue";
 import type { CustomLists } from "@/utils/storage";
 import CustomListItem from "./CustomListItem.vue";
 
-const props = defineProps<{
-  customLists: CustomLists;
-}>();
+const customLists = defineModel<CustomLists>("customLists", { required: true });
 
-const emits = defineEmits<{
-  (event: "update:customLists", newValue: CustomLists): void;
-}>();
-
-const customLists = useVModel(props, "customLists", emits);
 const all = computed({
   get() {
     return customLists.value.all;
