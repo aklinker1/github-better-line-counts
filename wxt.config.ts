@@ -13,8 +13,8 @@ export default defineConfig({
   imports: {
     presets: ["vue-router", "@vueuse/core"],
     imports: [
-      { from: "vue-query", name: "useQuery" },
-      { from: "vue-query", name: "useMutation" },
+      { from: "@tanstack/vue-query", name: "useQuery" },
+      { from: "@tanstack/vue-query", name: "useMutation" },
     ],
   },
   vite: () => ({
