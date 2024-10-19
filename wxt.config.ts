@@ -9,7 +9,11 @@ export default defineConfig({
   experimental: {
     entrypointImporter: "vite-node",
   },
-  modules: ["@wxt-dev/module-vue", "@wxt-dev/i18n/module"],
+  modules: [
+    "@wxt-dev/module-vue",
+    "@wxt-dev/i18n/module",
+    "@wxt-dev/auto-icons",
+  ],
   imports: {
     presets: ["vue-router", "@vueuse/core"],
     imports: [
@@ -35,5 +39,8 @@ export default defineConfig({
       description: "__MSG_description__",
       permissions,
     };
+  },
+  autoIcons: {
+    grayscaleOnDevelopment: false,
   },
 });
