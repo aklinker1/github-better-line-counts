@@ -3,7 +3,7 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "isolatedModules": true,
-    "types": ["unplugin-icons/types/vue"],
+    "types": ["bun", "unplugin-icons/types/vue"],
     "verbatimModuleSyntax": true
   }
 }

@@ -13,25 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
+      - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: Run Checks
-        run: pnpm check
+        run: bun check
 
       - name: Build
-        run: pnpm build
+        run: bun run build
 
       - name: Tests
-        run: pnpm test:coverage
+        run: bun run test:coverage

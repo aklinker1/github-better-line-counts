@@ -2,7 +2,6 @@ dist
 dist-*
 artifacts
 coverage
-pnpm-lock.yaml
 .wxt
 .output
 coverage
