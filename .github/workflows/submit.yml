@@ -89,6 +89,9 @@ jobs:
 
       - name: Release
         if: ${{ !inputs.dryRun }}
-        run: gh release create v${{ steps.version.outputs.newVersion }} .output/*.zip -F CHANGELOG.md
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpx changelogen@latest gh release ${{ steps.version.outputs.newVersion }} --token ${{ github.token }}
+
+      # Don't upload sources zip - it can contain .env files, which may include secrets
+      - name: Upload ZIPs
+        if: ${{ !inputs.dryRun }}
+        run: gh release upload ${{ steps.version.outputs.newVersion }} .output/*-chrome.zip .output/*-firefox.zip
