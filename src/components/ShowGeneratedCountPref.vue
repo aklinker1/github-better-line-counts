@@ -1,13 +1,7 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  hideGeneratedLineCount: boolean;
-}>();
-
-const emits = defineEmits<{
-  (event: "update:hideGeneratedLineCount", newHide: boolean): void;
-}>();
-
-const hideLineCount = useVModel(props, "hideGeneratedLineCount", emits);
+const hideLineCount = defineModel<boolean>("hideGeneratedLineCount", {
+  required: true,
+});
 
 function toggle() {
   hideLineCount.value = !hideLineCount.value;
