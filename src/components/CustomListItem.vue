@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps<{
+defineProps<{
   value: string;
 }>();
 
@@ -14,7 +14,7 @@ const emits = defineEmits<{
 
     <textarea
       class="font-mono p-2 w-full resize-y m-0 outline-none -mb-1 min-h-[5rem]"
-      :placeholder="'Enter glob patterns:\n*.lock\n**/vendor/**'"
+      :placeholder="i18n.t('options.customLists.customRepoPlaceholder')"
       :value="value"
       @input="
         emits('update:value', ($event.target as HTMLTextAreaElement).value)

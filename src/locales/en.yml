@@ -1,0 +1,49 @@
+name: GitHub Better Line Counts
+description: Remove generated files from GitHub line counts
+saveChanges: Save Changes
+discard: Discard
+diffs:
+  additionsText:
+    1: $1 addition
+    n: $1 additions
+  deletionsText:
+    1: $1 deletion
+    n: $1 deletions
+  generatedText:
+    1: $1 generated line.
+    n: $1 generated lines.
+  additionsSymbol: +$1
+  deletionsSymbol: −$1
+  generatedSymbol: ⌁$1
+options:
+  title: Options
+  privateRepos:
+    title: Access Private Repos
+    description1: "Optional:"
+    description2: To recalculate the diff on private repos, the extension needs a GitHub PAT to authenticate API requests.
+    description3: Click here
+    description4: to create one.
+    inputPlaceholder: Personal access token...
+    invalidToken: Token is invalid
+    validToken: Token is valid
+    checking: Checking token...
+    username: "Username: $1"
+  enabled:
+    title: Show Generated Line Counts
+    description1: Along with
+    description2: +additions
+    description3: and
+    description4: −deletions
+    description5: ", show a third number for"
+    description6: ⌁generated
+    description7: lines.
+  customLists:
+    title: Custom Lists
+    description1: Use
+    description2: minimatch
+    description3: glob patterns to mark files as generated across all repos.
+    allRepos: All Repos
+    customRepoPlaceholder: |
+      Enter glob patterns:
+      *.lock
+      **/vendor/**

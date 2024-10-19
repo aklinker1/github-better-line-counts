@@ -7,7 +7,7 @@ export const PrDiff = createDiffComponent({
     const deletions = this.getDeletionsElement();
     deletions?.replaceWith(deletions, spinner);
   },
-  getAdditionsText: (count) => `+${count}`,
-  getDeletionsText: (count) => `−${count}`,
-  getGeneratedText: (count) => ` ⌁${count}`,
+  getAdditionsText: (count) => i18n.t("diffs.additionsSymbol", [count]),
+  getDeletionsText: (count) => i18n.t("diffs.deletionsSymbol", [count]),
+  getGeneratedText: (count) => i18n.t("diffs.generatedSymbol", [count]),
 });

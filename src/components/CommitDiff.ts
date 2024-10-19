@@ -7,7 +7,7 @@ export const CommitDiff = createDiffComponent({
     const container = this.getDeletionsElement()?.parentElement;
     container?.appendChild(spinner);
   },
-  getAdditionsText: (count) => `${count} additions`,
-  getDeletionsText: (count) => `${count} deletions`,
-  getGeneratedText: (count) => `${count} generated lines.`,
+  getAdditionsText: (count) => i18n.t("diffs.additionsText", count),
+  getDeletionsText: (count) => i18n.t("diffs.deletionsText", count),
+  getGeneratedText: (count) => i18n.t("diffs.generatedText", count),
 });

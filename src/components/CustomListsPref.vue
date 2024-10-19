@@ -23,26 +23,32 @@ const all = computed({
     };
   },
 });
+
+const { t } = i18n;
 </script>
 
 <template>
   <li class="flex flex-col gap-4">
     <!-- Header -->
     <div class="flex flex-col gap-2">
-      <p class="font-medium text-base-content text-lg">Custom Lists</p>
+      <p class="font-medium text-base-content text-lg">
+        {{ t("options.customLists.title") }}
+      </p>
       <p class="text-base">
-        Use
+        {{ t("options.customLists.description1") }}
         <a
           class="link link-secondary"
           href="https://github.com/isaacs/minimatch#features"
           target="_blank"
-          >minimatch</a
+          >{{ t("options.customLists.description2") }}</a
         >
-        glob patterns to mark files as generated accross all repos.
+        {{ t("options.customLists.description3") }}
       </p>
     </div>
 
     <!-- All Repos -->
-    <CustomListItem v-model:value="all">All Repos</CustomListItem>
+    <CustomListItem v-model:value="all">{{
+      i18n.t("options.customLists.allRepos")
+    }}</CustomListItem>
   </li>
 </template>
