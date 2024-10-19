@@ -35,6 +35,14 @@ Install dependencies:
 bun i
 ```
 
+### Default GitHub Token
+
+You can provide a default API token for development by creating a `.env.development.local` file:
+
+```sh
+VITE_DEFAULT_TOKEN=<your-token>
+```
+
 ### Scripts
 
 This extension is bundled via [WXT](https://wxt.dev).
