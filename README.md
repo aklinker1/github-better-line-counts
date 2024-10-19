@@ -27,60 +27,35 @@ That's it. Very simple, targeted extension for fixing 1 problem with GitHub.
 
 ## Development
 
-You must use [PNPM](https://pnpm.io/) with this repo. To install it, run `corepack enable` or `npm i -g pnpm`.
+You must use [Bun](https://bun.sh/) with this repo.
 
-Then instal dependencies:
+Install dependencies:
 
 ```sh
-pnpm i
+bun i
 ```
 
 ### Scripts
 
 This extension is bundled via [WXT](https://wxt.dev).
 
-- `pnpm dev`: Launchs Chrome with the dev version of the extension installed.
-- `pnpm build`: Builds the extension for production. Outputs to the `dist` directory.
-- `pnpm zip`: Zips up the `dist` directory into an installable ZIP file.
+- `bun dev`: Launches Chrome with the dev version of the extension installed.
+- `bun run build`: Builds the extension for production. Outputs to the `dist` directory.
+- `bun run zip`: Zips up the `dist` directory into an installable ZIP file.
 
 Add `:firefox` suffix to some commands to target firefox instead of Chrome.
 
-- `pnpm build:firefox`
-- `pnpm dev:firefox`
+- `bun run build:firefox`
+- `bun run dev:firefox`
 
 ### Running Tests
 
 Unit tests are written with Vitest.
 
 ```ts
-pnpm test
+bun run test
 ```
 
 ## Release an Update
 
-Eventually, I'll create a GitHub action for this. But for now, you can release an update by:
-
-1. Create a file, `.env.submit`, with the following content:
-
-   ```sh
-   # Follow: https://developer.chrome.com/docs/webstore/using_webstore_api/
-   CHROME_EXTENSION_ID="..."
-   CHROME_CLIENT_ID="..."
-   CHROME_CLIENT_SECRET="..."
-   CHROME_REFRESH_TOKEN="..."
-
-   # Follow: https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#web-ext-sign
-   FIREFOX_EXTENSION_ID="..."
-   FIREFOX_JWT_ISSUER="..."
-   FIREFOX_JWT_SECRET="..."
-
-   # Follow: https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/publish/api/using-addons-api#before-you-begin
-   EDGE_PRODUCT_ID="..."
-   EDGE_CLIENT_ID="..."
-   EDGE_CLIENT_SECRET="..."
-   EDGE_ACCESS_TOKEN_URL="..."
-   ```
-
-2. _Optional_: Run `pnpm submit:dry` to test if your config is correct.
-
-3. Run `pnpm submit` to submit new versions to the stores.
+Use the [Submit for Review](https://github.com/aklinker1/github-better-line-counts/actions/workflows/submit.yml) workflow.
