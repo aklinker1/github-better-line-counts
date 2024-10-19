@@ -19,10 +19,9 @@ export function createGithubApi() {
       Accept: "application/vnd.github+json",
     },
     async onRequest(ctx) {
-      const headers = ctx.options.headers as Record<string, string>;
-      if (headers.Authorization == null) {
+      if (!ctx.options.headers.has("Authorization")) {
         const token = await githubPatStorage.getValue();
-        if (token) headers.Authorization = `Bearer ${token}`;
+        ctx.options.headers.set("Authorization", `Bearer ${token}`);
       }
     },
   });
