@@ -9,7 +9,7 @@ export default defineConfig({
   experimental: {
     entrypointImporter: "vite-node",
   },
-  modules: ["@wxt-dev/module-vue"],
+  modules: ["@wxt-dev/module-vue", "@wxt-dev/i18n/module"],
   imports: {
     presets: ["vue-router", "@vueuse/core"],
     imports: [
@@ -30,6 +30,9 @@ export default defineConfig({
       permissions.push("https://api.github.com/*");
     }
     return {
+      default_locale: "en",
+      name: "__MSG_name__",
+      description: "__MSG_description__",
       permissions,
     };
   },

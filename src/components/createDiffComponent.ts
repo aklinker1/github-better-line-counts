@@ -44,10 +44,15 @@ export function createDiffComponent(options: {
       if (!hideGeneratedLineCount) {
         const generated = document.createElement("strong");
         generated.id = DIFF_COMPONENT_ID;
-        generated.textContent = options.getGeneratedText(stats.exclude.changes);
+        generated.textContent =
+          " " + options.getGeneratedText(stats.exclude.changes);
         generated.style.color = GREY_COLOR;
-        const generatedAdditionsText = `+${stats.exclude.additions}`;
-        const generatedDeletionsText = `−${stats.exclude.deletions}`;
+        const generatedAdditionsText = i18n.t("diffs.additionsSymbol", [
+          stats.exclude.additions,
+        ]);
+        const generatedDeletionsText = i18n.t("diffs.deletionsSymbol", [
+          stats.exclude.deletions,
+        ]);
         generated.title = `${generatedAdditionsText} ${generatedDeletionsText}`;
         spinner.replaceWith(generated);
       } else {
