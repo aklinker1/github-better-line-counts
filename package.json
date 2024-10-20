@@ -20,7 +20,7 @@
   "dependencies": {
     "@aklinker1/check": "^1.4.5",
     "@tanstack/vue-query": "^5.59.13",
-    "@webext-core/messaging": "^1.0.0",
+    "@webext-core/messaging": "^2.0.2",
     "@webext-core/proxy-service": "^1.2.0",
     "async-mutex": "^0.5.0",
     "daisyui": "^4.12.13",
