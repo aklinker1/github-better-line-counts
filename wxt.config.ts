@@ -4,7 +4,6 @@ import Tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   srcDir: "src",
-  extensionApi: "chrome",
   experimental: {
     entrypointImporter: "vite-node",
   },
