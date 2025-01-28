@@ -2,7 +2,7 @@
   "name": "github-better-line-counts",
   "private": true,
   "version": "1.7.1",
-  "packageManager": "bun@1.1.31",
+  "packageManager": "bun@1.2.1",
   "type": "module",
   "scripts": {
     "check": "check",
