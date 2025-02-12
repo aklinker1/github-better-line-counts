@@ -13,7 +13,7 @@ const emits = defineEmits<{
     <div class="py-2 px-2.5 font-bold"><slot /></div>
 
     <textarea
-      class="font-mono p-2 w-full resize-y m-0 outline-none -mb-1 min-h-[5rem]"
+      class="font-mono p-2 w-full resize-y m-0 outline-none border-0 -mb-1 min-h-[5rem]"
       :placeholder="i18n.t('options.customLists.customRepoPlaceholder')"
       :value="value"
       @input="

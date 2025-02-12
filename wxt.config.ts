@@ -1,5 +1,6 @@
 import { defineConfig } from "wxt";
 import Icons from "unplugin-icons/vite";
+import Tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   srcDir: "src",
@@ -20,7 +21,7 @@ export default defineConfig({
     ],
   },
   vite: () => ({
-    plugins: [Icons({ compiler: "vue3" })],
+    plugins: [Icons({ compiler: "vue3" }), Tailwindcss() as any],
     ssr: {
       // List any dependencies that depend on webextension-polyfill here for vite-node importer to work
       noExternal: ["@webext-core/proxy-service", "@webext-core/messaging"],
