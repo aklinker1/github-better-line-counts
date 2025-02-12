@@ -1,6 +1,3 @@
-import { i18n } from "@/utils/i18n";
-import { createDiffComponent } from "./createDiffComponent";
-
 export const CommitDiff = createDiffComponent({
   getAdditionsElement: () =>
     document.querySelector<HTMLElement>("#toc>*>strong:nth-child(2)"),

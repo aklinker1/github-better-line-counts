@@ -1,4 +1,3 @@
-import { storage } from "@wxt-dev/storage";
 import { Mutex } from "async-mutex";
 
 interface CachedValue<TValue> {

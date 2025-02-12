@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { i18n } from "@/utils/i18n";
-
 defineProps<{
   value: string;
 }>();

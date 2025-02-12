@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import IMdiEye from "~icons/mdi/eye";
 import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
-import { ref } from "vue";
-import { i18n } from "@/utils/i18n";
-import useGithubUserQuery from "@/composables/useGithubUserQuery";
 
 const token = defineModel<string>("githubPat", {
   required: true,

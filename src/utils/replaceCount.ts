@@ -1,7 +1,5 @@
-import { DIFF_COMPONENT_ID } from "./constants";
 import { getGithubService } from "./github";
 import type { RecalculateOptions, RecalculateResult } from "./github";
-import { logger } from "./logger";
 
 /**
  * Calculate and add the generated count to the page.

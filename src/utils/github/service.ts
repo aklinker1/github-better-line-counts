@@ -3,10 +3,6 @@ import type { GithubApi } from "./api";
 import type { DiffEntry } from "./types";
 import { minimatch } from "minimatch";
 import { GitAttributes } from "../gitattributes";
-import { logger } from "../logger";
-import { customListsStorage } from "../storage";
-import { commitHashDiffsCache } from "../global-cache";
-import { HOUR } from "../time";
 
 export const [registerGithubService, getGithubService] = defineProxyService(
   "GithubService",
