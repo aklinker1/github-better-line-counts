@@ -7,6 +7,8 @@ import type {
   PullRequest,
   User,
 } from "./types";
+import { githubPatStorage } from "../storage";
+import { logger } from "../logger";
 
 export function createGithubApi() {
   /**

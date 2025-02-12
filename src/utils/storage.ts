@@ -1,3 +1,5 @@
+import { storage } from "@wxt-dev/storage";
+
 export interface CustomLists {
   all: string;
 }

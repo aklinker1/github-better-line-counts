@@ -1,9 +1,21 @@
 {
-  "extends": "./.wxt/tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "skipLibCheck": true,
     "lib": ["ESNext", "DOM"],
     "isolatedModules": true,
-    "types": ["bun", "unplugin-icons/types/vue"],
-    "verbatimModuleSyntax": true
+    "types": ["bun", "unplugin-icons/types/vue", "@types/chrome"],
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./src/*"]
+    }
   }
 }

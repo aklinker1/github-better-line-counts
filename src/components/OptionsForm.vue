@@ -8,6 +8,9 @@ import {
   githubPatStorage,
   customListsStorage,
 } from "@/utils/storage";
+import { useForm } from "@/composables/useForm";
+import { commitHashDiffsCache } from "@/utils/global-cache";
+import { i18n } from "@/utils/i18n";
 
 const { state, hasChanges, reset, saveChanges } = useForm<{
   hideGeneratedLineCount: boolean;

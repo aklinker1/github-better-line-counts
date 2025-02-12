@@ -1,3 +1,6 @@
+import { i18n } from "@/utils/i18n";
+import { createDiffComponent } from "./createDiffComponent";
+
 export const PrDiff = createDiffComponent({
   getAdditionsElement: () =>
     document.querySelector<HTMLElement>("#diffstat .color-fg-success"),
