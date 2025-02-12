@@ -1,4 +1,9 @@
+import { DIFF_COMPONENT_ID, GREY_COLOR } from "@/utils/constants";
 import type { RecalculateResult } from "@/utils/github";
+import { hideGeneratedLineCountStorage } from "@/utils/storage";
+import { Spinner } from "./Spinner";
+import { i18n } from "@/utils/i18n";
+import { logger } from "@/utils/logger";
 
 export function createDiffComponent(options: {
   getAdditionsElement: () => HTMLElement | null | undefined;

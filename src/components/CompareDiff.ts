@@ -1,3 +1,6 @@
+import { i18n } from "@/utils/i18n";
+import { createDiffComponent } from "./createDiffComponent";
+
 export const CompareDiff = createDiffComponent({
   getAdditionsElement: () =>
     document.querySelectorAll<HTMLElement>(".toc-diff-stats>strong")[0],

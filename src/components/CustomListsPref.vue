@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import type { CustomLists } from "@/utils/storage";
 import CustomListItem from "./CustomListItem.vue";
+import { i18n } from "@/utils/i18n";
 
 const customLists = defineModel<CustomLists>("customLists", { required: true });
 
