@@ -44,9 +44,3 @@
 - Update workflow runners to ubuntu-24.04 ([cba43b4](https://github.com/aklinker1/github-better-line-counts/commit/cba43b4))
 - Use project bun version in workflows ([9797648](https://github.com/aklinker1/github-better-line-counts/commit/9797648))
 - Push version change before submission ([af0c7b1](https://github.com/aklinker1/github-better-line-counts/commit/af0c7b1))
-
-### ❤️ Contributors
-
-- Aaron ([@aklinker1](https://github.com/aklinker1))
-- Semro <semenrozhkov@mail.ru>
-- Aaron Klinker ([@aklinker1](https://github.com/aklinker1))
