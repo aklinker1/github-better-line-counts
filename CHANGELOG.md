@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.6
+
+[compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.5...v1.7.6)
+
+### 🤖 CI
+
+- Fix upload zip step ([90798bf](https://github.com/aklinker1/github-better-line-counts/commit/90798bf))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v1.7.5
 
 [compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.4...v1.7.5)
