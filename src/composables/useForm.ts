@@ -19,10 +19,11 @@ export function useForm<T extends Record<string, any>>(
       if (!hasChanges.value) return;
 
       try {
-        // @ts-expect-error: Not sure why TS is mad
-        await saveChanges(state);
+        await saveChanges(toRaw(state) as T);
         Object.assign(resetState, state);
-      } catch {}
+      } catch (err) {
+        console.error("Error saving changes:", err);
+      }
     },
   };
 }
