@@ -46,15 +46,10 @@ const { t } = i18n;
     <div
       class="fixed inset-x-0 bottom-0 bg-base-100 flex gap-4 p-4 border-t border-neutral border-opacity-10"
     >
-      <button
-        class="btn btn-primary"
-        type="submit"
-        :disabled="!hasChanges"
-        @click="saveChanges"
-      >
+      <button class="btn btn-primary" type="submit" :disabled="!hasChanges">
         {{ t("saveChanges") }}
       </button>
-      <button class="btn" :disabled="!hasChanges" @click="reset">
+      <button class="btn" type="button" :disabled="!hasChanges" @click="reset">
         {{ t("discard") }}
       </button>
     </div>
