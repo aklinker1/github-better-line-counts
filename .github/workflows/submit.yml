@@ -67,6 +67,8 @@ jobs:
       - name: Release
         if: ${{ !inputs.dryRun }}
         run: bunx changelogen@latest gh release ${{ steps.version.outputs.newVersion }} --token ${{ github.token }}
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       # Don't upload sources zip - it can contain .env files, which may include secrets
       - name: Upload ZIPs
