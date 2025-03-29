@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.3
+
+[compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.2...v1.7.3)
+
+### 🤖 CI
+
+- Also create github release before submitting ([c73ef2d](https://github.com/aklinker1/github-better-line-counts/commit/c73ef2d))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v1.7.2
 
 [compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.0...v1.7.2)
