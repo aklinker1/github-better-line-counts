@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.4
+
+[compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.3...v1.7.4)
+
+### 🤖 CI
+
+- Fix workflow ([1283780](https://github.com/aklinker1/github-better-line-counts/commit/1283780))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v1.7.3
 
 [compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.2...v1.7.3)
