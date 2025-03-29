@@ -64,6 +64,15 @@ jobs:
         env:
           NEW_VERSION: ${{ steps.version.outputs.newVersion }}
 
+      - name: Release
+        if: ${{ !inputs.dryRun }}
+        run: pnpx changelogen@latest gh release ${{ steps.version.outputs.newVersion }} --token ${{ github.token }}
+
+      # Don't upload sources zip - it can contain .env files, which may include secrets
+      - name: Upload ZIPs
+        if: ${{ !inputs.dryRun }}
+        run: gh release upload ${{ steps.version.outputs.newVersion }} .output/*-chrome.zip .output/*-firefox.zip
+
       - name: Submit
         run: |
           bun wxt submit \
@@ -82,12 +91,3 @@ jobs:
           EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
           EDGE_CLIENT_SECRET: ${{ secrets.EDGE_CLIENT_SECRET }}
           EDGE_ACCESS_TOKEN_URL: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
-
-      - name: Release
-        if: ${{ !inputs.dryRun }}
-        run: pnpx changelogen@latest gh release ${{ steps.version.outputs.newVersion }} --token ${{ github.token }}
-
-      # Don't upload sources zip - it can contain .env files, which may include secrets
-      - name: Upload ZIPs
-        if: ${{ !inputs.dryRun }}
-        run: gh release upload ${{ steps.version.outputs.newVersion }} .output/*-chrome.zip .output/*-firefox.zip
