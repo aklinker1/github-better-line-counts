@@ -53,6 +53,17 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
 
+      - name: Commit and Push
+        if: ${{ !inputs.dryRun }}
+        run: |
+          git add package.json CHANGELOG.md
+          git commit -am "chore(release): v$NEW_VERSION"
+          git tag v$NEW_VERSION
+          git push
+          git push --tags
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.newVersion }}
+
       - name: Submit
         run: |
           bun wxt submit \
@@ -71,17 +82,6 @@ jobs:
           EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
           EDGE_CLIENT_SECRET: ${{ secrets.EDGE_CLIENT_SECRET }}
           EDGE_ACCESS_TOKEN_URL: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
-
-      - name: Commit and Push
-        if: ${{ !inputs.dryRun }}
-        run: |
-          git add package.json CHANGELOG.md
-          git commit -am "chore(release): v$NEW_VERSION"
-          git tag v$NEW_VERSION
-          git push
-          git push --tags
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.newVersion }}
 
       - name: Release
         if: ${{ !inputs.dryRun }}
