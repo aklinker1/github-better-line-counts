@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.8.0
+
+[compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.7...v1.8.0)
+
+### 🚀 Enhancements
+
+- Support new PR and diff UI ([#46](https://github.com/aklinker1/github-better-line-counts/pull/46))
+
+### 🏡 Chore
+
+- Upgrade @aklinker1/check ([3056153](https://github.com/aklinker1/github-better-line-counts/commit/3056153))
+- Cleanup logs and comments ([405be6f](https://github.com/aklinker1/github-better-line-counts/commit/405be6f))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v1.7.7
 
 [compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.6...v1.7.7)
