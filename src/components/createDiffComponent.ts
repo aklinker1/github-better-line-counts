@@ -47,7 +47,6 @@ export function createDiffComponent(options: {
         generated.textContent =
           " " + options.getGeneratedText(stats.exclude.changes);
         generated.style.color = GREY_COLOR;
-        console.log(additions?.classList);
         generated.classList.add(
           ...[...(additions?.classList ?? [])].filter(
             (className) => !className.toLowerCase().includes("fg"),

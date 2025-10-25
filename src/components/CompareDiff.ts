@@ -3,13 +3,11 @@ export const CompareDiff = createDiffComponent({
     querySelectorFirst(
       // 2023
       [".toc-diff-stats>strong", 0],
-      // 2025-10-24
     ),
   getDeletionsElement: () =>
     querySelectorFirst(
       // 2023
       [".toc-diff-stats>strong", 1],
-      // 2025-10-24
     ),
   addSpinnerToPage(spinner) {
     const container = this.getDeletionsElement()?.parentElement;
