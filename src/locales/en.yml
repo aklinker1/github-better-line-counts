@@ -9,9 +9,7 @@ diffs:
   deletionsText:
     1: $1 deletion
     n: $1 deletions
-  generatedText:
-    1: $1 generated line.
-    n: $1 generated lines.
+  generatedText: $1 generated
   additionsSymbol: +$1
   deletionsSymbol: −$1
   generatedSymbol: ⌁$1
