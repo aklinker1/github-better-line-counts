@@ -10,6 +10,8 @@ export const [registerGithubService, getGithubService] = defineProxyService(
 );
 
 function createGithubService(api: GithubApi) {
+  const mountCache: { [mountId: number]: RecalculateResult } = {};
+
   /**
    * Returns a list of generated files that should be excluded from diff counts.
    *
@@ -122,11 +124,18 @@ function createGithubService(api: GithubApi) {
     async recalculateDiff(
       options: RecalculateOptions,
     ): Promise<RecalculateResult> {
+      // Cache the result if the same content script tries to get the result multiple times.
+      if (mountCache[options.mountId]) {
+        logger.debug("[recalculateDiff] Using mount cache");
+        return mountCache[options.mountId];
+      }
+
       const ref = await getCurrentCommit(options);
       const cacheKey = getCacheKey(ref, options);
       const cached = await commitHashDiffsCache.get(cacheKey);
       if (cached) {
         logger.debug("[recalculateDiff] Using cached result");
+        mountCache[options.mountId] = cached;
         return cached;
       }
 
@@ -172,6 +181,8 @@ function createGithubService(api: GithubApi) {
         include: calculateDiffForFiles(include),
       };
       await commitHashDiffsCache.set(cacheKey, result, 2 * HOUR);
+
+      mountCache[options.mountId] = result;
       return result;
     },
 
@@ -187,6 +198,7 @@ export type RecalculateOptions =
   | RecalculateCompareOptions;
 
 export interface RecalculatePrOptions {
+  mountId: number;
   type: "pr";
   owner: string;
   repo: string;
@@ -194,6 +206,7 @@ export interface RecalculatePrOptions {
 }
 
 export interface RecalculateCommitOptions {
+  mountId: number;
   type: "commit";
   owner: string;
   repo: string;
@@ -201,6 +214,7 @@ export interface RecalculateCommitOptions {
 }
 
 export interface RecalculateCompareOptions {
+  mountId: number;
   type: "compare";
   owner: string;
   repo: string;

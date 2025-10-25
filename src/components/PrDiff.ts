@@ -1,8 +1,18 @@
 export const PrDiff = createDiffComponent({
   getAdditionsElement: () =>
-    document.querySelector<HTMLElement>("#diffstat .color-fg-success"),
+    querySelectorFirst(
+      // 2023
+      "#diffstat .color-fg-success",
+      // 2025-10-24
+      "*[data-component=PH_Navigation] .f6.text-bold.fgColor-success",
+    ),
   getDeletionsElement: () =>
-    document.querySelector<HTMLElement>("#diffstat .color-fg-danger"),
+    querySelectorFirst(
+      // 2023
+      "#diffstat .color-fg-danger",
+      // 2025-10-24
+      "*[data-component=PH_Navigation] .f6.text-bold.fgColor-danger",
+    ),
   addSpinnerToPage(spinner) {
     const deletions = this.getDeletionsElement();
     deletions?.replaceWith(deletions, spinner);
