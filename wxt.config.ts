@@ -19,6 +19,23 @@ export default defineConfig({
       { from: "@tanstack/vue-query", name: "useMutation" },
     ],
   },
+  zip: {
+    includeSources: [
+      "src",
+      "public",
+      ".tool-versions",
+      "README.md",
+      "bun.lock",
+      "package.json",
+      "tsconfig.json",
+      "wxt.config.ts",
+    ],
+    dotSources: true,
+  },
+  suppressWarnings: {
+    firefoxDataCollection: true,
+    firefoxId: true,
+  },
   vite: () => ({
     plugins: [Icons({ compiler: "vue3" }), Tailwindcss() as any],
     ssr: {
