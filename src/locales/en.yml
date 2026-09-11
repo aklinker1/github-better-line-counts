@@ -1,5 +1,5 @@
-name: GitHub Better Line Counts
-description: Remove generated files from GitHub line counts
+name: Better Git Line Counts
+description: Remove generated files from PR and diff line counts
 saveChanges: Save Changes
 discard: Discard
 diffs:

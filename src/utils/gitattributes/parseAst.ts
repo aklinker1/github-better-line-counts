@@ -5,7 +5,7 @@ export function parseAst(tokens: Token[]): Node[] {
   let currentNode: Node | null = null;
 
   for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
+    const token = tokens[i]!;
 
     if (token.token === "\n") {
       if (currentNode) nodes.push(currentNode);
@@ -17,8 +17,8 @@ export function parseAst(tokens: Token[]): Node[] {
         line: token.line,
         column: token.column,
       };
-      while (i < tokens.length && tokens[i].token !== "\n") {
-        comment.text += tokens[i].token;
+      while (i < tokens.length && tokens[i]!.token !== "\n") {
+        comment.text += tokens[i]!.token;
         i++;
       }
       i--;
@@ -36,15 +36,15 @@ export function parseAst(tokens: Token[]): Node[] {
       i++;
       while (
         i < tokens.length &&
-        tokens[i].token !== "#" &&
-        tokens[i].token !== "\n"
+        tokens[i]!.token !== "#" &&
+        tokens[i]!.token !== "\n"
       ) {
-        const attrToken = tokens[i];
+        const attrToken = tokens[i]!;
 
         switch (attrToken.token) {
           case "!":
             rule.attributes.push({
-              name: tokens[i + 1].token,
+              name: tokens[i + 1]!.token,
               value: undefined,
               line: attrToken.line,
               column: attrToken.column,
@@ -52,7 +52,7 @@ export function parseAst(tokens: Token[]): Node[] {
             i++;
             break;
           case "-":
-            const name = tokens[i + 1].token;
+            const name = tokens[i + 1]!.token;
             rule.attributes.push({
               name,
               value: false,

@@ -4,9 +4,6 @@ import { defineConfig } from "wxt";
 
 export default defineConfig({
   srcDir: "src",
-  experimental: {
-    entrypointImporter: "vite-node",
-  },
   modules: [
     "@wxt-dev/module-vue",
     "@wxt-dev/i18n/module",
@@ -38,10 +35,6 @@ export default defineConfig({
   },
   vite: () => ({
     plugins: [Icons({ compiler: "vue3" }), Tailwindcss() as any],
-    ssr: {
-      // List any dependencies that depend on webextension-polyfill here for vite-node importer to work
-      noExternal: ["@webext-core/proxy-service", "@webext-core/messaging"],
-    },
   }),
   manifest: ({ browser }) => {
     const permissions = ["storage"];

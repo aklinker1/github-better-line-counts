@@ -122,9 +122,10 @@ export function createGithubService(api: GithubApi): GithubService {
   return {
     async recalculateDiff(options) {
       // Cache the result if the same content script tries to get the result multiple times.
-      if (mountCache[options.mountId]) {
+      const mountCached = mountCache[options.mountId];
+      if (mountCached) {
         logger.debug("[recalculateDiff] Using mount cache");
-        return mountCache[options.mountId];
+        return mountCached;
       }
 
       const ref = await getCurrentCommit(options);
