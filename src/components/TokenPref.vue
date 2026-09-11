@@ -41,11 +41,11 @@ const { t } = i18n;
       <button
         class="btn aspect-square p-4"
         type="button"
-        :class="{ 'red': !tokenHidden, 'neutral': tokenHidden }"
+        :class="{ red: !tokenHidden, neutral: tokenHidden }"
         @click="tokenHidden = !tokenHidden"
       >
-          <IconEyeOff v-if="tokenHidden" class="size-5" />
-          <IconEye v-else class="size-5" />
+        <IconEyeOff v-if="tokenHidden" class="size-5" />
+        <IconEye v-else class="size-5" />
       </button>
     </div>
 
@@ -58,12 +58,12 @@ const { t } = i18n;
         <span class="text-sm">{{ error }}</span>
       </p>
       <p v-else-if="isLoading || user == null">
-         <span class="badge neutral">{{ t("options.privateRepos.checking") }}</span>
+        <span class="badge neutral">{{
+          t("options.privateRepos.checking")
+        }}</span>
       </p>
       <p v-else>
-        <span class="badge">{{
-          t("options.privateRepos.validToken")
-        }}</span>
+        <span class="badge">{{ t("options.privateRepos.validToken") }}</span>
         {{ " " }}
         <span class="text-sm">{{
           t("options.privateRepos.username", [user.login])

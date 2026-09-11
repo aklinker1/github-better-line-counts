@@ -1,12 +1,11 @@
 import { Github } from "@/utils/github";
 
-export default function (token: { value: string | undefined }) {
+export default function (token: MaybeRefOrGetter<string | undefined>) {
   return useQuery<Github.User | undefined>({
-    queryKey: [QueryKeys.GithubUser, token],
-    queryFn() {
-      if (!token.value) return;
-      return githubProxy.getUser(token.value);
+    key: () => [QueryKeys.GithubUser, toValue(token) ?? ""],
+    async query() {
+      const v = toValue(token);
+      return v ? await githubProxy.getUser(v) : undefined
     },
-    retry: false,
   });
 }

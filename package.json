@@ -17,7 +17,8 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.59.13",
+    "@pinia/colada": "^0.14.0",
+    "pinia": "^3.0.0",
     "@webext-core/messaging": "^4.0.0",
     "@webext-core/proxy-service": "^3.0.2",
     "fast-deep-equal": "^3.1.3",

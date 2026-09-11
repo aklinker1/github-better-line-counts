@@ -25,19 +25,19 @@ const emits = defineEmits<{
 
 <style scoped>
 .item {
-    border: 1px solid var(--c-neutral);
-    border-radius: calc(2 * var(--spacing));
-    display: flex;
-    flex-direction: column;
+  border: 1px solid var(--c-neutral);
+  border-radius: calc(2 * var(--spacing));
+  display: flex;
+  flex-direction: column;
 }
-.item>* {
-    padding: calc(2 * var(--spacing));
+.item > * {
+  padding: calc(2 * var(--spacing));
 }
-.item>:first-child {
-    border-bottom: 1px solid var(--c-neutral);
+.item > :first-child {
+  border-bottom: 1px solid var(--c-neutral);
 }
 textarea {
-    resize: vertical;
-    min-height: 5rem;
+  resize: vertical;
+  min-height: 5rem;
 }
 </style>

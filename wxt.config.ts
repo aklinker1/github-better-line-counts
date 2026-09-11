@@ -10,8 +10,8 @@ export default defineConfig({
   imports: {
     presets: ["vue-router"],
     imports: [
-      { from: "@tanstack/vue-query", name: "useQuery" },
-      { from: "@tanstack/vue-query", name: "useMutation" },
+      { from: "@pinia/colada", name: "useQuery" },
+      { from: "@pinia/colada", name: "useMutation" },
     ],
   },
   zip: {
