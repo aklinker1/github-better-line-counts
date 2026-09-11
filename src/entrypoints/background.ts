@@ -13,5 +13,5 @@ export default defineBackground({
         void browser.runtime.openOptionsPage();
       }
     });
-  }
+  },
 });

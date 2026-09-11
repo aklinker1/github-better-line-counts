@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" vapor>
 import { computed } from "vue";
 import type { CustomLists } from "@/utils/storage";
 import CustomListItem from "./CustomListItem.vue";
@@ -21,16 +21,16 @@ const { t } = i18n;
 </script>
 
 <template>
-  <li class="flex flex-col gap-4">
+  <div class="col gap-4">
     <!-- Header -->
-    <div class="flex flex-col gap-2">
-      <p class="font-medium text-base-content text-lg">
+    <div class="col gap-2">
+      <p class="setting-title">
         {{ t("options.customLists.title") }}
       </p>
-      <p class="text-base">
+      <p>
         {{ t("options.customLists.description1") }}
         <a
-          class="link link-secondary"
+          class="link"
           href="https://github.com/isaacs/minimatch#features"
           target="_blank"
           >{{ t("options.customLists.description2") }}</a
@@ -43,5 +43,5 @@ const { t } = i18n;
     <CustomListItem v-model:value="all">{{
       i18n.t("options.customLists.allRepos")
     }}</CustomListItem>
-  </li>
+  </div>
 </template>

@@ -20,18 +20,18 @@ export interface ExtensionStorageSchema {
 }
 
 export const githubPatStorage = storage.defineItem<string>("local:githubPat", {
-  defaultValue: import.meta.env.VITE_DEFAULT_TOKEN ?? "",
+  fallback: import.meta.env.VITE_DEFAULT_TOKEN ?? "",
 });
 
 export const hideGeneratedLineCountStorage = storage.defineItem<boolean>(
   "local:hideGeneratedLineCount",
-  { defaultValue: false },
+  { fallback: false },
 );
 
 export const customListsStorage = storage.defineItem<{ all: string }>(
   "local:customLists",
   {
-    defaultValue: {
+    fallback: {
       all: `*.lock\n*.lock.*\n*-lock*`,
     },
   },

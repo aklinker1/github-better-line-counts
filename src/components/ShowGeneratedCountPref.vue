@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" vapor>
 const hideLineCount = defineModel<boolean>("hideGeneratedLineCount", {
   required: true,
 });
@@ -11,34 +11,34 @@ const { t } = i18n;
 </script>
 
 <template>
-  <li class="flex flex-col gap-4">
-    <div class="flex flex-col gap-2">
-      <p class="font-medium text-base-content text-lg">
+  <div class="col gap-4">
+    <div class="col gap-2">
+      <p class="setting-title">
         {{ t("options.enabled.title") }}
       </p>
-      <label class="text-base flex gap-4 items-center">
+      <label class="row gap-4 items-center">
         <input
-          class="checkbox checkbox-primary checkbox-sm ml-2"
+          class="p-3 size-4 ml-2"
           type="checkbox"
           :checked="!hideLineCount"
           @change="toggle"
         />
-        <p>
+        <p class="flex-1">
           {{ t("options.enabled.description1") }}
-          <span class="text-success font-medium">{{
+          <span class="text-green font-medium">{{
             t("options.enabled.description2")
           }}</span>
           {{ t("options.enabled.description3") }}
-          <span class="text-error font-medium">{{
+          <span class="text-red font-medium">{{
             t("options.enabled.description4")
           }}</span
           >{{ t("options.enabled.description5") }}
-          <span class="text-base-content text-opacity-50 font-medium">{{
+          <span class="opacity-50 font-medium">{{
             t("options.enabled.description6")
           }}</span>
           {{ t("options.enabled.description7") }}
         </p>
       </label>
     </div>
-  </li>
+  </div>
 </template>

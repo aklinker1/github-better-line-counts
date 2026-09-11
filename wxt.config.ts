@@ -1,5 +1,3 @@
-import Tailwindcss from "@tailwindcss/vite";
-import Icons from "unplugin-icons/vite";
 import { defineConfig } from "wxt";
 
 export default defineConfig({
@@ -33,9 +31,6 @@ export default defineConfig({
     firefoxDataCollection: true,
     firefoxId: true,
   },
-  vite: () => ({
-    plugins: [Icons({ compiler: "vue3" }), Tailwindcss() as any],
-  }),
   manifest: ({ browser }) => {
     const permissions = ["storage"];
     if (browser === "firefox") {

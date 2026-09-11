@@ -1,6 +1,6 @@
-<script lang="ts" setup>
-import IMdiEye from "~icons/mdi/eye";
-import IMdiEyeOffOutline from "~icons/mdi/eye-off-outline";
+<script lang="ts" vapor>
+import IconEyeOff from "./IconEyeOff.vue";
+import IconEye from "./IconEye.vue";
 
 const token = defineModel<string>("githubPat", {
   required: true,
@@ -14,16 +14,16 @@ const { t } = i18n;
 </script>
 
 <template>
-  <li class="flex flex-col gap-4">
-    <div class="flex flex-col gap-2">
-      <p class="font-medium text-base-content text-lg">
+  <div class="col gap-4">
+    <div class="col gap-2">
+      <p class="setting-title">
         {{ t("options.privateRepos.title") }}
       </p>
-      <p class="text-base">
+      <p>
         <em>{{ t("options.privateRepos.description1") }}</em>
         {{ t("options.privateRepos.description2") }}
         <a
-          class="link link-secondary"
+          class="link"
           href="https://github.com/settings/tokens/new?description=Github%3A%20Better%20Line%20Count&scopes=repo"
           target="_blank"
           >{{ t("options.privateRepos.description3") }}</a
@@ -33,35 +33,35 @@ const { t } = i18n;
     </div>
     <div class="join">
       <input
-        class="join-item input input-bordered w-full"
+        class="input flex-1"
         :placeholder="t('options.privateRepos.inputPlaceholder')"
         v-model="token"
         :type="tokenHidden ? 'password' : 'text'"
       />
-      <div
-        class="join-item btn"
-        role="button"
-        :class="{ 'btn-error': !tokenHidden }"
+      <button
+        class="btn aspect-square p-4"
+        type="button"
+        :class="{ 'red': !tokenHidden, 'neutral': tokenHidden }"
         @click="tokenHidden = !tokenHidden"
       >
-        <i-mdi-eye-off-outline v-if="tokenHidden" />
-        <i-mdi-eye v-else />
-      </div>
+          <IconEyeOff v-if="tokenHidden" class="size-5" />
+          <IconEye v-else class="size-5" />
+      </button>
     </div>
 
     <template v-if="token">
-      <p v-if="error" class="">
-        <span class="badge badge-error shrink-0">{{
+      <p v-if="error">
+        <span class="badge red shrink-0">{{
           t("options.privateRepos.invalidToken")
         }}</span>
         {{ " " }}
         <span class="text-sm">{{ error }}</span>
       </p>
-      <p v-else-if="isLoading || user == null" class="badge badge-ghost">
-        {{ t("options.privateRepos.checking") }}
+      <p v-else-if="isLoading || user == null">
+         <span class="badge neutral">{{ t("options.privateRepos.checking") }}</span>
       </p>
       <p v-else>
-        <span class="badge badge-primary">{{
+        <span class="badge">{{
           t("options.privateRepos.validToken")
         }}</span>
         {{ " " }}
@@ -70,5 +70,5 @@ const { t } = i18n;
         }}</span>
       </p>
     </template>
-  </li>
+  </div>
 </template>

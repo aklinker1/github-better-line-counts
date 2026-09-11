@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" vapor>
 import TokenPref from "./TokenPref.vue";
 import ShowGeneratedCountPref from "./ShowGeneratedCountPref.vue";
 import CustomListsPref from "./CustomListsPref.vue";
@@ -8,48 +8,69 @@ import {
   githubPatStorage,
   customListsStorage,
 } from "@/utils/storage";
+import isDeepEqual from "fast-deep-equal";
 
-const { state, hasChanges, reset, saveChanges } = useForm<{
+const props = defineProps<{
   hideGeneratedLineCount: boolean;
   githubPat: string;
   customLists: CustomLists;
-}>(
-  {
-    hideGeneratedLineCount: await hideGeneratedLineCountStorage.getValue(),
-    githubPat: await githubPatStorage.getValue(),
-    // This value is set when extension is installed.
-    customLists: await customListsStorage.getValue(),
-  },
-  async (newState) => {
-    await hideGeneratedLineCountStorage.setValue(
-      newState.hideGeneratedLineCount,
-    );
-    await githubPatStorage.setValue(newState.githubPat);
-    await customListsStorage.setValue(newState.customLists);
+}>();
 
-    // Clear cache
-    await commitHashDiffsCache.clear();
-  },
+const hideGeneratedLineCount = ref(props.hideGeneratedLineCount);
+const githubPat = ref(props.githubPat);
+const customLists = ref(props.customLists);
+
+const reset = () => {
+  hideGeneratedLineCount.value = props.hideGeneratedLineCount;
+  githubPat.value = props.githubPat;
+  customLists.value = props.customLists;
+};
+const save = async () => {
+  await hideGeneratedLineCountStorage.setValue(hideGeneratedLineCount.value);
+  await githubPatStorage.setValue(githubPat.value);
+  await customListsStorage.setValue(customLists.value);
+
+  // Clear cache
+  await commitHashDiffsCache.clear();
+};
+
+const hasChanges = computed(
+  () =>
+    !isDeepEqual(
+      toRaw(hideGeneratedLineCount.value),
+      toRaw(props.hideGeneratedLineCount),
+    ) ||
+    !isDeepEqual(toRaw(githubPat.value), toRaw(props.githubPat)) ||
+    !isDeepEqual(toRaw(customLists.value), toRaw(props.customLists)),
 );
 
 const { t } = i18n;
 </script>
 
 <template>
-  <form class="flex flex-col gap-8 pb-20" @submit.prevent="saveChanges">
-    <TokenPref v-model:github-pat="state.githubPat" />
-    <ShowGeneratedCountPref
-      v-model:hide-generated-line-count="state.hideGeneratedLineCount"
-    />
-    <CustomListsPref v-model:custom-lists="state.customLists" />
+  <form @submit.prevent="save">
+    <!-- Settings -->
+    <div class="scroll-wrapper">
+      <div class="col gap-8 p-4">
+        <TokenPref v-model:github-pat="githubPat" />
+        <ShowGeneratedCountPref
+          v-model:hide-generated-line-count="hideGeneratedLineCount"
+        />
+        <CustomListsPref v-model:custom-lists="customLists" />
+      </div>
+    </div>
 
-    <div
-      class="fixed inset-x-0 bottom-0 bg-base-100 flex gap-4 p-4 border-t border-neutral border-opacity-10"
-    >
-      <button class="btn btn-primary" type="submit" :disabled="!hasChanges">
+    <!-- Buttons -->
+    <div class="row gap-4 p-4 shrink-0">
+      <button class="btn" type="submit" :disabled="!hasChanges">
         {{ t("saveChanges") }}
       </button>
-      <button class="btn" type="button" :disabled="!hasChanges" @click="reset">
+      <button
+        class="btn neutral"
+        type="button"
+        :disabled="!hasChanges"
+        @click="reset"
+      >
         {{ t("discard") }}
       </button>
     </div>

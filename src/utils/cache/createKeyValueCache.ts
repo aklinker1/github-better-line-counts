@@ -1,4 +1,4 @@
-import { Mutex } from "async-mutex";
+import { withLock } from "superlock";
 
 interface CachedValue<TValue> {
   value: TValue;
@@ -30,7 +30,7 @@ export function createKeyValueCache<TValue>(
 ): KeyValueCache<TValue> {
   const storageKey = `@cache/${name}`;
 
-  const mutex = new Mutex();
+  const lock = withLock();
 
   const getCache = (): Promise<Cache<TValue>> =>
     storage
@@ -52,7 +52,7 @@ export function createKeyValueCache<TValue>(
    * often.
    */
   const cleanup = () =>
-    mutex.runExclusive(async () => {
+    lock(async () => {
       const now = Date.now();
       const cache = await getCache();
       Object.entries(cache).forEach(([key, cachedValue]) => {
@@ -64,7 +64,7 @@ export function createKeyValueCache<TValue>(
 
   return {
     get(key) {
-      return mutex.runExclusive(async () => {
+      return lock(async () => {
         const now = Date.now();
         const cache = await getCache();
         const cachedValue = cache[key];
@@ -72,7 +72,7 @@ export function createKeyValueCache<TValue>(
       });
     },
     set(key, value, expiresInMs) {
-      return mutex.runExclusive(async () => {
+      return lock(async () => {
         const now = Date.now();
         const cache = await getCache();
         cache[key] = { value, expiresAt: now + expiresInMs };
@@ -80,7 +80,7 @@ export function createKeyValueCache<TValue>(
       });
     },
     clear() {
-      return mutex.runExclusive(() => setCache({}));
+      return lock(() => setCache({}));
     },
   };
 }
