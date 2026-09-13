@@ -5,7 +5,7 @@ export default function (token: MaybeRefOrGetter<string | undefined>) {
     key: () => [QueryKeys.GithubUser, toValue(token) ?? ""],
     async query() {
       const v = toValue(token);
-      return v ? await githubProxy.getUser(v) : undefined
+      return v ? await githubProxy.getUser(v) : undefined;
     },
   });
 }

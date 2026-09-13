@@ -2,10 +2,7 @@ import { defineConfig } from "wxt";
 
 export default defineConfig({
   srcDir: "src",
-  modules: [
-    "@wxt-dev/module-vue",
-    "@wxt-dev/i18n/module",
-  ],
+  modules: ["@wxt-dev/module-vue", "@wxt-dev/i18n/module"],
   imports: {
     presets: ["vue-router"],
     imports: [
