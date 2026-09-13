@@ -5,7 +5,6 @@ export default defineConfig({
   modules: [
     "@wxt-dev/module-vue",
     "@wxt-dev/i18n/module",
-    "@wxt-dev/auto-icons",
   ],
   imports: {
     presets: ["vue-router"],
@@ -42,8 +41,5 @@ export default defineConfig({
       description: "__MSG_description__",
       permissions,
     };
-  },
-  autoIcons: {
-    grayscaleOnDevelopment: false,
   },
 });
