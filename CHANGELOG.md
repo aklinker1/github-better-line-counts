@@ -1,5 +1,34 @@
 # Changelog
 
+## v1.8.1
+
+[compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.8.0...v1.8.1)
+
+### 🩹 Fixes
+
+- Upgrade vite, cut extension size in half, remove github from extension name ([8ba1208](https://github.com/aklinker1/github-better-line-counts/commit/8ba1208))
+- Fix layout height, use `@pinia/colada` ([a641ac9](https://github.com/aklinker1/github-better-line-counts/commit/a641ac9))
+- New, non-copyright infringing icon ([89b70d4](https://github.com/aklinker1/github-better-line-counts/commit/89b70d4))
+
+### 🏡 Chore
+
+- Upgrade to `@webext-core/proxy-service` v2 ([256f9d1](https://github.com/aklinker1/github-better-line-counts/commit/256f9d1))
+- Upgrade wxt ([534cbb7](https://github.com/aklinker1/github-better-line-counts/commit/534cbb7))
+- Upgrade bun to 1.3.8 ([995200d](https://github.com/aklinker1/github-better-line-counts/commit/995200d))
+- Use `.tool-versions` file ([d837f45](https://github.com/aklinker1/github-better-line-counts/commit/d837f45))
+- Upgrade to WXT v0.21 test version ([1e71862](https://github.com/aklinker1/github-better-line-counts/commit/1e71862))
+- Refactor to vapor, drop tailwind to minimize CSS, simplify deps ([d536e13](https://github.com/aklinker1/github-better-line-counts/commit/d536e13))
+- Fix lockfile ([3a9975b](https://github.com/aklinker1/github-better-line-counts/commit/3a9975b))
+- Fix formatting ([59fc284](https://github.com/aklinker1/github-better-line-counts/commit/59fc284))
+
+### 🤖 CI
+
+- Upgrade to CWS v2 API ([ec4f7c8](https://github.com/aklinker1/github-better-line-counts/commit/ec4f7c8))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v1.8.0
 
 [compare changes](https://github.com/aklinker1/github-better-line-counts/compare/v1.7.7...v1.8.0)
